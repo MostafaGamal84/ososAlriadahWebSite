@@ -1,0 +1,414 @@
+<!-- <section class="leasing">
+    <div class="leasing__hero">
+        <div class="leasing__hero-content">
+            <h1>{{ hero.title }}</h1>
+            <p class="leasing__subtitle">{{ hero.subtitle }}</p>
+            <div class="leasing__cta-buttons">
+                <button class="leasing__button leasing__button--primary" (click)="setActiveTab('properties')">
+                    {{ hero.ctaPrimary }}
+                </button>
+                <button class="leasing__button leasing__button--secondary" (click)="registerProperty()">
+                    {{ hero.ctaSecondary }}
+                </button>
+            </div>
+        </div>
+        <div class="leasing__hero-image">
+            <img [src]="hero.image" alt="{{ hero.title }}" class="leasing__image">
+        </div>
+    </div>
+
+    <div class="leasing__dashboard">
+        <div class="leasing__tabs">
+            <button class="leasing__tab" [class.leasing__tab--active]="activeTab === 'properties'"
+                (click)="setActiveTab('properties')">
+                <mat-icon>home</mat-icon> العقارات
+            </button>
+            <button class="leasing__tab" [class.leasing__tab--active]="activeTab === 'tenants'"
+                (click)="setActiveTab('tenants')">
+                <mat-icon>groups</mat-icon> المستأجرون
+            </button>
+            <button class="leasing__tab" [class.leasing__tab--active]="activeTab === 'payments'"
+                (click)="setActiveTab('payments')">
+                <mat-icon>payments</mat-icon> المدفوعات
+            </button>
+            <button class="leasing__tab" [class.leasing__tab--active]="activeTab === 'maintenance'"
+                (click)="setActiveTab('maintenance')">
+                <mat-icon>handyman</mat-icon> الصيانة
+            </button>
+        </div>
+
+        <div class="leasing__tab-content" *ngIf="activeTab === 'properties'">
+            <div class="leasing__filters">
+                <div class="leasing__filter-group">
+                    <label class="leasing__filter-label">نوع العقار:</label>
+                    <select class="leasing__filter-select" [(ngModel)]="selectedPropertyType">
+                        <option *ngFor="let type of propertyTypes" [value]="type.value">{{ type.label }}</option>
+                    </select>
+                </div>
+                <div class="leasing__filter-group">
+                    <label class="leasing__filter-label">المدينة:</label>
+                    <select class="leasing__filter-select" [(ngModel)]="selectedCity">
+                        <option *ngFor="let city of cities" [value]="city.value">{{ city.label }}</option>
+                    </select>
+                </div>
+                <div class="leasing__filter-group">
+                    <label class="leasing__filter-label">الحالة:</label>
+                    <select class="leasing__filter-select" [(ngModel)]="selectedStatus">
+                        <option *ngFor="let status of statusOptions" [value]="status.value">{{ status.label }}</option>
+                    </select>
+                </div>
+                <button class="leasing__filter-button" (click)="searchProperties()">
+                    بحث
+                </button>
+                <button class="leasing__button leasing__button--primary" (click)="newPropertyModal = true">
+                    <mat-icon>add</mat-icon> إضافة عقار
+                </button>
+            </div>
+
+            <div class="leasing__properties-grid">
+                <div class="leasing__property-card" *ngFor="let property of filteredProperties">
+                    <div class="leasing__property-badge"
+                        [class.leasing__property-badge--available]="property.status === 'available'"
+                        [class.leasing__property-badge--rented]="property.status === 'rented'"
+                        [class.leasing__property-badge--maintenance]="property.status === 'maintenance'">
+                        {{ property.status === 'available' ? 'متوفر' :
+                        property.status === 'rented' ? 'مؤجر' : 'صيانة' }}
+                    </div>
+                    <img [src]="property.image" [alt]="property.title" class="leasing__property-image">
+                    <div class="leasing__property-details">
+                        <h3 class="leasing__property-title">{{ property.title }}</h3>
+                        <div class="leasing__property-info">
+                            <span class="leasing__property-info-item">
+                                <mat-icon>king_bed</mat-icon> {{ property.bedrooms }} غرف
+                            </span>
+                            <span class="leasing__property-info-item">
+                                <mat-icon>bathtub</mat-icon> {{ property.bathrooms }} حمام
+                            </span>
+                            <span class="leasing__property-info-item">
+                                <mat-icon>straighten</mat-icon> {{ property.size }} م²
+                            </span>
+                        </div>
+                        <div class="leasing__property-footer">
+                            <span class="leasing__property-price">{{ property.price }}</span>
+                            <div class="leasing__property-actions">
+                                <button class="leasing__property-button" (click)="viewPropertyDetails(property)">
+                                    التفاصيل
+                                </button>
+                                <button class="leasing__property-button leasing__property-button--tenant"
+                                    *ngIf="property.status === 'available'"
+                                    (click)="selectedPropertyForTenant = property; newTenantModal = true">
+                                    إضافة مستأجر
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="leasing__tab-content" *ngIf="activeTab === 'tenants'">
+            <h3 class="leasing__sub-section-title">المستأجرون الحاليون</h3>
+
+            <div class="leasing__tenants-grid">
+                <div class="leasing__tenant-card" *ngFor="let tenant of allTenants">
+                    <div class="leasing__tenant-avatar">
+                        <mat-icon>person</mat-icon>
+                    </div>
+                    <div class="leasing__tenant-info">
+                        <h4>{{ tenant.name }}</h4>
+                        <p><mat-icon>phone</mat-icon> {{ tenant.contact }}</p>
+                        <p><mat-icon>date_range</mat-icon>
+                            عقد من {{ tenant.leaseStart | date:'yyyy/MM/dd' }} إلى {{ tenant.leaseEnd |
+                            date:'yyyy/MM/dd' }}
+                        </p>
+                        <p>
+                            <mat-icon [class.leasing__payment-paid]="tenant.rentPaid"
+                                [class.leasing__payment-pending]="!tenant.rentPaid">
+                                {{ tenant.rentPaid ? 'check_circle' : 'pending' }}
+                            </mat-icon>
+                            {{ tenant.rentPaid ? 'تم السداد' : 'بانتظار السداد' }}
+                        </p>
+                    </div>
+                    <div class="leasing__tenant-property">
+                        <p>العقار: {{ getPropertyForTenant(tenant)?.title }}</p>
+                        <button class="leasing__property-button"
+                            (click)="addMaintenanceRequest(getPropertyForTenant(tenant))">
+                            طلب صيانة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="leasing__tab-content" *ngIf="activeTab === 'payments'">
+            <div class="leasing__payment-stats">
+                <div class="leasing__stat-card">
+                    <h4>إجمالي الإيرادات</h4>
+                    <p>120,000 ر.س</p>
+                </div>
+                <div class="leasing__stat-card leasing__stat-card--pending">
+                    <h4>مدفوعات معلقة</h4>
+                    <span>{{ pendingPaymentsCount }}</span>
+                </div>
+                <div class="leasing__stat-card leasing__stat-card--overdue">
+                    <h4>مدفوعات متأخرة</h4>
+                    <p>{{ overduePayments.length }}</p>
+                </div>
+            </div>
+
+            <h3 class="leasing__sub-section-title">سجل المدفوعات</h3>
+
+            <div class="leasing__payments-table">
+                <div class="leasing__table-header">
+                    <div>العقار</div>
+                    <div>المستأجر</div>
+                    <div>المبلغ</div>
+                    <div>تاريخ الاستحقاق</div>
+                    <div>الحالة</div>
+                    <div>إجراءات</div>
+                </div>
+
+                <div class="leasing__table-row" *ngFor="let payment of payments">
+                    <div>{{ getPropertyById(payment.propertyId)?.title }}</div>
+                    <div>{{ getTenantForProperty(payment.propertyId)?.name || '--' }}</div>
+                    <div>{{ payment.amount | number }} ر.س</div>
+                    <div>{{ payment.date | date:'yyyy/MM/dd' }}</div>
+                    <div>
+                        <span [class.leasing__payment-paid]="payment.status === 'paid'"
+                            [class.leasing__payment-pending]="payment.status === 'pending'"
+                            [class.leasing__payment-overdue]="payment.status === 'overdue'">
+                            {{ payment.status === 'paid' ? 'مسدد' :
+                            payment.status === 'pending' ? 'معلق' : 'متأخر' }}
+                        </span>
+                    </div>
+                    <div>
+                        <button class="leasing__property-button" *ngIf="payment.status !== 'paid'"
+                            (click)="recordPayment(payment)">
+                            تسديد
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="leasing__tab-content" *ngIf="activeTab === 'maintenance'">
+            <button class="leasing__button leasing__button--primary" (click)="newMaintenanceModal = true">
+                <mat-icon>add</mat-icon> طلب صيانة جديد
+            </button>
+
+            <h3 class="leasing__sub-section-title">طلبات الصيانة النشطة</h3>
+
+            <div class="leasing__maintenance-grid">
+                <div class="leasing__maintenance-card" *ngFor="let request of activeMaintenance">
+                    <div class="leasing__maintenance-header">
+                        <h4>{{ request.title }}</h4>
+                        <span [class.leasing__maintenance-pending]="request.status === 'pending'"
+                            [class.leasing__maintenance-inprogress]="request.status === 'in-progress'">
+                            {{ request.status === 'pending' ? 'قيد الانتظار' : 'قيد التنفيذ' }}
+                        </span>
+                    </div>
+                    <p class="leasing__maintenance-desc">{{ request.description }}</p>
+                    <div class="leasing__maintenance-footer">
+                        <span><mat-icon>date_range</mat-icon> {{ request.date | date:'yyyy/MM/dd' }}</span>
+                        <div class="leasing__maintenance-actions">
+                            <button class="leasing__property-button" *ngIf="request.status === 'pending'">
+                                بدء التنفيذ
+                            </button>
+                            <button class="leasing__property-button leasing__property-button--complete"
+                                *ngIf="request.status === 'in-progress'">
+                                إكمال
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="leasing__features">
+        <h2 class="leasing__section-title">مميزات نظام الإدارة المتكامل</h2>
+        <div class="leasing__features-grid">
+            <div class="leasing__feature-card" *ngFor="let feature of features">
+                <mat-icon class="leasing__feature-icon">{{ feature.icon }}</mat-icon>
+                <h3 class="leasing__feature-title">{{ feature.title }}</h3>
+                <p class="leasing__feature-desc">{{ feature.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="leasing__process">
+        <h2 class="leasing__section-title">كيفية إدارة عقارك معنا</h2>
+        <div class="leasing__process-steps">
+            <div class="leasing__step" *ngFor="let step of processSteps">
+                <div class="leasing__step-number">{{ step.number }}</div>
+                <h3 class="leasing__step-title">{{ step.title }}</h3>
+                <p class="leasing__step-desc">{{ step.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="leasing__cta">
+        <h2 class="leasing__cta-title">{{ cta.title }}</h2>
+        <p class="leasing__cta-desc">{{ cta.description }}</p>
+        <button class="leasing__cta-button" (click)="registerProperty()">
+            {{ cta.button }}
+        </button>
+    </div>
+
+
+    <div class="leasing__modal" *ngIf="newPropertyModal">
+        <div class="leasing__modal-content">
+            <div class="leasing__modal-header">
+                <h3>إضافة عقار جديد</h3>
+                <button class="leasing__modal-close" (click)="newPropertyModal = false">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="leasing__modal-body">
+                <div class="leasing__form-group">
+                    <label>عنوان العقار</label>
+                    <input type="text" [(ngModel)]="newProperty.title">
+                </div>
+                <div class="leasing__form-row">
+                    <div class="leasing__form-group">
+                        <label>نوع العقار</label>
+                        <select [(ngModel)]="newProperty.type">
+                            <option *ngFor="let type of propertyTypes.slice(1)" [value]="type.value">
+                                {{ type.label }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="leasing__form-group">
+                        <label>المدينة</label>
+                        <select [(ngModel)]="newProperty.city">
+                            <option *ngFor="let city of cities" [value]="city.value">
+                                {{ city.label }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="leasing__form-row">
+                    <div class="leasing__form-group">
+                        <label>عدد الغرف</label>
+                        <input type="number" [(ngModel)]="newProperty.bedrooms">
+                    </div>
+                    <div class="leasing__form-group">
+                        <label>عدد الحمامات</label>
+                        <input type="number" [(ngModel)]="newProperty.bathrooms">
+                    </div>
+                    <div class="leasing__form-group">
+                        <label>المساحة (م²)</label>
+                        <input type="number" [(ngModel)]="newProperty.size">
+                    </div>
+                </div>
+                <div class="leasing__form-group">
+                    <label>سعر الإيجار الشهري</label>
+                    <input type="text" [(ngModel)]="newProperty.price">
+                </div>
+            </div>
+            <div class="leasing__modal-footer">
+                <button class="leasing__button leasing__button--secondary" (click)="newPropertyModal = false">
+                    إلغاء
+                </button>
+                <button class="leasing__button leasing__button--primary" (click)="addNewProperty()">
+                    حفظ العقار
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="leasing__modal" *ngIf="newTenantModal && selectedPropertyForTenant">
+        <div class="leasing__modal-content">
+            <div class="leasing__modal-header">
+                <h3>إضافة مستأجر جديد - {{ selectedPropertyForTenant.title }}</h3>
+                <button class="leasing__modal-close" (click)="newTenantModal = false">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="leasing__modal-body">
+                <div class="leasing__form-group">
+                    <label>اسم المستأجر</label>
+                    <input type="text" [(ngModel)]="newTenant.name">
+                </div>
+                <div class="leasing__form-group">
+                    <label>رقم التواصل</label>
+                    <input type="text" [(ngModel)]="newTenant.contact">
+                </div>
+                <div class="leasing__form-row">
+                    <div class="leasing__form-group">
+                        <label>تاريخ بدء العقد</label>
+                        <input type="date" [(ngModel)]="newTenant.leaseStart">
+                    </div>
+                    <div class="leasing__form-group">
+                        <label>تاريخ انتهاء العقد</label>
+                        <input type="date" [(ngModel)]="newTenant.leaseEnd">
+                    </div>
+                </div>
+                <div class="leasing__form-group">
+                    <label>قيمة الإيجار الشهري</label>
+                    <input type="number" [(ngModel)]="newTenant.rentAmount">
+                </div>
+            </div>
+            <div class="leasing__modal-footer">
+                <button class="leasing__button leasing__button--secondary" (click)="newTenantModal = false">
+                    إلغاء
+                </button>
+                <button class="leasing__button leasing__button--primary"
+                    (click)="addTenant(selectedPropertyForTenant); newTenantModal = false">
+                    حفظ المستأجر
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="leasing__modal" *ngIf="newMaintenanceModal">
+        <div class="leasing__modal-content">
+            <div class="leasing__modal-header">
+                <h3>طلب صيانة جديد</h3>
+                <button class="leasing__modal-close" (click)="newMaintenanceModal = false">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="leasing__modal-body">
+                <div class="leasing__form-group">
+                    <label>عنوان الطلب</label>
+                    <input type="text" [(ngModel)]="newMaintenanceRequest.title">
+                </div>
+                <div class="leasing__form-group">
+                    <label>وصف المشكلة</label>
+                    <textarea [(ngModel)]="newMaintenanceRequest.description"></textarea>
+                </div>
+            </div>
+            <div class="leasing__modal-footer">
+                <button class="leasing__button leasing__button--secondary" (click)="newMaintenanceModal = false">
+                    إلغاء
+                </button>
+                <button class="leasing__button leasing__button--primary"
+                    (click)="addMaintenanceRequest(); newMaintenanceModal = false">
+                    إرسال الطلب
+                </button>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<div class="coming-soon-container">
+    <div class="coming-soon-content">
+        <div class="icon-wrapper">
+            <mat-icon class="main-icon">engineering</mat-icon>
+        </div>
+        <h1>{{ currentLang === 'ar' ? 'إدارة العقارات' : 'Property Management' }}</h1>
+        <p class="coming-soon-text">
+            {{ currentLang === 'ar' ? 'قريبًا....' : 'Coming soon...' }}
+        </p>
+        <div class="progress-container">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <p class="contact-text">
+            {{ currentLang === 'ar' ? 'للحصول على معلومات، يرجى التواصل معنا' : 'For inquiries, please contact us' }}
+        </p>
+        <button mat-raised-button color="primary" (click)="navigateTo('contact')" class="custom-mat-button">
+            {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+        </button>
+    </div>
+</div>

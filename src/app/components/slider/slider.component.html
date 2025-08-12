@@ -1,0 +1,40 @@
+<section class="testimonials-section container-fluid py-5 animate-on-scroll" aria-labelledby="testimonials-title" appInViewport>
+  <div class="row mb-5">
+    <div class="col-12 text-center">
+      <h2 id="testimonials-title" class="section-header mb-3">
+        {{ currentLang === 'ar' ? 'لوحة الشرف للطلاب الخاتمين' : 'Honor Board for Quran Graduates' }}
+      </h2>
+      <p class="section-subtitle mx-auto">
+        {{ currentLang === 'ar' ? 'شاهد قصص نجاح طلابنا وتجاربهم المميزة في رحلة تعلم القرآن الكريم' : 'Explore our students\' success stories and experiences on their Quran learning journey.' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="testimonials-slider position-relative">
+        <div class="swiper" role="region" [attr.aria-label]="currentLang === 'ar' ? 'شرائح إنجازات الطلاب' : 'Student achievement slides'">
+          <div class="swiper-wrapper">
+            <div *ngFor="let slide of slides" class="swiper-slide text-center" role="group" >
+              <div class="testimonial-image-wrapper">
+                <img [src]="slide.image"  class="testimonial-image" loading="lazy" />
+              </div>
+              <div class="testimonial-content mt-4">
+                <h3 class="testimonial-name">{{ currentLang === 'ar' ?  slide.title.ar :  slide.title.en  }}</h3>
+                <p class="testimonial-role mb-0">{{ currentLang === 'ar' ?  slide.gender.ar :  slide.gender.en   }}</p>
+                <p class="testimonial-text mb-3">{{  currentLang === 'ar' ?  slide.subtitle.ar :  slide.subtitle.en }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="nav-button prev-button" [attr.aria-label]="currentLang === 'ar' ? 'السابق' : 'Previous'">
+          <span class="arrow-icon">&#10094;</span>
+        </button>
+        <button class="nav-button next-button" [attr.aria-label]="currentLang === 'ar' ? 'التالي' : 'Next'">
+          <span class="arrow-icon">&#10095;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

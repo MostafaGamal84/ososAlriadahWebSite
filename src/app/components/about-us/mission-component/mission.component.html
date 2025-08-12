@@ -1,0 +1,77 @@
+<section class="mission-section" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+  <div class="container">
+    <div class="mission-container">
+      <div class="row align-items-center g-5">
+        <!-- Image Column -->
+        <div class="col-lg-5">
+          <div class="mission-media">
+            <div class="media-wrapper">
+              <img src="https://i.pinimg.com/1200x/b9/86/cd/b986cdd3b618e3c90520ec6227466f64.jpg"
+                alt="{{ currentLang === 'ar' ? 'رسالتنا' : 'Our Mission' }}" class="mission-image" />
+
+              <!-- Optional decorative elements -->
+              <div class="media-decoration"></div>
+              <div class="media-badge">
+                <i class="fas fa-bullseye"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Column -->
+        <div class="col-lg-7">
+          <div class="mission-content">
+            <div class="section-header">
+              <span class="section-tag">
+                {{ currentLang === 'ar' ? 'من نحن' : 'About Us' }}
+              </span>
+              <h2 class="section-title">
+                {{ currentLang === 'ar' ? 'رسالتنا' : 'Our Mission' }}
+              </h2>
+              <div class="title-divider"></div>
+            </div>
+
+            <p class="mission-text">
+              {{ mission[currentLang] }}
+            </p>
+
+            <div class="mission-features">
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>{{ currentLang === 'ar' ? 'شفافية كاملة' : 'Full Transparency' }}</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>{{ currentLang === 'ar' ? 'خبرة متخصصة' : 'Specialized Expertise' }}</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>{{ currentLang === 'ar' ? 'شراكات طويلة الأمد' : 'Long-term Partnerships' }}</span>
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="btn btn-mission-primary" (click)="navigateTo('our-services')">
+                <span class="btn-content">
+                  <span class="btn-text">
+                    {{ currentLang === 'ar' ? 'اكتشف خدماتنا' : 'Discover Services' }}
+                  </span>
+                  <span class="btn-icon">
+                    <i class="fas" [class.fa-arrow-left]="currentLang === 'ar'"
+                      [class.fa-arrow-right]="currentLang !== 'ar'"></i>
+                  </span>
+                </span>
+                <span class="hover-effect"></span>
+              </button>
+
+              <button class="btn btn-mission-secondary" (click)="navigateTo('contact')">
+                {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

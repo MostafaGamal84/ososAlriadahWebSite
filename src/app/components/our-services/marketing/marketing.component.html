@@ -1,0 +1,21 @@
+<div class="coming-soon-container">
+    <div class="coming-soon-content">
+        <div class="icon-wrapper">
+            <mat-icon class="main-icon">home_work</mat-icon>
+        </div>
+        <h1>{{ currentLang === 'ar' ? 'التسويق العقاري' : 'Real Estate Marketing' }}</h1>
+        <p class="coming-soon-text">
+                        {{ currentLang === 'ar' ? 'قريبًا....' : 'Coming soon...' }}
+
+        </p>
+        <div class="progress-container">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <p class="contact-text">
+            {{ currentLang === 'ar' ? 'تواصل معنا لمعرفة المزيد' : 'Contact us to learn more' }}
+        </p>
+        <button mat-raised-button color="primary" (click)="navigateTo('contact')" class="custom-mat-button">
+            {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+        </button>
+    </div>
+</div>

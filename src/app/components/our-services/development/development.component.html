@@ -1,0 +1,125 @@
+<section class="development-container">
+    <!-- Hero Section -->
+    <div class="container hero-section">
+        <div class="row align-items-center" [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+
+            <!-- النص -->
+            <div class="col-lg-6 hero-content" [ngClass]="currentLang === 'ar' ? 'text-end' : 'text-start'">
+                <h1>
+                    {{ currentLang === 'ar'
+                    ? 'تطوير العقارات بأعلى جودة'
+                    : 'Real Estate Development with the Highest Quality' }}
+                </h1>
+                <p class="subtitle">
+                    {{ currentLang === 'ar'
+                    ? 'نبني مشاريع عقارية استثنائية تجمع بين التصميم المبتكر والجودة العالية'
+                    : 'We build exceptional real estate projects combining innovative design and high quality' }}
+                </p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary me-2" (click)="navigateTo('contact')">
+                        {{ currentLang === 'ar' ? 'ابدأ الآن' : 'Get Started' }}
+                    </button>
+                    <button class="btn btn-outline-primary" (click)="navigateTo('vision')">
+                        {{ currentLang === 'ar' ? 'تعرف علينا أكثر' : 'Learn More' }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- الصورة -->
+            <div class="col-lg-6 hero-image text-center">
+                <img class="img-fluid rounded shadow"
+                    src="https://i.pinimg.com/1200x/70/9c/85/709c850b624123f6f51bc658d3dc71c7.jpg" alt="تطوير عقاري">
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- Features Section -->
+    <div class="features-section">
+        <h2 class="section-title">
+            {{ currentLang === 'ar' ? 'نهجنا في التطوير العقاري' : 'Our Real Estate Development Approach' }}
+        </h2>
+        <div class="features-grid">
+            <div class="feature-card" *ngFor="let feature of features">
+                <div class="card-icon-wrapper">
+                    <mat-icon class="feature-icon">{{feature.icon}}</mat-icon>
+                </div>
+                <h3 class="feature-title">{{currentLang === 'ar' ? feature.title.ar : feature.title.en}}</h3>
+                <p class="feature-description">{{currentLang === 'ar' ? feature.description.ar :
+                    feature.description.en}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technologies Section (يمكنك تسميتها "التقنيات والأساليب" أو ازالة) -->
+    <!-- <div class="tech-section">
+        <h2 class="section-title">أدوات وتقنيات البناء الحديثة</h2>
+        <div class="tech-tabs">
+            <button *ngFor="let tech of technologies" [class.active]="tech === activeTech" (click)="activeTech = tech">
+                {{tech}}
+            </button>
+        </div>
+        <div class="tech-content">
+            <div class="tech-description">
+                <h3>لماذا {{activeTech}}؟</h3>
+                <p>نستخدم أحدث تقنيات البناء لضمان الجودة والاستدامة في مشاريعنا العقارية.</p>
+                <ul>
+                    <li>كفاءة عالية في البناء باستخدام {{activeTech}}</li>
+                    <li>تحسين جودة المشاريع وسرعة التنفيذ باستخدام {{activeTech}}</li>
+                    <li>توفير حلول مستدامة وصديقة للبيئة</li>
+                </ul>
+            </div>
+            <div class="tech-image">
+                <img [src]="'assets/tech-' + activeTech.toLowerCase() + '.png'" [alt]="activeTech + ' logo'">
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="stat-card" *ngFor="let stat of stats">
+            <div class="stat-value" [appCountUp]="stat.value">{{stat.value}}</div>
+            <div class="stat-label">{{currentLang === 'ar' ? stat.label.ar : stat.label.en}}</div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <!-- <div class="team-section">
+        <h2 class="section-title">فريقنا المتميز</h2>
+        <div class="team-grid">
+            <div class="team-card" *ngFor="let member of team">
+                <img [src]="member.image" [alt]="member.name" class="team-photo" />
+                <div class="team-info">
+                    <h3>{{member.name}}</h3>
+                    <p class="role">{{member.role}}</p>
+                    <div class="social-links">
+                        <a *ngIf="member.social.twitter" [href]="member.social.twitter"
+                            target="_blank"><mat-icon>twitter</mat-icon></a>
+                        <a *ngIf="member.social.linkedin" [href]="member.social.linkedin"
+                            target="_blank"><mat-icon>linkedin</mat-icon></a>
+                        <a *ngIf="member.social.github" [href]="member.social.github"
+                            target="_blank"><mat-icon>code</mat-icon></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">
+                {{ currentLang === 'ar' ? 'هل أنت جاهز لتطوير مشروعك العقاري؟' : 'Ready to Develop Your Real Estate
+                Project?' }}
+            </h2>
+            <p class="cta-subtitle">
+                {{ currentLang === 'ar' ? 'دعنا نبني مستقبلًا أفضل معًا' : 'Let us build a better future together' }}
+            </p>
+            <button class="cta-button" (click)="navigateTo('contact')">
+                {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+            </button>
+        </div>
+    </div>
+</section>

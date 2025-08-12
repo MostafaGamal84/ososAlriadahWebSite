@@ -1,0 +1,9 @@
+<section class="partners-section">
+    <div class="container">
+        <div class="partners-carousel">
+            <img *ngFor="let logo of logos" [src]="logo" alt="Partner Logo" />
+            <!-- duplicate logos for seamless scroll -->
+            <img *ngFor="let logo of logos" [src]="logo" alt="Partner Logo" />
+        </div>
+    </div>
+</section>

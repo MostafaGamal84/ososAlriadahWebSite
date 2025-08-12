@@ -1,0 +1,33 @@
+<section class="about-us-section d-flex align-items-center justify-content-center text-center text-white min-vh-100"
+  [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" aria-labelledby="about-us-title">
+
+  <div class="slider w-100" data-animate>
+    <div *ngFor="let slide of slides; let i = index" class="slide" data-animate [class.active]="currentSlide === i"
+      [style.backgroundImage]="'url(' + slide + ')'"></div>
+    <div class="overlay" data-animate></div>
+  </div>
+
+  <div class="container position-relative z-2 px-3 px-md-4" [class.text-end]="currentLang === 'ar'"
+    [class.text-start]="currentLang === 'en'" data-animate>
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-12" data-animate>
+        <h2 class="fw-bold fs-1 mb-4 mt-5">
+          {{ currentLang === "ar" ? sectionTitle.ar : sectionTitle.en }}
+        </h2>
+        <p class="lead mb-4 fs-6 fs-md-5 w-100 mx-auto" [class.text-end]="currentLang === 'ar'"
+          [class.text-start]="currentLang === 'en'">
+          {{ currentLang === "ar" ? description.ar : description.en }}
+        </p>
+        <button class="btn btn-primary" data-animate (click)="scrollToAuctions()">
+          {{ currentLang === "ar" ? 'استكشاف المزادات' : 'Explore Auctions' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination" data-animate>
+    <span *ngFor="let slide of slides; let i = index" class="dot" data-animate [class.active]="currentSlide === i"
+      (click)="setCurrentSlide(i)">
+    </span>
+  </div>
+</section>

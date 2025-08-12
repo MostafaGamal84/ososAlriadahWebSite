@@ -1,0 +1,352 @@
+:root {
+  --mission-primary: #218c5b;
+  --mission-secondary: #2c3e50;
+  --mission-accent: #e3a34d;
+  --mission-light: #f8f9fa;
+  --mission-text: #444;
+}
+
+.mission-section {
+  padding: 6rem 0;
+  background-color: var(--mission-light);
+  position: relative;
+  overflow: hidden;
+  margin-top: 110px;
+}
+
+.mission-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mission-media {
+  position: relative;
+  padding: 1rem;
+}
+
+.media-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: perspective(1000px);
+}
+
+.mission-image {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.media-decoration {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(227, 163, 77, 0.1);
+  border-radius: 30px;
+  z-index: -1;
+  transform: rotate(45deg);
+}
+
+.media-badge {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--mission-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.mission-content {
+  padding: 2rem;
+  position: relative;
+}
+
+.section-header {
+  margin-bottom: 2rem;
+}
+
+.section-tag {
+  display: inline-block;
+  background-color: rgba(227, 163, 77, 0.1);
+  color: var(--mission-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--mission-secondary);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.title-divider {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--mission-primary), var(--mission-accent));
+  border-radius: 2px;
+  margin: 1.5rem 0;
+}
+
+.mission-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--mission-text);
+  margin-bottom: 2rem;
+}
+
+.mission-features {
+  margin-bottom: 2.5rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  i {
+    color: var(--mission-primary);
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+  }
+
+  span {
+    font-weight: 500;
+    color: var(--mission-secondary);
+  }
+}
+
+/* Container styling */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Base button style */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Mission primary button */
+.btn-mission-primary {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: #fff;
+}
+
+.btn-mission-primary:hover {
+  background: linear-gradient(135deg, #0056b3, #00408d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Mission secondary button */
+.btn-mission-secondary {
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+.btn-mission-secondary:hover {
+  background-color: #007bff;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Icon inside button */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.btn:hover .btn-icon {
+  transform: translateX(3px);
+}
+
+/* Content alignment */
+.btn-content {
+  display: flex;
+  align-items: center;
+}
+
+/* Hover effect background */
+.hover-effect {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn:hover .hover-effect {
+  opacity: 1;
+}
+
+.btn-mission-primary {
+  --btn-bg: var(--mission-primary);
+  --btn-text: white;
+  --btn-hover: darken(#218c5b, 10%);
+
+  @include mission-button-styles;
+}
+
+.btn-mission-secondary {
+  --btn-bg: white;
+  --btn-text: var(--mission-secondary);
+  --btn-hover: #f0f0f0;
+
+  @include mission-button-styles;
+  border: 1px solid var(--mission-secondary);
+}
+
+@mixin mission-button-styles {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  border-radius: 50px;
+  text-decoration: none;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+
+  .btn-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 2;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-icon {
+    font-size: 0.9em;
+    transition: transform 0.3s ease;
+  }
+
+  .hover-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
+    transform: translateX(-100%) skewX(-15deg);
+    transition: transform 0.5s ease;
+    z-index: 1;
+  }
+
+  &:hover {
+    background-color: var(--btn-hover);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+
+    .btn-content {
+      transform: translateX(5px);
+    }
+
+    [dir="rtl"] & .btn-content {
+      transform: translateX(-5px);
+    }
+
+    .btn-icon {
+      transform: translateX(3px);
+    }
+
+    [dir="rtl"] & .btn-icon {
+      transform: translateX(-3px);
+    }
+
+    .hover-effect {
+      transform: translateX(100%) skewX(-15deg);
+    }
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .mission-section {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .mission-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mission-media {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+
+    .btn-mission-primary,
+    .btn-mission-secondary {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .mission-section {
+    padding: 3rem 0;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+}

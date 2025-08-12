@@ -1,0 +1,41 @@
+.partners-section {
+    background: #eeeeee;
+    /* light grey */
+    padding: 2rem 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.partners-carousel {
+    display: flex;
+    gap: 4rem;
+    /* space between logos */
+    animation: scroll-logos 30s linear infinite;
+}
+
+.partners-carousel img {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+    opacity: 0.4;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border-radius: 50%;
+}
+
+.partners-carousel img:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Scroll animation */
+@keyframes scroll-logos {
+  from { transform: translateX(100%); }   /* خارجًا من أقصى اليمين */
+  to   { transform: translateX(-50%); }   /* نصف العرض (لأنها مكررة) */
+}
+
+.logos-track {
+  display: flex;
+  gap: 32px;
+  animation: scroll-logos 30s linear infinite;
+  will-change: transform;
+}

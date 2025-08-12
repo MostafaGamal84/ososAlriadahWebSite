@@ -1,0 +1,107 @@
+<nav class="navbar navbar-expand-lg custom-navbar" [ngClass]="{ scrolled: isScrolled }" [attr.dir]="getDirection()">
+  <div class="container-fluid">
+
+    <!-- Logo Small Screen -->
+    <a class="navbar-brand d-lg-none"
+       [class.order-1]="currentLang === 'en'"
+       [class.order-2]="currentLang === 'ar'"
+       href="#">
+      <img src="https://pbs.twimg.com/profile_images/1756714052372357121/jItqW0yk_400x400.jpg"
+           alt="شعار أسس الريادة" width="40" height="40" class="img-navbar" loading="lazy" />
+    </a>
+
+    <!-- Hamburger -->
+    <button class="navbar-toggler"
+            [class.order-1]="currentLang === 'ar'"
+            [class.order-2]="currentLang === 'en'"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nav Links -->
+    <div class="collapse navbar-collapse order-3 order-lg-2" id="navbarNav">
+      <ul class="navbar-nav mx-auto align-items-lg-center text-center justify-content-center justify-content-lg-start">
+
+        <li class="nav-item">
+          <a class="nav-link" href="#about" (click)="closeAllAndCollapse()">
+            {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
+          </a>
+        </li>
+
+        <!-- About Us Dropdown -->
+        <li class="nav-item dropdown custom-dropdown">
+          <a class="nav-link dropdown-toggle" href="#"
+             (click)="toggleDropdown('about', $event)">
+            {{ currentLang === 'ar' ? 'من نحن' : 'About Us' }}
+          </a>
+          <ul class="dropdown-menu text-center" [ngClass]="{ open: dropdowns['about'] }">
+            <li *ngFor="let item of aboutLinks">
+              <a class="dropdown-item"
+                 [routerLink]="item.link"
+                 (click)="navigateAndCloseDropdown(item.link, 'about')">
+                {{ currentLang === 'ar' ? item.labelAr : item.labelEn }}
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Services Dropdown -->
+        <li class="nav-item dropdown custom-dropdown">
+          <a class="nav-link dropdown-toggle" href="#"
+             (click)="toggleDropdown('services', $event)">
+            {{ currentLang === 'ar' ? 'خدماتنا' : 'Our Services' }}
+          </a>
+          <ul class="dropdown-menu text-center" [ngClass]="{ open: dropdowns['services'] }">
+            <li *ngFor="let item of serviceLinks">
+              <a class="dropdown-item"
+                 [routerLink]="item.link"
+                 (click)="navigateAndCloseDropdown(item.link, 'services')">
+                {{ currentLang === 'ar' ? item.labelAr : item.labelEn }}
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#packages" (click)="closeAllAndCollapse()">
+            {{ currentLang === 'ar' ? 'المزادات' : 'Auctions' }}
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#features" (click)="closeAllAndCollapse()">
+            {{ currentLang === 'ar' ? 'الميزات' : 'Features' }}
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#contact" (click)="closeAllAndCollapse()">
+            {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
+          </a>
+        </li>
+
+        <!-- Language Toggle -->
+        <li class="nav-item">
+          <button class="nav-link btn-lang" type="button" (click)="toggleLanguage()">
+            🌐 {{ currentLang === 'ar' ? 'English' : 'العربية' }}
+          </button>
+        </li>
+      </ul>
+
+      <!-- Logo Desktop -->
+      <a class="navbar-brand d-none d-lg-block"
+         [class.ms-lg-auto]="currentLang === 'en'"
+         [class.me-lg-auto]="currentLang === 'ar'"
+         href="#">
+        <img src="https://pbs.twimg.com/profile_images/1756714052372357121/jItqW0yk_400x400.jpg"
+             alt="شعار أسس الريادة" width="50" height="50"
+             class="img-navbar" loading="lazy" />
+      </a>
+    </div>
+  </div>
+</nav>

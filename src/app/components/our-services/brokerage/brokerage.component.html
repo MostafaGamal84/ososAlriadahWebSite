@@ -1,0 +1,76 @@
+<div class="brokerage-container" [class.en]="currentLang === 'en'">
+    <!-- Hero Section -->
+    <div class="brokerage-hero">
+        <div class="hero-content">
+            <h1 class="brokerage-title">{{ currentLang === 'ar' ? companyTitle.ar : companyTitle.en }}</h1>
+            <p class="brokerage-description">{{ currentLang === 'ar' ? description.ar : description.en }}</p>
+            <div class="hero-cta">
+                <button class="cta-button primary" (click)="navigateTo('contact')">
+                    {{ currentLang === 'ar' ? 'تواصل معنا ' : 'Contact Us' }}
+                </button>
+                <button class="cta-button secondary" (click)="scrollDown()">
+                    {{ currentLang === 'ar' ? 'إعرف أكثر' : 'Learn More' }}
+                </button>
+
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://i.pinimg.com/736x/5d/1e/b7/5d1eb770150e9f1fe55ac8fb619fe82a.jpg"
+                [alt]="currentLang === 'ar' ? companyTitle.ar : companyTitle.en">
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="stat-card" *ngFor="let stat of statistics">
+            <div class="stat-value" [appCountUp]="getStatValue(stat.value)" [options]="counterOptions"></div>
+            <div class="stat-label">{{ currentLang === 'ar' ? stat.label.ar : stat.label.en }}</div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section">
+        <h2 class="section-title">{{ currentLang === 'ar' ? 'لماذا تختارنا؟' : 'Why Choose Us?' }}</h2>
+        <div class="features-grid">
+            <div class="feature-card" *ngFor="let feature of features">
+                <div class="feature-icon">
+                    <i [class]="'fas ' + feature.icon"></i>
+                </div>
+                <h3>{{ currentLang === 'ar' ? feature.title.ar : feature.title.en }}</h3>
+                <p>{{ currentLang === 'ar' ? feature.description.ar : feature.description.en }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials-section">
+        <h2 class="section-title">{{ currentLang === 'ar' ? 'آراء عملائنا' : 'Client Testimonials' }}</h2>
+        <div class="testimonials-slider">
+            <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+                <div class="testimonial-content">
+                    <div class="quote-icon">"</div>
+                    <p>{{ currentLang === 'ar' ? testimonial.quote.ar : testimonial.quote.en }}</p>
+                </div>
+                <div class="client-info">
+                    <img [src]="testimonial.clientImage" alt="Client" class="client-avatar">
+                    <div>
+                        <h4>{{testimonial.clientName}}</h4>
+                        <div class="client-rating">
+                            <i class="fas" [ngClass]="{'fa-star': star, 'fa-star-half-alt': !star}"
+                                *ngFor="let star of getStars(testimonial.rating)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <!-- <h2>{{ currentLang === 'ar' ? ctaData.title.ar : ctaData.title.en }}</h2>
+        <p>{{ currentLang === 'ar' ? ctaData.subtitle.ar : ctaData.subtitle.en }}</p> -->
+        <button class="cta-button large" (click)="navigateTo('brokerage')">
+            {{ currentLang === 'ar' ? ctaData.buttonText.ar : ctaData.buttonText.en }}
+        </button>
+    </div>
+</div>

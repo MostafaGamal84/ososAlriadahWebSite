@@ -1,0 +1,119 @@
+<section
+  class="feature-section py-5"
+  style="background-color: var(--background-light)"
+  aria-labelledby="feature-title"
+  appAppInViewport
+  animationClass="fade-from-bottom"
+>
+  <div
+    class="container features"
+    appInViewport
+    animationType="fade-in"
+    staggerDelay="1"
+  >
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <div class="section-title" data-animate>
+          <span class="fw-bold" style="font-size: 1.3rem">
+             {{ currentLang === 'ar' ? 'أسس الريادة للخدمات العقارية' : 'Osos Al-Riyada Real Estate Services' }}
+
+          </span>
+          <h2
+            id="feature-title"
+            class="fw-bold mt-2"
+            style="color: var(--primary-medium)"
+          >
+            {{
+              currentLang === "ar"
+                ? "مزايا خدماتنا العقارية"
+                : "Our Real Estate Service Features"
+            }}
+          </h2>
+          <p class="lead mt-2" style="color: var(--primary-dark)">
+            {{
+              currentLang === "ar"
+                ? "نحن نقدم حلولاً عقارية مبتكرة تلبي تطلعاتكم وتحقق أعلى معايير الجودة والشفافية. اكتشف كيف نجعل الاستثمار العقاري أكثر سهولة وأماناً."
+                : "We provide innovative real estate solutions that meet your aspirations and achieve the highest standards of quality and transparency. Discover how we make real estate investment easier and safer."
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div
+        class="col-xl-3 col-lg-4 col-md-6 col-12"
+        *ngFor="let feature of features; let i = index"
+      >
+        <article
+          class="feature-item p-4 h-100 border rounded-4 shadow-sm d-flex flex-column align-items-center"
+          style="
+            background: linear-gradient(
+              135deg,
+              var(--primary-light) 0%,
+              var(--background-light) 100%
+            );
+            border-color: var(--primary-medium);
+          "
+          [attr.aria-label]="
+            currentLang === 'ar' ? feature.subtitleAr : feature.subtitleEn
+          "
+          data-animate
+        >
+          <span
+            class="feature-number mb-2 fw-bold"
+            aria-hidden="true"
+            style="font-size: 1.5rem"
+          >
+            {{ feature.id }}
+          </span>
+          <div class="fea-icon mb-3">
+            <ng-container *ngIf="feature.icon.type === 'svg'; else imageBlock">
+              <div
+                class="svg-icon"
+                [innerHTML]="feature.icon.content"
+                role="img"
+                [attr.aria-label]="
+                  currentLang === 'ar' ? feature.titleAr : feature.titleEn
+                "
+              ></div>
+            </ng-container>
+            <ng-template #imageBlock>
+              <img
+                class="rounded-3 border"
+                [src]="feature.icon.content"
+                [alt]="currentLang === 'ar' ? feature.titleAr : feature.titleEn"
+                width="100"
+                height="100"
+                loading="lazy"
+                [ngStyle]="feature.icon.style || {}"
+              />
+            </ng-template>
+          </div>
+          <div class="feature-content fea-content text-center">
+            <h3
+              class="fea-title fw-bold mb-2"
+              style="color: var(--primary-medium)"
+            >
+              {{ currentLang === "ar" ? feature.titleAr : feature.titleEn }}
+            </h3>
+            <p class="fea-desc mb-0" style="color: var(--primary-dark)">
+              {{
+                currentLang === "ar"
+                  ? feature.descriptionAr
+                  : feature.descriptionEn
+              }}
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <app-counter
+          appAppInViewport
+          animationClass="fade-from-bottom"
+        ></app-counter>
+      </div>
+    </div>
+  </div>
+</section>

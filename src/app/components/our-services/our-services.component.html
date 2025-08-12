@@ -1,0 +1,69 @@
+<div class="services-container">
+  <!-- Header Section -->
+  <div class="services-header text-center">
+    <h2 class="services-title">
+      {{ currentLang == "ar" ? "خدماتنا العقارية" : "Our Real Estate Services" }}
+    </h2>
+    <h3 class="services-subtitle">
+      {{ currentLang == "ar" ? "الخدمات الشائعة" : "Popular Services" }}
+    </h3>
+  </div>
+
+  <!-- No Services Message -->
+  <div *ngIf="services.length === 0" class="no-services-message">
+    <div class="message-card">
+      <h3>🎉 {{ currentLang == "ar" ? "لا توجد خدمات متاحة حالياً" : "No Services Available Yet" }}</h3>
+      <p>
+        {{ currentLang == "ar"
+        ? "هذه الميزة سيتم تفعيلها قريبًا إن شاء الله. تابعنا للمزيد."
+        : "This feature will be available soon, Insha'Allah. Stay tuned for updates." }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Service Links Navigation -->
+  <div class="service-links mb-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div *ngFor="let link of serviceLinks" class="col-md-2 col-sm-4 col-6 mb-3">
+          <a [routerLink]="link.link" class="service-link-btn" [class.active]="isActiveLink(link.link)">
+            {{ currentLang == 'ar' ? link.labelAr : link.labelEn }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Services Carousel -->
+  <div *ngIf="services.length > 0" class="services-carousel m-5">
+    <swiper-container class="services-swiper" [spaceBetween]="20" [loop]="false" [pagination]="{ clickable: true }"
+      [navigation]="true" [breakpoints]="breakpoints" (slidechange)="onSlideChange($event)">
+
+      <swiper-slide *ngFor="let service of services; let i = index">
+        <div class="service-card mb-5" [class.expanded]="expandedCardIndex === i" (click)="toggleCardExpand(i)">
+          <div class="card-front">
+            <img [src]="service.icon" [alt]="currentLang == 'ar' ? service.serviceNameAr : service.serviceNameEn"
+              class="service-icon" />
+            <h3 class="service-name">
+              {{ currentLang == "ar" ? service.serviceNameAr : service.serviceNameEn }}
+            </h3>
+            <span class="service-type">
+              {{ currentLang == "ar" ? service.typeAr : service.typeEn }}
+            </span>
+          </div>
+
+          <div class="card-back">
+            <div class="service-details">
+              <h3>{{ currentLang == "ar" ? service.serviceNameAr : service.serviceNameEn }}</h3>
+              <p class="service-description">
+                {{ currentLang == "ar" ? service.descriptionAr : service.descriptionEn }}
+              </p>
+              <button class="details-btn" (click)="navigateToService(service)">
+                {{ currentLang == "ar" ? "عرض التفاصيل" : "View Details" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="fixed-buttons">
+  <button *ngIf="showButton" class="back-to-top-btn" (click)="scrollToTop()">
+    ↑
+  </button>
+  <a href="https://wa.me/+966575060000" class="whatsapp-btn" target="_blank" class="whatsapp-btn"
+    aria-label="تواصل معنا عبر واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</div>
+
+<div class="social-toggle">
+  <button class="toggle-btn" (click)="toggleSocialLinks()">
+    <i class="fas" [ngClass]="{ 'fa-times': showSocialLinks, 'fa-share-alt': !showSocialLinks }"></i>
+  </button>
+  <div class="social-links" [class.show]="showSocialLinks">
+    <a href="https://facebook.com" target="_blank" class="social-link facebook" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://x.comhttps://x.com/UssRyadahCo?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
+      target="_blank" class="social-link x" aria-label="X">
+      <i class="fab fa-x-twitter"></i>
+    </a>
+    <a href="https://instagram.com" target="_blank" class="social-link instagram" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://linkedin.com" target="_blank" class="social-link linkedin" aria-label="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+  </div>
+</div>

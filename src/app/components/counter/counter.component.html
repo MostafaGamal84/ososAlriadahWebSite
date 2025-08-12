@@ -1,0 +1,26 @@
+<section class="counters-section" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" aria-labelledby="counters-title">
+  <h2 id="counters-title" class="section-title">
+    {{ currentLang === 'ar' ? 'إحصائياتنا' : 'Our Statistics' }}
+  </h2>
+
+  <div class="counter-container">
+    <article class="counter-item" *ngFor="let counter of counters; let i = index"
+      [@counterAnimation]="animationState[i]" (@counterAnimation.done)="onAnimationDone($event, i)" role="region"
+      [attr.aria-label]="currentLang === 'ar' ? counter.labelAr : counter.labelEn">
+      <div class="counter-icon" aria-hidden="true">
+        <i [class]="counter.icon"></i>
+      </div>
+
+      <div class="counter-number">
+        <span class="counter-value" #counterValue>
+          {{ formatNumber(counter.count) }}
+        </span>
+        <span class="counter-suffix" aria-hidden="true">+</span>
+      </div>
+
+      <p class="counter-label">
+        {{ currentLang === 'ar' ? counter.labelAr : counter.labelEn }}
+      </p>
+    </article>
+  </div>
+</section>

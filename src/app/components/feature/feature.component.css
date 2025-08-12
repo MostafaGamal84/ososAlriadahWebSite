@@ -1,0 +1,294 @@
+:root {
+  --primary-dark: #113c7c;
+  --primary-medium: #2e65b9;
+  --primary-light: #4ed1e2;
+  --background-light: #f5f7fa;
+  --text-primary: #113c7c;
+  --text-secondary: #2e65b9;
+  --border-radius: 16px;
+  --box-shadow: 0 4px 24px rgba(46, 101, 185, 0.12);
+  --item-min-height: 420px;
+}
+
+/* =====================
+   Feature Section
+   ===================== */
+.feature-section {
+  padding: 4rem 1rem;
+  font-family: "SuisseIntl", "Poppins", sans-serif;
+  background: var(--background-light);
+  direction: rtl;
+}
+
+/* =====================
+   Section Title
+   ===================== */
+.section-title {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.section-title span {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.section-title h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-medium);
+  margin: 0;
+}
+
+/* =====================
+   Feature Item
+   ===================== */
+.feature-item {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 0%,
+    var(--background-light) 100%
+  );
+  border: 2px solid var(--primary-medium);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  overflow: hidden;
+  width: 100%;
+  min-height: var(--item-min-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s,
+    background-color 0.4s;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.feature-item:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(46, 101, 185, 0.18);
+  border-color: var(--primary-dark);
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 40%,
+    var(--background-light) 100%
+  );
+}
+
+.feature-item:hover .fea-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.feature-item:hover .feature-content {
+  transform: translateY(-5px);
+}
+
+/* =====================
+   Feature Badge
+   ===================== */
+.feature-number {
+  position: absolute;
+  top: 0;
+  left: 2rem;
+  background-color: var(--primary-dark);
+  color: #fff;
+  padding: 0.35rem 1rem;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(17, 60, 124, 0.08);
+}
+
+/* =====================
+   Icon Area
+   ===================== */
+.fea-icon {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: transform 0.4s;
+}
+
+.svg-icon {
+  width: 64px;
+  height: 64px;
+}
+
+.svg-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--primary-color);
+  transition: transform 0.4s ease, fill 0.4s ease;
+}
+
+.feature-item:hover .fea-icon {
+  transform: scale(1.1);
+}
+
+.feature-item:hover .svg-icon svg {
+  transform: scale(1.1);
+  fill: var(--primary-color);
+}
+
+.feature-item img,
+.svg-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  background: var(--background-light);
+  border: 2px solid var(--primary-light);
+  box-shadow: 0 2px 12px rgba(46, 101, 185, 0.1);
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.feature-item:hover img,
+.feature-item:hover .svg-icon {
+  transform: scale(1.08) rotate(3deg);
+  box-shadow: 0 6px 24px rgba(46, 101, 185, 0.18);
+}
+
+/* =====================
+   Feature Content
+   ===================== */
+.feature-content {
+  text-align: center;
+  transition: transform 0.3s;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.fea-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-medium);
+  margin-bottom: 1rem;
+}
+
+.fea-desc {
+  font-size: 1.08rem;
+  color: var(--primary-dark);
+  line-height: 2.1;
+  margin: 0;
+  padding: 1.5rem 1.5rem 1.25rem;
+  background: linear-gradient(90deg, #f7f9fc 80%, #eaf1fb 100%);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(46, 101, 185, 0.06);
+  word-break: break-word;
+  min-height: 120px;
+  max-height: 160px;
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  border-left: 4px solid var(--primary-medium);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.03);
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 0.5rem;
+}
+
+.fea-desc:hover,
+.feature-item:hover .fea-desc {
+  background: linear-gradient(90deg, #eaf1fb 80%, #f7f9fc 100%);
+  box-shadow: 0 4px 18px rgba(46, 101, 185, 0.13);
+}
+
+/* =====================
+   Responsive Design
+   ===================== */
+@media (max-width: 992px) {
+  .feature-item {
+    padding: 2rem 1rem 1.5rem;
+    min-height: 380px;
+  }
+
+  .fea-title {
+    font-size: 1.1rem;
+    padding-top: 1.5rem;
+  }
+
+  .fea-desc {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    margin-bottom: 2rem;
+  }
+
+  .section-title span {
+    font-size: 1.1rem;
+  }
+
+  .section-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .feature-item {
+    padding: 1.5rem 0.5rem 1rem;
+    min-height: 320px;
+  }
+
+  .fea-icon {
+    height: 80px;
+  }
+
+  .svg-icon,
+  .feature-item img {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media (max-width: 576px) {
+  .feature-section {
+    padding: 2rem 0.5rem;
+  }
+
+  .section-title h2 {
+    font-size: 1.2rem;
+  }
+
+  .feature-number {
+    left: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .feature-item {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .fade-in,
+  .slide-left,
+  .slide-right,
+  .slide-bottom,
+  .slide-bottom-blur,
+  .scale-in {
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+    will-change: transform, opacity;
+  }
+
+  .fade-in.show,
+  .slide-left.show,
+  .slide-right.show,
+  .slide-bottom.show,
+  .slide-bottom-blur.show,
+  .scale-in.show {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+  }
+}

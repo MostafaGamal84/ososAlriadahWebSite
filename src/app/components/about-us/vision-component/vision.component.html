@@ -1,0 +1,81 @@
+<section class="vision-mission-section" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+  <div class="section-header text-center mb-5">
+    <h2 class="section-title">
+      {{ currentLang === 'ar' ? 'رؤيتنا ورسالتنا' : 'Our Vision & Mission' }}
+    </h2>
+    <p class="section-subtitle">
+      {{ currentLang === 'ar' ? 'ما نؤمن به ونعمل من أجله' : 'What we believe in and work for' }}
+    </p>
+  </div>
+
+  <div class="container">
+    <div class="vision-mission-container">
+      <div class="vision-mission-item" *ngFor="let section of visionSections; let i = index">
+        <div class="row align-items-center g-5">
+          <!-- Image Column -->
+          <div class="col-lg-5"
+            [class.order-lg-2]="i % 2 === 0 && currentLang !== 'ar' || i % 2 !== 0 && currentLang === 'ar'">
+            <div class="media-container">
+              <div class="media-wrapper">
+                <img [src]="section.imageUrl" [alt]="currentLang === 'ar' ? section.titleAr : section.titleEn"
+                  class="media-image" />
+
+                <!-- Optional play button for videos -->
+                <!-- <div *ngIf="section.videoUrl" class="play-btn" (click)="openVideoModal(section.videoUrl)">
+                  <i class="fas fa-play"></i>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Column -->
+          <div class="col-lg-7">
+            <div class="content-wrapper bg-success text-white">
+              <div class="section-marker">
+                <span class="marker-number">0{{i+1}}</span>
+                <span class="marker-line"></span>
+              </div>
+
+              <h3 class="item-title">
+                {{ currentLang === 'ar' ? section.titleAr : section.titleEn }}
+              </h3>
+
+              <p class="item-description">
+                {{ currentLang === 'ar' ? section.textAr : section.textEn }}
+              </p>
+
+              <div class="item-features" *ngIf="section.features">
+                <div class="feature" *ngFor="let feature of section.features">
+                  <i class="feature-icon" [class]="feature.icon"></i>
+                  <span>{{ currentLang === 'ar' ? feature.textAr : feature.textEn }}</span>
+                </div>
+              </div>
+
+              <div class="action-buttons">
+                <a class="contact-btn" [href]="section.actionLink || '#services'">
+                  <span class="btn-content">
+                    <span class="btn-text">
+                      {{ currentLang === 'ar' ? section.actionTextAr || 'اكتشف المزيد' : section.actionTextEn ||
+                      'Discover More' }}
+                    </span>
+                    <span class="btn-icon">
+                      <i class="fas" [class.fa-arrow-left]="currentLang === 'ar'"
+                        [class.fa-arrow-right]="currentLang !== 'ar'"></i>
+                    </span>
+                  </span>
+                  <span class="hover-effect"></span>
+                </a>
+
+                <button *ngIf="section.videoUrl" class="btn btn-outline-secondary bg-success text-white"
+                  (click)="openVideoModal(section.videoUrl)">
+                  <i class="fas fa-play-circle me-2"></i>
+                  {{ currentLang === 'ar' ? 'المزيد' : 'Show More' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,115 @@
+<!-- <section class="leasing">
+    <div class="leasing__hero">
+        <div class="leasing__hero-content">
+            <h1>{{ hero.title }}</h1>
+            <p class="leasing__subtitle">{{ hero.subtitle }}</p>
+            <div class="leasing__cta-buttons">
+                <button class="leasing__button leasing__button--primary">{{ hero.ctaPrimary }}</button>
+                <button class="leasing__button leasing__button--secondary">{{ hero.ctaSecondary }}</button>
+            </div>
+        </div>
+        <div class="leasing__hero-image">
+            <img [src]="hero.image" alt="{{ hero.title }}" class="leasing__image">
+        </div>
+    </div>
+
+    <div class="leasing__features">
+        <h2 class="leasing__section-title">لماذا تختار خدماتنا للتأجير؟</h2>
+        <div class="leasing__features-grid">
+            <div class="leasing__feature-card" *ngFor="let feature of features">
+                <mat-icon class="leasing__feature-icon">{{ feature.icon }}</mat-icon>
+                <h3 class="leasing__feature-title">{{ feature.title }}</h3>
+                <p class="leasing__feature-desc">{{ feature.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="leasing__properties">
+        <h2 class="leasing__section-title">وحداتنا المتاحة للتأجير</h2>
+
+        <div class="leasing__filters">
+            <div class="leasing__filter-group">
+                <label class="leasing__filter-label">نوع العقار:</label>
+                <select class="leasing__filter-select" [(ngModel)]="selectedPropertyType">
+                    <option value="">الكل</option>
+                    <option *ngFor="let type of propertyTypes" [value]="type.value">{{ type.label }}</option>
+                </select>
+            </div>
+            <div class="leasing__filter-group">
+                <label class="leasing__filter-label">المدينة:</label>
+                <select class="leasing__filter-select" [(ngModel)]="selectedCity">
+                    <option value="">الكل</option>
+                    <option *ngFor="let city of cities" [value]="city.value">{{ city.label }}</option>
+                </select>
+            </div>
+            <button class="leasing__filter-button" (click)="searchProperties()">بحث</button>
+
+        </div>
+
+        <div class="leasing__properties-grid">
+            <div class="leasing__property-card" *ngFor="let property of properties">
+                <div class="leasing__property-badge" *ngIf="property.badge">{{ property.badge }}</div>
+                <img [src]="property.image" [alt]="property.title" class="leasing__property-image">
+                <div class="leasing__property-details">
+                    <h3 class="leasing__property-title">{{ property.title }}</h3>
+                    <div class="leasing__property-info">
+                        <span class="leasing__property-info-item"><mat-icon>king_bed</mat-icon> {{ property.bedrooms }}
+                            غرف</span>
+                        <span class="leasing__property-info-item"><mat-icon>bathtub</mat-icon> {{ property.bathrooms }}
+                            حمام</span>
+                        <span class="leasing__property-info-item"><mat-icon>straighten</mat-icon> {{ property.size }}
+                            م²</span>
+                    </div>
+                    <div class="leasing__property-footer">
+                        <span class="leasing__property-price">{{ property.price }}</span>
+                        <button class="leasing__property-button" (click)="viewPropertyDetails(property)">عرض
+                            التفاصيل</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="leasing__view-all">
+            <button class="leasing__button leasing__button--secondary">عرض جميع الوحدات</button>
+        </div>
+    </div>
+
+    <div class="leasing__process">
+        <h2 class="leasing__section-title">كيفية تأجير عقارك معنا</h2>
+        <div class="leasing__process-steps">
+            <div class="leasing__step" *ngFor="let step of processSteps">
+                <div class="leasing__step-number">{{ step.number }}</div>
+                <h3 class="leasing__step-title">{{ step.title }}</h3>
+                <p class="leasing__step-desc">{{ step.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="leasing__cta">
+        <h2 class="leasing__cta-title">{{ cta.title }}</h2>
+        <p class="leasing__cta-desc">{{ cta.description }}</p>
+        <button class="leasing__cta-button" (click)="registerProperty()">{{ cta.button }}</button>
+    </div>
+</section> -->
+
+<div class="coming-soon-container">
+    <div class="coming-soon-content">
+        <div class="icon-wrapper">
+            <mat-icon class="main-icon">home_work</mat-icon>
+        </div>
+        <h1>{{ currentLang === 'ar' ? 'خدمات التأجير' : 'Leasing Services' }}</h1>
+        <p class="coming-soon-text">
+                        {{ currentLang === 'ar' ? 'قريبًا....' : 'Coming soon...' }}
+
+        </p>
+        <div class="progress-container">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <p class="contact-text">
+            {{ currentLang === 'ar' ? 'تواصل معنا لمعرفة المزيد' : 'Contact us to learn more' }}
+        </p>
+        <button mat-raised-button color="primary" (click)="navigateTo('contact')" class="custom-mat-button">
+            {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+        </button>
+    </div>
+</div>

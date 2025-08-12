@@ -1,0 +1,24 @@
+<div class="team-section" *ngFor="let team of teamSections" [dir]="currentLang">
+  <div class="team-container">
+    <!-- Image Column -->
+    <div class="team-image-column" [class.rtl-order]="currentLang === 'ar'">
+      <div class="image-wrapper">
+        <div class="image-background"></div>
+        <img [src]="team.imageUrl" [alt]="currentLang === 'ar' ? team.titleAr : team.titleEn" class="team-image" />
+      </div>
+    </div>
+
+    <!-- Content Column -->
+    <div class="team-content-column" [class.rtl-align]="currentLang === 'ar'">
+      <h2 class="team-title">
+        {{ currentLang === 'ar' ? team.titleAr : team.titleEn }}
+      </h2>
+      <p class="team-description" [class.arabic-text]="currentLang === 'ar'">
+        {{ currentLang === 'ar' ? team.textAr : team.textEn }}
+      </p>
+      <a class="team-button" (click)="navigateTo('contact')">
+        {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+      </a>
+    </div>
+  </div>
+</div>
