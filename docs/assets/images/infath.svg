@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38px" height="61px" viewBox="0 0 38 61" version="1.1">
+    <title>A220B940-2A78-4CC2-ACBD-5C6D30FE1A8A</title>
+    <defs>
+        <linearGradient x1="47.8371979%" y1="78.1656667%" x2="69.3383341%" y2="27.4077848%" id="linearGradient-1">
+            <stop stop-color="#01796F" offset="0%"/>
+            <stop stop-color="#01796F" offset="0%"/>
+            <stop stop-color="#C5D12D" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="401.220824%" y1="616.852119%" x2="401.220824%" y2="509.619496%" id="linearGradient-2">
+            <stop stop-color="#01796F" offset="0%"/>
+            <stop stop-color="#01796F" offset="0%"/>
+            <stop stop-color="#C5D12D" offset="100%"/>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-Page---Loged-in" transform="translate(-787.000000, -3139.000000)" fill-rule="nonzero">
+            <g id="Group-27" transform="translate(240.000000, 2994.474053)">
+                <g id="Group-4" transform="translate(0.000000, 130.000000)">
+                    <g id="MOJ-Logo-Copy-3" transform="translate(500.295880, 0.000000)">
+                        <g id="infath" transform="translate(46.764208, 15.470957)">
+                            <polygon id="Path" fill="#8D8070" points="22.8414662 42.3455217 22.8399935 8.46821739 14.4029009 0 14.4043736 50.8144783 14.4043736 50.8144783 22.8414662 59.2834348 22.8407299 42.3455217"/>
+                            <polygon id="Path" fill="#005172" points="14.4043736 50.8144783 14.4029009 16.937913 22.8399935 8.46821739 22.8414662 42.3455217"/>
+                            <path d="M1.74799837,38.1110435 L14.4043736,50.8144783 L14.4043736,16.937913 L1.74799837,29.642087 C0.628804006,30.7649452 0,32.2882057 0,33.8765652 C0,35.4649247 0.628804006,36.9881852 1.74799837,38.1110435 L1.74799837,38.1110435 Z" id="Path" fill="url(#linearGradient-1)"/>
+                            <path d="M35.4971051,21.1716522 L22.8407299,8.46821739 L22.8407299,42.3455217 L35.4971051,29.642087 C37.8267179,27.302778 37.8267179,23.5109612 35.4971051,21.1716522 Z" id="Path" fill="url(#linearGradient-2)"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
