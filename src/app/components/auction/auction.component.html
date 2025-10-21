@@ -1,22 +1,18 @@
 <div class="auctions-section">
   <h2 class="section-title text-center">
-    {{ currentLang === 'ar' ? 'المزادات' : 'Auctions' }}
+    {{ sectionTitles[currentLang][selectedTab] }}
   </h2>
 
   <div class="swiper-tabs-container">
     <!-- Tabs -->
-    <div class="tabs-navigation" role="tablist">
-      <button class="tab-button" [class.active]="selectedTab === 'all'" (click)="selectTab('all')">
-        {{ currentLang === 'ar' ? 'الكل' : 'All' }}
-      </button>
-      <button class="tab-button" [class.active]="selectedTab === 'current'" (click)="selectTab('current')">
-        {{ currentLang === 'ar' ? 'الجارية' : 'Current' }}
-      </button>
-      <button class="tab-button" [class.active]="selectedTab === 'upcoming'" (click)="selectTab('upcoming')">
-        {{ currentLang === 'ar' ? 'القادمة' : 'Upcoming' }}
-      </button>
-      <button class="tab-button" [class.active]="selectedTab === 'ended'" (click)="selectTab('ended')">
-        {{ currentLang === 'ar' ? 'المنتهية' : 'Ended' }}
+    <div class="tabs-navigation" role="tablist" *ngIf="visibleTabs.length > 1">
+      <button
+        *ngFor="let tab of visibleTabs"
+        class="tab-button"
+        [class.active]="selectedTab === tab"
+        (click)="selectTab(tab)"
+      >
+        {{ tabLabels[currentLang][tab] }}
       </button>
     </div>
 
@@ -52,7 +48,7 @@
                     ? (auction.status === 'current' ? 'مزاد جاري'
                         : auction.status === 'ended' ? 'مزاد منتهي' : 'مزاد قادم')
                     : (auction.status === 'current' ? 'Current'
-                        : auction.status === 'ended' ? 'Ended' : 'Upcoming')
+                        : auction.status === 'ended' ? 'Ended' : 'Coming')
                 }}
               </span>
 
@@ -90,12 +86,12 @@
                 <div class="timer-title">
                   {{
                     currentLang === 'ar'
-                      ? (auction.status === 'upcoming'
+                      ? (auction.status === 'coming'
                           ? 'يبدأ المزاد بعد'
                           : auction.status === 'current'
                             ? 'ينتهي المزاد بعد'
                             : 'المزاد منتهي')
-                      : (auction.status === 'upcoming'
+                      : (auction.status === 'coming'
                           ? 'Starts in'
                           : auction.status === 'current'
                             ? 'Ends in'

@@ -7,8 +7,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
@@ -17,7 +17,8 @@ import { AuctionService } from '../../services/auction.service/auction.service';
 
 Swiper.use([Navigation, Pagination, Autoplay]);
 
-type AuctionStatus = 'upcoming' | 'current' | 'ended';
+type AuctionStatus = 'coming' | 'current' | 'ended';
+type AuctionTab = 'all' | AuctionStatus;
 
 interface Countdown {
   days: string;
@@ -47,7 +48,7 @@ interface Auction {
 }
 
 @Component({
-  selector: 'app-packages',
+  selector: 'app-auction',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './auction.component.html',
@@ -72,14 +73,48 @@ interface Auction {
     ]),
   ],
 })
-export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
   swiper: Swiper | null = null;
 
   currentLang: 'ar' | 'en' = 'ar';
   auctions: Auction[] = [];
   filteredAuctions: Auction[] = [];
-  selectedTab: 'all' | 'current' | 'upcoming' | 'ended' = 'all';
+  selectedTab: AuctionTab = 'all';
+  lockedStatus: AuctionStatus | null = null;
   isLoading = false;
+
+  readonly tabOrder: AuctionTab[] = ['all', 'current', 'coming', 'ended'];
+  visibleTabs: AuctionTab[] = [...this.tabOrder];
+
+  readonly sectionTitles: Record<'ar' | 'en', Record<AuctionTab, string>> = {
+    ar: {
+      all: 'المزادات',
+      current: 'المزادات الجارية',
+      coming: 'المزادات القادمة',
+      ended: 'المزادات المنتهية',
+    },
+    en: {
+      all: 'Auctions',
+      current: 'Current Auctions',
+      coming: 'Coming Auctions',
+      ended: 'Ended Auctions',
+    },
+  };
+
+  readonly tabLabels: Record<'ar' | 'en', Record<AuctionTab, string>> = {
+    ar: {
+      all: 'الكل',
+      current: 'الجارية',
+      coming: 'القادمة',
+      ended: 'المنتهية',
+    },
+    en: {
+      all: 'All',
+      current: 'Current',
+      coming: 'Coming',
+      ended: 'Ended',
+    },
+  };
 
   private subscriptions = new Subscription();
   private timerSubscription?: Subscription;
@@ -88,12 +123,18 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private http: HttpClient,
-    private auctionService: AuctionService
+    private auctionService: AuctionService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.currentLang = localStorage.getItem('lang') === 'en' ? 'en' : 'ar';
+    this.syncTabFromRoute(this.route.snapshot.data['defaultTab']);
+    const routeDataSub = this.route.data.subscribe((data) =>
+      this.syncTabFromRoute(data['defaultTab'])
+    );
+    this.subscriptions.add(routeDataSub);
     this.loadAuctions();
     this.startTimer(); // live counter
   }
@@ -151,7 +192,8 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
   private fullUrl(rel?: string): string {
     if (!rel) return '';
     if (/^https?:\/\//i.test(rel)) return rel;
-    return `  baseUrl: 'https://app.osos-alriadah.com/${rel.replace(/^\/+/, '')}`;
+    const normalized = rel.replace(/^\/+/, '');
+    return `https://app.osos-alriadah.com/${normalized}`;
   }
 
   /** Try to find the external URL on typical field names */
@@ -162,19 +204,49 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /** ---------- Tabs & Filtering ---------- */
-  selectTab(tab: 'all' | 'current' | 'upcoming' | 'ended'): void {
+  selectTab(tab: AuctionTab): void {
+    const prev = this.selectedTab;
     this.selectedTab = tab;
-    this.applyFilter(true);
+    this.applyFilter(prev !== tab);
+    this.navigateForTab(tab);
   }
 
   // recreateSwiper: when true, rebuild swiper (e.g., on tab change or initial load)
   private applyFilter(recreateSwiper = true): void {
+    const filterKey: AuctionTab = this.lockedStatus ?? this.selectedTab;
     this.filteredAuctions =
-      this.selectedTab === 'all'
+      filterKey === 'all'
         ? this.auctions
-        : this.auctions.filter((a) => a.status === this.selectedTab);
+        : this.auctions.filter((a) => a.status === filterKey);
 
     if (recreateSwiper) this.recreateSwiper();
+  }
+
+  private navigateForTab(tab: AuctionTab): void {
+    const targetUrl = tab === 'all' ? '/auction' : `/auction/${tab}`;
+    if (this.router.url === targetUrl) return;
+    this.router.navigateByUrl(targetUrl, { replaceUrl: true });
+  }
+
+  private syncTabFromRoute(tab?: unknown): void {
+    const normalized = this.normalizeTab(tab);
+    this.lockedStatus = normalized === 'all' ? null : normalized;
+    this.visibleTabs = this.lockedStatus
+      ? [this.lockedStatus]
+      : [...this.tabOrder];
+    if (this.selectedTab === normalized) {
+      this.applyFilter(false);
+      return;
+    }
+
+    this.selectedTab = normalized;
+    this.applyFilter(true);
+  }
+
+  private normalizeTab(tab?: unknown): AuctionTab {
+    if (tab === 'current' || tab === 'coming' || tab === 'ended') return tab;
+    if (tab === 'upcoming') return 'coming';
+    return 'all';
   }
 
   /** ---------- Swiper ---------- */
@@ -249,7 +321,7 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
     const start = new Date(startStr).getTime();
     const end = new Date(endStr).getTime();
     if (isNaN(start) || isNaN(end)) return 'ended';
-    if (now < start) return 'upcoming';
+    if (now < start) return 'coming';
     if (now >= start && now <= end) return 'current';
     return 'ended';
   }
@@ -264,7 +336,7 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
       return { days: '0', hours: '00', minutes: '00', seconds: '00' };
 
     const target =
-      status === 'upcoming'
+      status === 'coming'
         ? new Date(startStr).getTime()
         : new Date(endStr).getTime();
 
