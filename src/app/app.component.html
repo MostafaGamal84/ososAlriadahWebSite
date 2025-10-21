@@ -3,9 +3,11 @@
 <router-outlet></router-outlet>
 
 <ng-container *ngIf="isHomeOrAbout()">
-  <section appAppInViewport animationClass="fade-from-bottom">
-    <app-about-us id="about"></app-about-us>
-  </section>
+  <ng-container *ngIf="!isAboutRoute()">
+    <section appAppInViewport animationClass="fade-from-bottom">
+      <app-about-us id="about"></app-about-us>
+    </section>
+  </ng-container>
   <section appAppInViewport animationClass="fade-from-bottom">
     <app-packages id="packages"></app-packages>
   </section>

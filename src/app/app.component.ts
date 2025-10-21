@@ -50,9 +50,23 @@ export class AppComponent {
   }
 
   isHomeOrAbout(): boolean {
-    const url = this.router.url.split('?')[0].split('#')[0];
+    const url = this.normalizedUrl();
     return url === '/' || url === '/about';
   }
 
-  
+  isAboutRoute(): boolean {
+    return this.normalizedUrl() === '/about';
+  }
+
+  private normalizedUrl(): string {
+    const [withoutQuery] = this.router.url.split('?');
+    const [withoutFragment] = withoutQuery.split('#');
+    if (!withoutFragment || withoutFragment === '/') {
+      return '/';
+    }
+
+    return withoutFragment.startsWith('/')
+      ? withoutFragment
+      : `/${withoutFragment}`;
+  }
 }
