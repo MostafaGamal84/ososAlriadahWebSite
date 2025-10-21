@@ -5,18 +5,14 @@
 
   <div class="swiper-tabs-container">
     <!-- Tabs -->
-    <div class="tabs-navigation" role="tablist">
-      <button class="tab-button" [class.active]="selectedTab === 'all'" (click)="selectTab('all')">
-        {{ currentLang === 'ar' ? 'الكل' : 'All' }}
-      </button>
-      <button class="tab-button" [class.active]="selectedTab === 'current'" (click)="selectTab('current')">
-        {{ currentLang === 'ar' ? 'الجارية' : 'Current' }}
-      </button>
-      <button class="tab-button" [class.active]="selectedTab === 'coming'" (click)="selectTab('coming')">
-        {{ currentLang === 'ar' ? 'القادمة' : 'Coming' }}
-      </button>
-      <button class="tab-button" [class.active]="selectedTab === 'ended'" (click)="selectTab('ended')">
-        {{ currentLang === 'ar' ? 'المنتهية' : 'Ended' }}
+    <div class="tabs-navigation" role="tablist" *ngIf="visibleTabs.length > 1">
+      <button
+        *ngFor="let tab of visibleTabs"
+        class="tab-button"
+        [class.active]="selectedTab === tab"
+        (click)="selectTab(tab)"
+      >
+        {{ tabLabels[currentLang][tab] }}
       </button>
     </div>
 

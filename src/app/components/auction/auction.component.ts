@@ -80,7 +80,11 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
   auctions: Auction[] = [];
   filteredAuctions: Auction[] = [];
   selectedTab: AuctionTab = 'all';
+  lockedStatus: AuctionStatus | null = null;
   isLoading = false;
+
+  readonly tabOrder: AuctionTab[] = ['all', 'current', 'coming', 'ended'];
+  visibleTabs: AuctionTab[] = [...this.tabOrder];
 
   readonly sectionTitles: Record<'ar' | 'en', Record<AuctionTab, string>> = {
     ar: {
@@ -94,6 +98,21 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
       current: 'Current Auctions',
       coming: 'Coming Auctions',
       ended: 'Ended Auctions',
+    },
+  };
+
+  readonly tabLabels: Record<'ar' | 'en', Record<AuctionTab, string>> = {
+    ar: {
+      all: 'الكل',
+      current: 'الجارية',
+      coming: 'القادمة',
+      ended: 'المنتهية',
+    },
+    en: {
+      all: 'All',
+      current: 'Current',
+      coming: 'Coming',
+      ended: 'Ended',
     },
   };
 
@@ -194,10 +213,11 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // recreateSwiper: when true, rebuild swiper (e.g., on tab change or initial load)
   private applyFilter(recreateSwiper = true): void {
+    const filterKey: AuctionTab = this.lockedStatus ?? this.selectedTab;
     this.filteredAuctions =
-      this.selectedTab === 'all'
+      filterKey === 'all'
         ? this.auctions
-        : this.auctions.filter((a) => a.status === this.selectedTab);
+        : this.auctions.filter((a) => a.status === filterKey);
 
     if (recreateSwiper) this.recreateSwiper();
   }
@@ -210,6 +230,10 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private syncTabFromRoute(tab?: unknown): void {
     const normalized = this.normalizeTab(tab);
+    this.lockedStatus = normalized === 'all' ? null : normalized;
+    this.visibleTabs = this.lockedStatus
+      ? [this.lockedStatus]
+      : [...this.tabOrder];
     if (this.selectedTab === normalized) {
       this.applyFilter(false);
       return;
