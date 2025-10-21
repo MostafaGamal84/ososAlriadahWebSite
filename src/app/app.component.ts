@@ -11,7 +11,7 @@ import { OurServicesComponent } from './components/our-services/our-services.com
 import { AppInViewportDirective } from './directives/app-in-viewport.directive';
 import { ContactService } from './services/contact.service';
 import { CommonModule } from '@angular/common';
-import { PackagesComponent } from './components/auction/auction.component';
+import { AuctionComponent } from './components/auction/auction.component';
 import { OwlComponent } from './components/owl/owl.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 
@@ -30,7 +30,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
     AppInViewportDirective,
     RouterOutlet,
     CommonModule,
-    PackagesComponent,
+    AuctionComponent,
     OwlComponent,
     ProjectsComponent
   ],

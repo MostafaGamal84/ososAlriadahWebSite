@@ -3,7 +3,7 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FeatureComponent } from './components/feature/feature.component';
 import { OurServicesComponent } from './components/our-services/our-services.component';
 import { ContactComponent } from './components/contact/contact.component';
-import { PackagesComponent } from './components/auction/auction.component';
+import { AuctionComponent } from './components/auction/auction.component';
 import { VisionComponent } from './components/about-us/vision-component/vision.component';
 import { MissionComponent } from './components/about-us/mission-component/mission.component';
 import { TeamComponent } from './components/about-us/teams/team.component';
@@ -25,7 +25,16 @@ export const routes: Routes = [
   { path: 'features', component: FeatureComponent },
   { path: 'our-services', component: OurServicesComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'packages', component: PackagesComponent },
+  {
+    path: 'auction',
+    children: [
+      { path: '', component: AuctionComponent, data: { defaultTab: 'all' } },
+      { path: 'current', component: AuctionComponent, data: { defaultTab: 'current' } },
+      { path: 'upcoming', component: AuctionComponent, data: { defaultTab: 'upcoming' } },
+      { path: 'ended', component: AuctionComponent, data: { defaultTab: 'ended' } },
+    ],
+  },
+  { path: 'packages', redirectTo: 'auction', pathMatch: 'full' },
   { path: 'brokerage', component: BrokerageComponent },
   { path: 'development', component: DevelopmentComponent },
   { path: 'leasing', component: LeasingComponent },
