@@ -7,8 +7,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ActivatedRoute } from '@angular/router';
 
 import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
@@ -18,6 +18,7 @@ import { AuctionService } from '../../services/auction.service/auction.service';
 Swiper.use([Navigation, Pagination, Autoplay]);
 
 type AuctionStatus = 'upcoming' | 'current' | 'ended';
+type AuctionTab = 'all' | AuctionStatus;
 
 interface Countdown {
   days: string;
@@ -47,7 +48,7 @@ interface Auction {
 }
 
 @Component({
-  selector: 'app-packages',
+  selector: 'app-auction',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './auction.component.html',
@@ -72,14 +73,29 @@ interface Auction {
     ]),
   ],
 })
-export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
   swiper: Swiper | null = null;
 
   currentLang: 'ar' | 'en' = 'ar';
   auctions: Auction[] = [];
   filteredAuctions: Auction[] = [];
-  selectedTab: 'all' | 'current' | 'upcoming' | 'ended' = 'all';
+  selectedTab: AuctionTab = 'all';
   isLoading = false;
+
+  readonly sectionTitles: Record<'ar' | 'en', Record<AuctionTab, string>> = {
+    ar: {
+      all: 'المزادات',
+      current: 'المزادات الجارية',
+      upcoming: 'المزادات القادمة',
+      ended: 'المزادات المنتهية',
+    },
+    en: {
+      all: 'Auctions',
+      current: 'Current Auctions',
+      upcoming: 'Upcoming Auctions',
+      ended: 'Ended Auctions',
+    },
+  };
 
   private subscriptions = new Subscription();
   private timerSubscription?: Subscription;
@@ -88,12 +104,17 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private http: HttpClient,
-    private auctionService: AuctionService
+    private auctionService: AuctionService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.currentLang = localStorage.getItem('lang') === 'en' ? 'en' : 'ar';
+    this.syncTabFromRoute(this.route.snapshot.data['defaultTab']);
+    const routeDataSub = this.route.data.subscribe((data) =>
+      this.syncTabFromRoute(data['defaultTab'])
+    );
+    this.subscriptions.add(routeDataSub);
     this.loadAuctions();
     this.startTimer(); // live counter
   }
@@ -151,7 +172,8 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
   private fullUrl(rel?: string): string {
     if (!rel) return '';
     if (/^https?:\/\//i.test(rel)) return rel;
-    return `  baseUrl: 'https://app.osos-alriadah.com/${rel.replace(/^\/+/, '')}`;
+    const normalized = rel.replace(/^\/+/, '');
+    return `https://app.osos-alriadah.com/${normalized}`;
   }
 
   /** Try to find the external URL on typical field names */
@@ -162,7 +184,7 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /** ---------- Tabs & Filtering ---------- */
-  selectTab(tab: 'all' | 'current' | 'upcoming' | 'ended'): void {
+  selectTab(tab: AuctionTab): void {
     this.selectedTab = tab;
     this.applyFilter(true);
   }
@@ -175,6 +197,23 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
         : this.auctions.filter((a) => a.status === this.selectedTab);
 
     if (recreateSwiper) this.recreateSwiper();
+  }
+
+  private syncTabFromRoute(tab?: unknown): void {
+    const normalized = this.normalizeTab(tab);
+    if (this.selectedTab === normalized) {
+      this.applyFilter(false);
+      return;
+    }
+
+    this.selectedTab = normalized;
+    this.applyFilter(true);
+  }
+
+  private normalizeTab(tab?: unknown): AuctionTab {
+    return tab === 'current' || tab === 'upcoming' || tab === 'ended'
+      ? tab
+      : 'all';
   }
 
   /** ---------- Swiper ---------- */
