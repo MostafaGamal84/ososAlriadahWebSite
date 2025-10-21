@@ -5,6 +5,13 @@
   --primary-medium: #2E65B9;
   --primary-light: #4ED1E2;
   --background-light: #F5F7FA;
+  --navbar-height: 104px;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --navbar-height: 88px;
+  }
 }
 
 
@@ -44,6 +51,11 @@ html,
 body {
   height: 100%;
   background-color: #fff;
+}
+
+section[appAppInViewport] > *[id] {
+  display: block;
+  scroll-margin-top: calc(var(--navbar-height) + 16px);
 }
 
 /* === Animation Classes === */
