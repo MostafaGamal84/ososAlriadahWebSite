@@ -22,7 +22,7 @@ export interface Auction {
   providedIn: 'root',
 })
 export class AuctionService {
-  private readonly baseUrl = 'https://osuselriadah.somee.com/api/Auction';
+  private readonly baseUrl = 'https://app.osos-alriadah.com/api/Auction';
 
   constructor(private http: HttpClient) {}
 

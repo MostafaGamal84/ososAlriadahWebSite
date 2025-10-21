@@ -129,7 +129,7 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
   private fullUrl(rel?: string): string {
     if (!rel) return '';
     if (/^https?:\/\//i.test(rel)) return rel;
-    return `https://osuselriadah.somee.com/${rel.replace(/^\/+/, '')}`;
+    return `https://app.osos-alriadah.com/${rel.replace(/^\/+/, '')}`;
   }
 
   /** ---------- Tabs & Filtering ---------- */
