@@ -5,12 +5,12 @@
   --primary-medium: #2E65B9;
   --primary-light: #4ED1E2;
   --background-light: #F5F7FA;
-  --navbar-height: 104px;
+  --navbar-height: 80px !important;
 }
 
 @media (max-width: 991px) {
   :root {
-    --navbar-height: 88px;
+    --navbar-height: 88px !important;
   }
 }
 
