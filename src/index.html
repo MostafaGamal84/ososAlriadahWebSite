@@ -20,9 +20,42 @@
     rel="stylesheet" />
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- Snapchat Pixel -->
+  <meta name="snapchat-pixel-id" content="REPLACE_WITH_YOUR_PIXEL_ID" />
+  <script id="snapchat-pixel-loader">
+    (function (e, t, n) {
+      if (e.snaptr) return;
+      const a = e.snaptr = function () {
+        a.handleRequest ? a.handleRequest.apply(a, arguments) : a.queue.push(arguments);
+      };
+      a.queue = [];
+      const s = 'script';
+      const r = t.createElement(s);
+      r.async = true;
+      r.src = n;
+      const u = t.getElementsByTagName(s)[0];
+      u.parentNode.insertBefore(r, u);
+    })(window, document, 'https://sc-static.net/scevent.min.js');
+
+    (function initializeSnapchatPixel() {
+      const meta = document.querySelector('meta[name="snapchat-pixel-id"]');
+      const pixelId = meta && meta.content ? meta.content.trim() : '';
+      if (pixelId && pixelId !== 'REPLACE_WITH_YOUR_PIXEL_ID') {
+        window.snaptr('init', pixelId);
+      } else {
+        console.warn('Snapchat Pixel ID is not configured. Update the meta tag named "snapchat-pixel-id".');
+      }
+    })();
+  </script>
+  <!-- End Snapchat Pixel -->
 </head>
 
 <body class="mat-typography" style="font-family: 'Tajawal', sans-serif">
+  <noscript>
+    <img height="1" width="1" style="display:none;" alt=""
+      src="https://tr.snapchat.com/cm/i?pid=REPLACE_WITH_YOUR_PIXEL_ID&ev=PAGE_VIEW&escape=1" />
+  </noscript>
   <app-root></app-root>
 </body>
 
