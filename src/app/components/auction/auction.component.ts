@@ -3,11 +3,13 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  CUSTOM_ELEMENTS_SCHEMA,
   OnDestroy,
   OnInit,
-  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { trigger, transition, style, animate } from '@angular/animations';
+
 import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { interval, Subscription } from 'rxjs';
@@ -32,14 +34,14 @@ interface Auction {
   content?: string;
   imagePath?: string;
   pdfPath?: string;
-  imageUrl?: string; // full URL for image
-  pdfUrl?: string;   // full URL for pdf
+  imageUrl?: string;   // full URL for image
+  pdfUrl?: string;     // full URL for pdf
   openingPrice?: number;
   agentName?: string;
   district?: string;
   city?: string;
   gallery?: string[];
-  // derived at runtime
+  url?: string;        // external auction platform URL
   status: AuctionStatus;
   cd: Countdown;
 }
@@ -51,6 +53,24 @@ interface Auction {
   templateUrl: './auction.component.html',
   styleUrls: ['./auction.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  animations: [
+    trigger('statusBadge', [
+      transition(':enter', [
+        style({ transform: 'scale(0.9)', opacity: 0 }),
+        animate('150ms ease-out', style({ transform: 'scale(1)', opacity: 1 })),
+      ]),
+      transition('* => *', [
+        style({ transform: 'scale(0.95)', opacity: 0.8 }),
+        animate('120ms ease-out', style({ transform: 'scale(1)', opacity: 1 })),
+      ]),
+    ]),
+    trigger('timerSwap', [
+      transition('* => *', [
+        style({ opacity: 0, transform: 'translateY(-4px)' }),
+        animate('160ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+      ]),
+    ]),
+  ],
 })
 export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
   swiper: Swiper | null = null;
@@ -104,13 +124,15 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
             content: r.content || '',
             imagePath: r.imagePath || '',
             pdfPath: r.pdfPath || '',
-            imageUrl: this.fullUrl(r.imagePath),
+            imageUrl: 'https://app.osos-alriadah.com/'+r.imagePath,
             pdfUrl: this.fullUrl(r.pdfPath),
+            url: this.fullUrl(r.url),
             openingPrice: r.openingPrice ?? 0,
             agentName: r.agentName || '',
             district: r.district || '',
             city: r.city || '',
             gallery: r.gallery || [],
+            // 🔗 external platform URL (try several common field names)
             status,
             cd: this.buildCountdown(status, r.start, r.end),
           };
@@ -129,7 +151,14 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
   private fullUrl(rel?: string): string {
     if (!rel) return '';
     if (/^https?:\/\//i.test(rel)) return rel;
-    return `https://app.osos-alriadah.com/${rel.replace(/^\/+/, '')}`;
+    return `  baseUrl: 'https://app.osos-alriadah.com/${rel.replace(/^\/+/, '')}`;
+  }
+
+  /** Try to find the external URL on typical field names */
+  private pickExternalUrl(r: any): string {
+    const candidate =
+      r.url || r.auctionUrl || r.externalUrl || r.platformUrl || r.link || '';
+    return typeof candidate === 'string' ? candidate : '';
   }
 
   /** ---------- Tabs & Filtering ---------- */
@@ -162,8 +191,15 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
       spaceBetween: 20,
       loop: false,
       pagination: { el: '.swiper-pagination', clickable: true },
-      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-      breakpoints: { 640: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
       preventClicks: false,
       preventClicksPropagation: false,
     });
@@ -183,7 +219,7 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.timerSubscription = interval(1000).subscribe(() => {
       const now = Date.now();
 
-      // Update IN-PLACE so DOM nodes stay (no flicker, no reload feel)
+      // Update IN-PLACE so DOM nodes stay (no flicker)
       for (const a of this.auctions) {
         const st = this.computeStatus(a.start, a.end, now);
         a.status = st;
@@ -193,7 +229,6 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
       // Refresh the filtered list without rebuilding Swiper each tick
       this.applyFilter(false);
 
-      // Let Swiper know slides might have changed order/visibility
       try {
         (this.swiper as any)?.update?.();
       } catch {}
@@ -206,7 +241,11 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.timerSubscription?.unsubscribe();
   }
 
-  private computeStatus(startStr: string, endStr: string, now = Date.now()): AuctionStatus {
+  private computeStatus(
+    startStr: string,
+    endStr: string,
+    now = Date.now()
+  ): AuctionStatus {
     const start = new Date(startStr).getTime();
     const end = new Date(endStr).getTime();
     if (isNaN(start) || isNaN(end)) return 'ended';
@@ -241,17 +280,17 @@ export class PackagesComponent implements OnInit, AfterViewInit, OnDestroy {
       minutes: String(m).padStart(2, '0'),
       seconds: String(s).padStart(2, '0'),
     };
-  }
+    }
 
   /** ---------- Share ---------- */
   shareAuction(a: Auction): void {
-    const url = window.location.href;
-    const data = { title: a.name, text: a.content || '', url };
+    const shareUrl = a.url || a.pdfUrl || window.location.href;
+    const data = { title: a.name, text: a.content || '', url: shareUrl };
     const navAny = navigator as any;
     if (navAny.share) {
       navAny.share(data).catch(() => {});
     } else {
-      navigator.clipboard?.writeText(url);
+      navigator.clipboard?.writeText(shareUrl);
       alert(this.currentLang === 'ar' ? 'تم نسخ الرابط' : 'Link copied');
     }
   }

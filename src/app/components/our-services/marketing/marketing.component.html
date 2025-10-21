@@ -1,21 +1,210 @@
-<div class="coming-soon-container">
-    <div class="coming-soon-content">
-        <div class="icon-wrapper">
-            <mat-icon class="main-icon">home_work</mat-icon>
-        </div>
-        <h1>{{ currentLang === 'ar' ? 'التسويق العقاري' : 'Real Estate Marketing' }}</h1>
-        <p class="coming-soon-text">
-                        {{ currentLang === 'ar' ? 'قريبًا....' : 'Coming soon...' }}
+<div class="leasing" [attr.dir]="dir">
+  <!-- HERO -->
+  <section class="leasing__hero">
+    <div class="leasing__hero-content" style="flex:1">
+      <h1>
+        {{ currentLang === 'ar' ? 'التسويق العقاري' : 'Real Estate Marketing' }}
+      </h1>
+      <p class="leasing__subtitle">
+        {{
+          currentLang === 'ar'
+            ? 'نُقدّم خطة تسويق متكاملة لبيع أو تأجير عقارك بأسرع وقت وأفضل عائد — تصوير احترافي، إعلانات مدفوعة، وإدارة الاستفسارات حتى إتمام التعاقد.'
+            : 'We deliver a full-funnel strategy to sell or lease your property fast and at the best return—pro photography, paid ads, lead handling, and contract support.'
+        }}
+      </p>
 
-        </p>
-        <div class="progress-container">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </div>
-        <p class="contact-text">
-            {{ currentLang === 'ar' ? 'تواصل معنا لمعرفة المزيد' : 'Contact us to learn more' }}
-        </p>
-        <button mat-raised-button color="primary" (click)="navigateTo('contact')" class="custom-mat-button">
-            {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+      <div class="leasing__cta-buttons">
+        <button class="leasing__button leasing__button--primary" (click)="navigateTo('contact')">
+          {{ currentLang === 'ar' ? 'اطلب استشارة مجانية' : 'Get a Free Consultation' }}
         </button>
+        <button class="leasing__button leasing__button--secondary" (click)="scrollTo('steps')">
+          {{ currentLang === 'ar' ? 'خطوات العمل' : 'How It Works' }}
+        </button>
+      </div>
     </div>
+
+    <div class="leasing__hero-image">
+      <img
+        class="leasing__image"
+        alt="Marketing hero"
+        src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fit=crop"
+      />
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="leasing__features">
+    <h2 class="leasing__section-title">
+      {{ currentLang === 'ar' ? 'لماذا تختارنا؟' : 'Why Choose Us?' }}
+    </h2>
+
+    <div class="leasing__features-grid">
+      <article class="leasing__feature-card" *ngFor="let f of features; trackBy: trackByIdx">
+        <div class="leasing__feature-icon">
+          <mat-icon aria-hidden="true">{{ f.icon }}</mat-icon>
+        </div>
+        <h3 class="leasing__feature-title">{{ currentLang === 'ar' ? f.titleAr : f.titleEn }}</h3>
+        <p class="leasing__feature-desc">{{ currentLang === 'ar' ? f.descAr : f.descEn }}</p>
+      </article>
+    </div>
+  </section>
+
+  
+  <!-- <section class="leasing__properties" id="properties">
+    <h2 class="leasing__section-title">
+      {{ currentLang === 'ar' ? 'عقارات مختارة' : 'Featured Properties' }}
+    </h2>
+
+   
+    <div class="leasing__filters">
+      <div class="leasing__filter-group">
+        <label class="leasing__filter-label">
+          {{ currentLang === 'ar' ? 'المدينة' : 'City' }}
+        </label>
+        <select class="leasing__filter-select" [(ngModel)]="filters.city" (change)="applyFilters()">
+          <option value="all">{{ currentLang === 'ar' ? 'الكل' : 'All' }}</option>
+          <option *ngFor="let c of cities" [value]="c.value">{{ currentLang === 'ar' ? c.ar : c.en }}</option>
+        </select>
+      </div>
+
+      <div class="leasing__filter-group">
+        <label class="leasing__filter-label">
+          {{ currentLang === 'ar' ? 'النوع' : 'Type' }}
+        </label>
+        <select class="leasing__filter-select" [(ngModel)]="filters.type" (change)="applyFilters()">
+          <option value="all">{{ currentLang === 'ar' ? 'الكل' : 'All' }}</option>
+          <option *ngFor="let t of types" [value]="t.value">{{ currentLang === 'ar' ? t.ar : t.en }}</option>
+        </select>
+      </div>
+
+      <div class="leasing__filter-group">
+        <label class="leasing__filter-label">
+          {{ currentLang === 'ar' ? 'الميزانية (ريال)' : 'Budget (SAR)' }}
+        </label>
+        <select class="leasing__filter-select" [(ngModel)]="filters.budget" (change)="applyFilters()">
+          <option value="all">{{ currentLang === 'ar' ? 'غير محدد' : 'Any' }}</option>
+          <option value="0-3000">0 - 3,000</option>
+          <option value="3000-7000">3,000 - 7,000</option>
+          <option value="7000-15000">7,000 - 15,000</option>
+          <option value="15000+">15,000+</option>
+        </select>
+      </div>
+
+      <button class="leasing__filter-button" (click)="resetFilters()">
+        {{ currentLang === 'ar' ? 'إعادة ضبط' : 'Reset' }}
+      </button>
+    </div>
+
+ 
+    <div class="leasing__properties-grid">
+      <article class="leasing__property-card" *ngFor="let p of displayed; trackBy: trackById">
+        <span class="leasing__property-badge">{{ currentLang === 'ar' ? p.badgeAr : p.badgeEn }}</span>
+        <img class="leasing__property-image" [src]="p.image" [alt]="currentLang === 'ar' ? p.titleAr : p.titleEn" />
+        <div class="leasing__property-details">
+          <h3 class="leasing__property-title">{{ currentLang === 'ar' ? p.titleAr : p.titleEn }}</h3>
+
+          <div class="leasing__property-info">
+            <div class="leasing__property-info-item">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ currentLang === 'ar' ? p.cityAr : p.cityEn }}</span>
+            </div>
+            <div class="leasing__property-info-item">
+              <mat-icon>square_foot</mat-icon>
+              <span>{{ p.area }} m²</span>
+            </div>
+            <div class="leasing__property-info-item" *ngIf="p.beds">
+              <mat-icon>hotel</mat-icon>
+              <span>{{ p.beds }} {{ currentLang === 'ar' ? 'غرف' : 'Beds' }}</span>
+            </div>
+            <div class="leasing__property-info-item" *ngIf="p.baths">
+              <mat-icon>bathtub</mat-icon>
+              <span>{{ p.baths }} {{ currentLang === 'ar' ? 'حمامات' : 'Baths' }}</span>
+            </div>
+          </div>
+
+          <div class="leasing__property-footer">
+            <div class="leasing__property-price">
+              {{ p.price | number }} {{ currentLang === 'ar' ? 'ريال' : 'SAR' }}
+              <span *ngIf="p.period"> / {{ currentLang === 'ar' ? p.periodAr : p.periodEn }}</span>
+            </div>
+            <button class="leasing__property-button" (click)="navigateTo('contact')">
+              {{ currentLang === 'ar' ? 'تفاصيل' : 'Details' }}
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="leasing__view-all" *ngIf="displayed.length === 0">
+      <p>{{ currentLang === 'ar' ? 'لا توجد نتائج مطابقة.' : 'No matching results.' }}</p>
+    </div>
+  </section> -->
+
+  <!-- PROCESS -->
+  <section class="leasing__process"  id="steps">
+    <h2 class="leasing__section-title">
+      {{ currentLang === 'ar' ? 'خطوات العمل' : 'How It Works' }}
+    </h2>
+
+    <div class="leasing__process-steps">
+      <div class="leasing__step" *ngFor="let s of steps; trackBy: trackByIdx">
+        <div class="leasing__step-number"></div>
+        <h3 class="leasing__step-title">{{ currentLang === 'ar' ? s.titleAr : s.titleEn }}</h3>
+        <p class="leasing__step-desc">{{ currentLang === 'ar' ? s.descAr : s.descEn }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ (native <details> for zero dependencies) -->
+  <section class="leasing__properties">
+    <h2 class="leasing__section-title">
+      {{ currentLang === 'ar' ? 'الأسئلة الشائعة' : 'FAQs' }}
+    </h2>
+
+    <div>
+      <details style="margin-bottom:12px;" *ngFor="let q of faqs; trackBy: trackByIdx">
+        <summary style="font-weight:700; cursor:pointer;">
+          {{ currentLang === 'ar' ? q.qAr : q.qEn }}
+        </summary>
+        <p style="margin:12px 0 0;">
+          {{ currentLang === 'ar' ? q.aAr : q.aEn }}
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="leasing__cta" [style.background-image]="'url(https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1600&auto=format&fit=crop)'">
+    <h3 class="leasing__cta-title">
+      {{
+        currentLang === 'ar'
+          ? 'جاهز لبيع أو تأجير عقارك؟'
+          : 'Ready to Sell or Lease Your Property?'
+      }}
+    </h3>
+    <p class="leasing__cta-desc">
+      {{
+        currentLang === 'ar'
+          ? 'اترك بياناتك وسيتواصل معك فريقنا لاقتراح الخطة الأنسب خلال 24 ساعة عمل.'
+          : 'Share your details and our team will propose the best plan within one business day.'
+      }}
+    </p>
+    <button class="leasing__cta-button" (click)="navigateTo('contact')">
+      {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+    </button>
+  </section>
+</div>
+
+<!-- Optional: Keep your Coming Soon card for later toggling -->
+<div class="coming-soon-container" *ngIf="showComingSoon">
+  <div class="coming-soon-content" [attr.dir]="dir">
+    <div class="icon-wrapper"><mat-icon class="main-icon">home_work</mat-icon></div>
+    <h1>{{ currentLang === 'ar' ? 'التسويق العقاري' : 'Real Estate Marketing' }}</h1>
+    <p class="coming-soon-text">{{ currentLang === 'ar' ? 'قريبًا....' : 'Coming soon...' }}</p>
+    <div class="progress-container"><mat-progress-bar mode="indeterminate"></mat-progress-bar></div>
+    <p class="contact-text">{{ currentLang === 'ar' ? 'تواصل معنا لمعرفة المزيد' : 'Contact us to learn more' }}</p>
+    <button mat-raised-button color="primary" (click)="navigateTo('contact')" class="custom-mat-button">
+      {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+    </button>
+  </div>
 </div>

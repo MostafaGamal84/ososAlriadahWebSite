@@ -6,7 +6,7 @@
        [class.order-1]="currentLang === 'en'"
        [class.order-2]="currentLang === 'ar'"
        href="#">
-      <img src="https://pbs.twimg.com/profile_images/1756714052372357121/jItqW0yk_400x400.jpg"
+      <img src="../../../"
            alt="شعار أسس الريادة" width="40" height="40" class="img-navbar" loading="lazy" />
     </a>
 
@@ -87,9 +87,10 @@
 
         <!-- Language Toggle -->
         <li class="nav-item">
-          <button class="nav-link btn-lang" type="button" (click)="toggleLanguage()">
-            🌐 {{ currentLang === 'ar' ? 'English' : 'العربية' }}
-          </button>
+         <div class="lang-switch">
+        <button type="button" [class.active]="currentLang==='ar'" (click)="toggleLanguage()">عربي</button>
+        <button type="button" [class.active]="currentLang==='en'" (click)="toggleLanguage()">EN</button>
+      </div>
         </li>
       </ul>
 

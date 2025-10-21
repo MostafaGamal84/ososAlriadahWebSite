@@ -1,234 +1,127 @@
-.fixed-buttons {
+/* ===== Container ===== */
+.floating-buttons{
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
+  right: 16px;
+  bottom: 18px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-}
-.play-btn {
-  background-color: #515151;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 13px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.play-btn:hover {
-  background-color: #1abc9c;
-  transform: scale(1.05);
-}
-
-.play-btn:active {
-  transform: scale(0.95);
-}
-.back-to-top-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Button appearance when hovered */
-.back-to-top-btn:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Focus styling */
-.back-to-top-btn:focus {
-  outline: none;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
-}
-
-.whatsapp-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  background-color: #25d366;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 28px;
-  cursor: pointer;
-  text-decoration: none;
-  box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
-  transition: all 0.3s ease;
-}
-
-.whatsapp-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(37, 211, 102, 0.4);
-  background-color: #20ba59;
-}
-
-/* RTL Support */
-[dir="rtl"] .fixed-buttons {
-  right: auto;
-  left: 20px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .fixed-buttons {
-    bottom: 15px;
-    right: 15px;
-    gap: 0.75rem;
-  }
-
-  .whatsapp-btn,
-  .back-to-top-btn {
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-  }
-}
-.social-toggle {
-  position: fixed;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  align-items: flex-end;
+  gap: 12px;
   z-index: 1000;
 }
 
-.toggle-btn {
-  width: 50px;
-  height: 50px;
-  background-color: #fff;
-  border: none;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Group positions its own popout */
+.toggle-group{ position: relative; }
+
+/* ===== White circular toggles ===== */
+.floating-btn{
+  width: 48px; height: 48px;
+  border: none; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #fff; color:#111;
+  box-shadow: 0 8px 22px rgba(0,0,0,.15);
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.floating-btn:hover{ transform: translateY(-2px); }
+.floating-btn.is-open{ filter: brightness(0.98); box-shadow: 0 10px 26px rgba(0,0,0,.2); }
+
+/* Back to top (dark) */
+.back-to-top{ background:#0f172a; color:#fff; font-weight:700; }
+
+/* WhatsApp toggle style (white with black border as in screenshot) */
+.whats-toggle{
+  background:#fff; color:#111;
+  border: 2px solid #111;
+}
+.whats-toggle .fa-whatsapp{ color:#111; }
+
+/* Social toggle (plain white) */
+.social-toggle{ background:#fff; color:#111; }
+
+/* ===== Popout menus (open BESIDE) ===== */
+.links.vstack{
+  position:absolute;
+  display:flex; flex-direction:column; gap:8px;
+  opacity:0; pointer-events:none;
+  transition: opacity .2s ease, transform .2s ease;
 }
 
-.toggle-btn i {
-  font-size: 20px;
-  color: #000;
-}
+/* Open to the left of the button */
+.links.left{ right: calc(100% + 10px); }
 
-.toggle-btn:hover {
-  background-color: #f0f0f0;
-}
+/* Bottom-anchor ensures full list grows UP so nothing is cut off */
+.links.bottom-anchor{ bottom: 0; transform: translateX(8px); }
+.links.show{ opacity:1; pointer-events:auto; transform: translateX(0); }
 
-.social-links {
-  position: fixed;
-  left: 60px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
+/* ===== Social round buttons ===== */
+.social-btn{
+  width: 40px; height: 40px;
   border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  text-decoration: none;
-  color: #000;
-  opacity: 0; /* Initially hidden */
-  transform: translateX(-20px); /* Slide in from the left */
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: grid; place-items: center;
+  color:#fff; text-decoration:none;
+  box-shadow: 0 4px 10px rgba(0,0,0,.18);
+  transform: translateX(8px); opacity: 0;
+  transition: transform .2s ease, opacity .2s ease, filter .15s ease;
+}
+.links.show .social-btn{ transform: translateX(0); opacity: 1; }
+.social-btn:hover{ filter: brightness(1.05); }
+
+/* Staggered reveal */
+.links.show .social-btn:nth-child(1){ transition-delay: .02s; }
+.links.show .social-btn:nth-child(2){ transition-delay: .06s; }
+.links.show .social-btn:nth-child(3){ transition-delay: .10s; }
+.links.show .social-btn:nth-child(4){ transition-delay: .14s; }
+
+/* Brand colors */
+.social-btn.tiktok{ background:#000; color:#fff; }
+.social-btn.snapchat{ background:#FFFC00; color:#000; }
+.social-btn.twitter{ background:#000; color:#fff; } /* or #1DA1F2 for blue */
+.social-btn.instagram{
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  color:#fff;
 }
 
-.social-link i {
-  font-size: 18px;
+/* ===== WhatsApp contacts ===== */
+.wa-contact{
+  min-width: 210px;
+  display:flex; align-items:center; gap:10px;
+  background:#fff; border:1px solid #e8f5ee;
+  border-radius: 14px; padding: 8px 10px;
+  text-decoration:none; color:#1f2937;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  transform: translateX(8px); opacity: 0;
+  transition: transform .2s ease, opacity .2s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.links.show .wa-contact{ transform: translateX(0); opacity: 1; }
+.wa-contact:hover{ border-color:#c9efd9; box-shadow:0 8px 18px rgba(0,0,0,.12); }
+
+.wa-contact .avatar{
+  width: 32px; height: 32px; border-radius:50%;
+  display:grid; place-items:center; flex:0 0 32px;
+  background:#25D366; color:#fff; font-size:15px;
+}
+.wa-contact .meta{ display:flex; flex-direction:column; line-height:1.2; }
+.wa-contact .name{ font-weight:700; font-size:.92rem; }
+.wa-contact .phone{ font-size:.78rem; color:#64748b; }
+
+/* ===== RTL support ===== */
+[dir="rtl"] .floating-buttons{ right:auto; left:16px; }
+[dir="rtl"] .links.left{ left: calc(100% + 10px); right:auto; }
+/* WhatsApp toggle: brand green */
+.whats-toggle{
+  background: #25D366;   /* WhatsApp green */
+  color: #fff;           /* makes icon (and X) white */
+  border: 0;
+  box-shadow: 0 8px 22px rgba(37, 211, 102, .35);
 }
 
-/* Show animation */
-.social-links.show .social-link {
-  opacity: 1;
-  transform: translateX(0);
+.whats-toggle:hover{
+  filter: brightness(1.05);
+  transform: translateY(-2px);
 }
 
-.social-links.show .social-link:nth-child(1) {
-  transition-delay: 0.1s;
-}
-
-.social-links.show .social-link:nth-child(2) {
-  transition-delay: 0.2s;
-}
-
-.social-links.show .social-link:nth-child(3) {
-  transition-delay: 0.3s;
-}
-
-.social-links.show .social-link:nth-child(4) {
-  transition-delay: 0.4s;
-}
-
-/* Facebook styles */
-.social-link.facebook {
-  background-color: #3b5998;
-  color: #fff;
-}
-
-.social-link.facebook:hover {
-  background-color: #2d4373;
-  color: #fff;
-}
-
-/* X (formerly Twitter) styles */
-.social-link.x {
-  background-color: #000;
-  color: #fff;
-}
-
-.social-link.x:hover {
-  background-color: #444;
-  color: #fff;
-}
-
-/* Instagram styles */
-.social-link.instagram {
-  background-color: #e4405f;
-  color: #fff;
-}
-
-.social-link.instagram:hover {
-  background-color: #c13545;
-  color: #fff;
-}
-
-/* LinkedIn styles */
-.social-link.linkedin {
-  background-color: #0077b5;
-  color: #fff;
-}
-
-.social-link.linkedin:hover {
-  background-color: #005983;
-  color: #fff;
+/* Slightly darker when open (optional) */
+.whats-toggle.is-open{
+  background: #20ba59;
 }

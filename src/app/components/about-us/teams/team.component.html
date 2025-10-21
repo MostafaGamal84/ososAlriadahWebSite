@@ -1,24 +1,115 @@
-<div class="team-section" *ngFor="let team of teamSections" [dir]="currentLang">
-  <div class="team-container">
-    <!-- Image Column -->
-    <div class="team-image-column" [class.rtl-order]="currentLang === 'ar'">
-      <div class="image-wrapper">
-        <div class="image-background"></div>
-        <img [src]="team.imageUrl" [alt]="currentLang === 'ar' ? team.titleAr : team.titleEn" class="team-image" />
-      </div>
-    </div>
+<div class="manager-portfolio" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+  <main class="container">
 
-    <!-- Content Column -->
-    <div class="team-content-column" [class.rtl-align]="currentLang === 'ar'">
-      <h2 class="team-title">
-        {{ currentLang === 'ar' ? team.titleAr : team.titleEn }}
-      </h2>
-      <p class="team-description" [class.arabic-text]="currentLang === 'ar'">
-        {{ currentLang === 'ar' ? team.textAr : team.textEn }}
-      </p>
-      <a class="team-button" (click)="navigateTo('contact')">
-        {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
-      </a>
+    <!-- ===== Profile card (photo inside body) ===== -->
+    <section class="card profile">
+      <div class="profile-grid">
+        <div class="photo">
+          <img [src]="profile.photoUrl" [alt]="displayName" />
+        </div>
+
+        <div class="info">
+          <h1 class="name">{{ displayName }}</h1>
+          <div class="role">
+            {{ currentLang === 'ar' ? profile.roleAr : profile.roleEn }}
+          </div>
+
+          <div class="meta">
+            <span><i class="fa-solid fa-location-dot"></i>
+              {{ currentLang==='ar' ? profile.locationAr : profile.locationEn }}</span>
+            <span><i class="fa-solid fa-envelope"></i> {{ profile.email }}</span>
+            <span><i class="fa-solid fa-phone"></i> {{ profile.phone }}</span>
+          </div>
+
+          <div class="actions">
+            <!-- <button class="btn primary" (click)="navigateTo('contact')">
+              {{ currentLang==='ar' ? 'تواصل معي' : 'Contact Me' }}
+            </button> -->
+            <!-- <a *ngIf="profile.cvUrl" class="btn ghost" [href]="profile.cvUrl" download>
+              <i class="fa-solid fa-file-arrow-down"></i>
+              {{ currentLang==='ar' ? 'تنزيل السيرة' : 'Download CV' }}
+            </a> -->
+          </div>
+
+          <!-- <div class="socials">
+            <a *ngFor="let s of socials" [href]="s.href" target="_blank" rel="noopener"
+               [class]="'social ' + s.key" [attr.aria-label]="s.label">
+              <i [class]="s.icon"></i>
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Summary / Skills / Licenses ===== -->
+    <div class="grid">
+      <section id="about" class="card bio">
+        <h2 class="card-title">{{ currentLang==='ar' ? 'نبذة' : 'About' }}</h2>
+        <p class="lead">
+          {{ currentLang==='ar' ? profile.bioAr : profile.bioEn }}
+        </p>
+
+        <h3 class="subhead">{{ currentLang==='ar' ? 'الرخص والاعتمادات' : 'Licenses & Accreditations' }}</h3>
+        <ul class="bullets">
+          <li *ngFor="let l of licenses"><i class="fa-solid fa-check-circle"></i> {{ currentLang==='ar' ? l.ar : l.en }}</li>
+        </ul>
+
+        <h3 class="subhead">{{ currentLang==='ar' ? 'المهارات' : 'Skills' }}</h3>
+        <div class="skills">
+          <span class="chip" *ngFor="let sk of skills">
+            <i [class]="sk.icon"></i>
+            {{ currentLang==='ar' ? sk.ar : sk.en }}
+          </span>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="stats">
+        <div class="stat" *ngFor="let st of stats">
+          <div class="val">{{ st.value }}</div>
+          <div class="lbl">{{ currentLang==='ar' ? st.labelAr : st.labelEn }}</div>
+        </div>
+
+        <div class="edu card">
+          <h3 class="card-title slim">{{ currentLang==='ar' ? 'التعليم' : 'Education' }}</h3>
+          <ul class="bullets tight">
+            <li *ngFor="let e of education">
+              <i class="fa-solid fa-graduation-cap"></i> {{ currentLang==='ar' ? e.ar : e.en }}
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Timeline -->
+      <section id="experience" class="card timeline">
+        <h2 class="card-title">{{ currentLang==='ar' ? 'الخبرات والمهام' : 'Experience & Roles' }}</h2>
+        <ol class="tl">
+          <li class="tl-item" *ngFor="let m of milestones">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-head">
+                <span class="tl-title">{{ currentLang==='ar' ? m.titleAr : m.titleEn }}</span>
+                <span class="tl-date">{{ currentLang==='ar' ? m.whenAr : m.whenEn }}</span>
+              </div>
+              <p *ngIf="m.descAr || m.descEn" class="tl-desc">
+                {{ currentLang==='ar' ? m.descAr : m.descEn }}
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta card">
+        <div class="cta-text">
+          <h3>{{ currentLang==='ar' ? 'لديك مشروع أو فرصة تعاونية؟' : 'Have a project or collaboration?' }}</h3>
+          <p>{{ currentLang==='ar' ? 'يسعدني التواصل ومناقشة كيف يمكننا تحقيق القيمة معًا.'
+                                   : 'Happy to connect and discuss how we can create value together.' }}</p>
+        </div>
+        <button class="btn primary lg" (click)="navigateTo('contact')">
+          {{ currentLang==='ar' ? 'تواصل الآن' : 'Get in touch' }}
+        </button>
+      </section>
     </div>
-  </div>
+  </main>
 </div>

@@ -1,30 +1,80 @@
-<div class="fixed-buttons">
-  <button *ngIf="showButton" class="back-to-top-btn" (click)="scrollToTop()">
+<div class="floating-buttons">
+  <!-- Back to Top -->
+  <button
+    *ngIf="showButton"
+    class="floating-btn back-to-top"
+    (click)="scrollToTop()"
+    aria-label="Back to top">
     ↑
   </button>
-  <a href="https://wa.me/+966575060000" class="whatsapp-btn" target="_blank" class="whatsapp-btn"
-    aria-label="تواصل معنا عبر واتساب">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-</div>
 
-<div class="social-toggle">
-  <button class="toggle-btn" (click)="toggleSocialLinks()">
-    <i class="fas" [ngClass]="{ 'fa-times': showSocialLinks, 'fa-share-alt': !showSocialLinks }"></i>
-  </button>
-  <div class="social-links" [class.show]="showSocialLinks">
-    <a href="https://facebook.com" target="_blank" class="social-link facebook" aria-label="Facebook">
-      <i class="fab fa-facebook-f"></i>
-    </a>
-    <a href="https://x.comhttps://x.com/UssRyadahCo?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
-      target="_blank" class="social-link x" aria-label="X">
-      <i class="fab fa-x-twitter"></i>
-    </a>
-    <a href="https://instagram.com" target="_blank" class="social-link instagram" aria-label="Instagram">
-      <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://linkedin.com" target="_blank" class="social-link linkedin" aria-label="LinkedIn">
-      <i class="fab fa-linkedin-in"></i>
-    </a>
+  <!-- WhatsApp toggle (top white circle) -->
+  <div class="toggle-group">
+    <button
+      class="floating-btn whats-toggle"
+      (click)="toggleWhatsLinks()"
+      [class.is-open]="showWhatsLinks"
+      [attr.aria-expanded]="showWhatsLinks"
+      [attr.aria-label]="showWhatsLinks ? 'إخفاء جهات الواتساب' : 'إظهار جهات الواتساب'">
+      <!-- show WA logo when closed, X when open -->
+      <i *ngIf="!showWhatsLinks" class="fab fa-whatsapp"></i>
+      <i *ngIf="showWhatsLinks" class="fas fa-times"></i>
+    </button>
+
+    <!-- Anchor to bottom so list grows UP and stays visible -->
+    <div class="links vstack left bottom-anchor" [class.show]="showWhatsLinks" dir="rtl">
+      <a *ngFor="let c of contacts; trackBy: trackByName"
+         class="wa-contact"
+         [href]="waLink(c)"
+         target="_blank" rel="noopener"
+         [attr.aria-label]="'WhatsApp: ' + c.name">
+        <span class="avatar"><i class="fab fa-whatsapp"></i></span>
+        <span class="meta">
+          <span class="name">{{ c.name }}</span>
+          <span class="phone">{{ c.phone }}</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Social toggle (bottom white circle) -->
+  <div class="toggle-group">
+    <button
+      class="floating-btn social-toggle"
+      (click)="toggleSocialLinks()"
+      [class.is-open]="showSocialLinks"
+      [attr.aria-expanded]="showSocialLinks"
+      [attr.aria-label]="showSocialLinks ? 'إخفاء الروابط' : 'إظهار الروابط'">
+      <!-- share icon when closed, X when open -->
+      <i class="fas" [ngClass]="{ 'fa-times': showSocialLinks, 'fa-share-alt': !showSocialLinks }"></i>
+    </button>
+
+    <!-- Anchor to bottom so the 4 icons grow UP (TikTok, Snap, X, Instagram) -->
+    <div class="links vstack left bottom-anchor" [class.show]="showSocialLinks">
+      <a href="https://www.tiktok.com/@ussryadah"
+         target="_blank" rel="noopener"
+         class="social-btn tiktok" aria-label="TikTok">
+        <i class="fab fa-tiktok"></i>
+      </a>
+
+      <a href="https://t.snapchat.com/BQCcG0Tc"
+         target="_blank" rel="noopener"
+         class="social-btn snapchat" aria-label="Snapchat">
+        <i class="fab fa-snapchat-ghost"></i>
+      </a>
+
+      <a href="https://x.com/ussryadahco"
+         target="_blank" rel="noopener"
+         class="social-btn twitter" aria-label="X (Twitter)">
+        <i class="fab fa-x-twitter"></i>
+      </a>
+
+      <!-- ✅ Instagram now always visible at the bottom -->
+      <a href="https://www.instagram.com/usselryadah"
+         target="_blank" rel="noopener"
+         class="social-btn instagram" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
   </div>
 </div>

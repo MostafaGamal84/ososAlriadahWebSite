@@ -1,43 +1,33 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-declare var $: any;
+
+interface Partner {
+  src: string;
+  nameAr: string;
+  nameEn: string;
+}
+
 @Component({
   selector: 'app-owl',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './owl.component.html',
-  styleUrl: './owl.component.css',
+  styleUrls: ['./owl.component.css'],
 })
-export class OwlComponent implements AfterViewInit {
-  logos: string[] = [
-    'assets/images/Ahli.svg',
-  'assets/images/infath.svg',
-  'assets/images/MIM.svg',
-  'assets/images/Modon.svg',
-  'assets/images/Moj.svg',
-  'assets/images/rajhi.svg',
-  'assets/images/Sah.svg',
-  'assets/images/Tasfia.svg',
+export class OwlComponent {
+  currentLang: 'ar' | 'en' = (localStorage.getItem('lang') as 'ar' | 'en') || 'ar';
+  get dir(): 'rtl' | 'ltr' { return this.currentLang === 'ar' ? 'rtl' : 'ltr'; }
+
+  partners: Partner[] = [
+    { src: 'assets/images/Ahli.svg',   nameAr: 'البنك الأهلي السعودي',                    nameEn: 'SNB - Saudi National Bank' },
+    { src: 'assets/images/infath.svg', nameAr: 'مركز الإسناد والتصفية (إنفاذ)',          nameEn: 'Enfath Center' },
+    { src: 'assets/images/MIM.svg',    nameAr: 'وزارة الصناعة والثروة المعدنية',          nameEn: 'Ministry of Industry & Mineral Resources' },
+    { src: 'assets/images/Modon.svg',  nameAr: 'مدن',                                     nameEn: 'MODON' },
+    { src: 'assets/images/Moj.svg',    nameAr: 'وزارة العدل',                              nameEn: 'Ministry of Justice' },
+    { src: 'assets/images/rajhi.svg',  nameAr: 'مصرف الراجحي',                             nameEn: 'Al Rajhi Bank' },
+    { src: 'assets/images/Sah.svg',    nameAr: 'SAH',                                      nameEn: 'SAH' },       // ← update if needed
+    { src: 'assets/images/Tasfia.svg', nameAr: 'تصفية',                                    nameEn: 'Tasfiah' },  // ← update if needed
   ];
 
-  ngAfterViewInit(): void {
-    $('.logo-carousel').owlCarousel({
-      items: 9,
-      margin: 20,
-      autoplay: true,
-      autoplayTimeout: 3000,
-      autoplayHoverPause: true,
-      loop: true,
-      dots: false,
-      nav: false,
-      center: true,
-      rtl: document.documentElement.lang === 'ar',
-      responsive: {
-        0: { items: 1 },
-        476: { items: 1 },
-        768: { items: 4 },
-        992: { items: 6 },
-        1200: { items: 9 },
-      },
-    });
-  }
+  trackByIdx(i: number) { return i; }
 }

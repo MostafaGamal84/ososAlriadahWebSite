@@ -1,0 +1,69 @@
+/* Fallback header height: change if your header is different */
+:root { --header-h: 89حء; }
+
+/* The entire preview page sits BELOW the fixed header */
+.pdf-wrap{
+  position: fixed;
+  top: var(--header-h, 100px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: #f6f7f9;
+  color: #0a1526;
+  z-index: 0; /* keep below the header (which should have higher z-index) */
+}
+
+/* Top bar */
+.topbar{
+  display: grid;
+  grid-template-columns: 100px 1fr 160px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.topbar .title{
+  margin: 0;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar .btn{
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 0 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.topbar .btn.primary{ background:#0f6b4a; color:#fff; border-color:#0f6b4a; }
+
+/* PDF area */
+.frame{ overflow: hidden; }
+.frame iframe{
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #fff;
+  border: 0;
+}
+
+/* Empty state */
+.empty{
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  font-weight: 600;
+}

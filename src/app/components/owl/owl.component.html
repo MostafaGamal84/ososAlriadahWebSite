@@ -1,9 +1,21 @@
-<section class="partners-section">
-    <div class="container">
-        <div class="partners-carousel">
-            <img *ngFor="let logo of logos" [src]="logo" alt="Partner Logo" />
-            <!-- duplicate logos for seamless scroll -->
-            <img *ngFor="let logo of logos" [src]="logo" alt="Partner Logo" />
-        </div>
+<section class="partners-section" [attr.dir]="dir">
+  <div class="container">
+    <div class="partners-carousel" role="list">
+      <!-- main track -->
+      <figure class="partner" *ngFor="let p of partners; trackBy: trackByIdx" role="listitem">
+        <img [src]="p.src" [alt]="(currentLang === 'ar' ? p.nameAr : p.nameEn) + ' logo'" />
+        <figcaption class="partner-name">
+          {{ currentLang === 'ar' ? p.nameAr : p.nameEn }}
+        </figcaption>
+      </figure>
+
+      <!-- duplicate for seamless loop -->
+      <figure class="partner" *ngFor="let p of partners; trackBy: trackByIdx" role="listitem">
+        <img [src]="p.src" [alt]="(currentLang === 'ar' ? p.nameAr : p.nameEn) + ' logo'" />
+        <figcaption class="partner-name">
+          {{ currentLang === 'ar' ? p.nameAr : p.nameEn }}
+        </figcaption>
+      </figure>
     </div>
+  </div>
 </section>

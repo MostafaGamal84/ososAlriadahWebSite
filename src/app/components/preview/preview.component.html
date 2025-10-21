@@ -1,0 +1,27 @@
+<section class="pdf-wrap" [attr.dir]="isArabic(title) ? 'rtl' : 'ltr'">
+  <header class="topbar">
+    <button class="btn back" (click)="back()">←</button>
+    <h1 class="title">{{ title }}</h1>
+    <button class="btn primary" (click)="openInNewTab()">
+      {{ isArabic(title) ? 'فتح في تبويب' : 'Open in new tab' }}
+    </button>
+  </header>
+
+  <div class="frame">
+    <ng-container *ngIf="pdfUrl; else noPdf">
+      <!-- PDF.js viewer -->
+      <pdf-viewer
+        [src]="pdfUrl"
+        [render-text]="true"
+        [original-size]="true"
+        [fit-to-page]="true"
+        style="display:block; width:100%; height:100%;"
+      ></pdf-viewer>
+    </ng-container>
+
+    <ng-template #noPdf>
+      <div class="empty"><p>No PDF URL provided.</p></div>
+    </ng-template>
+  </div>
+  
+</section>

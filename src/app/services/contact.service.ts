@@ -14,7 +14,7 @@ export interface ContactFormData {
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = 'https://ajyalalquran.somee.com/api/Subscribe/SendEmailForNewRequests';
+  private apiUrl = 'https://app.osos-alriadah.com/api/Contact/SendEmailForNewRequests';
 
   constructor(private http: HttpClient) { }
   submitContactForm(formData: ContactFormData): Observable<{ success: boolean; message: string }> {

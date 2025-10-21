@@ -12,9 +12,13 @@ import { DevelopmentComponent } from './components/our-services/development/deve
 import { LeasingComponent } from './components/our-services/leasing/leasing.component';
 import { ManagementComponent } from './components/our-services/management/management.component';
 import { MarketingComponent } from './components/our-services/marketing/marketing.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { PreviewComponent } from './components/preview/preview.component';
 
 export const routes: Routes = [
   { path: 'about', component: AboutUsComponent },
+  { path: 'projects', component: ProjectsComponent },
+  { path: 'preview', component: PreviewComponent },
   { path: 'vision', component: VisionComponent },
   { path: 'mission', component: MissionComponent },
   { path: 'team', component: TeamComponent },

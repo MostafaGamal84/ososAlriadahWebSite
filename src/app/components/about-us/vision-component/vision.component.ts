@@ -27,7 +27,7 @@ export class VisionComponent implements OnInit {
 
   visionSections: VisionMissionItem[] = [
     {
-      titleAr: 'رؤيتنا',
+      titleAr: 'الرؤية',
       titleEn: 'Our Vision',
       textAr:
         'نسعى لأن نكون الرواد في تقديم الحلول العقارية المتكاملة التي تلبي تطلعات عملائنا وتساهم في بناء مجتمعات مستدامة. نطمح إلى إعادة تعريف معايير الجودة في قطاع العقارات من خلال الابتكار والشفافية والتميز في الخدمة.',
@@ -58,8 +58,8 @@ export class VisionComponent implements OnInit {
       actionTextEn: 'Explore Our Vision',
     },
     {
-      titleAr: 'رؤيتنا',
-      titleEn: 'Our Vision',
+      titleAr: 'الرسالة',
+      titleEn: 'Our Mission',
       textAr:
         'نلتزم بتقديم خدمات عقارية استثنائية تعتمد على المعرفة السوقية العميقة والخبرة المتراكمة. نعمل على بناء علاقات طويلة الأمد مع عملائنا من خلال الحلول المخصصة التي تحقق أهدافهم الاستثمارية والسكنية.',
       textEn:

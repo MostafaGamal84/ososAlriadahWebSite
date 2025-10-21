@@ -23,6 +23,7 @@ export interface Auction {
 })
 export class AuctionService {
   private readonly baseUrl = 'https://app.osos-alriadah.com/api/Auction';
+  // private readonly baseUrl = 'https://localhost:5001/api/Auction';
 
   constructor(private http: HttpClient) {}
 

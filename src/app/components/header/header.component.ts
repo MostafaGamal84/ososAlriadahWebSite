@@ -23,7 +23,7 @@ export class HeaderComponent {
 
   aboutLinks = [
     { link: '/vision',  labelAr: 'رؤيتنا',      labelEn: 'Our Vision' },
-    { link: '/mission', labelAr: 'رسالتنا',     labelEn: 'Our Mission' },
+    // { link: '/mission', labelAr: 'رسالتنا',     labelEn: 'Our Mission' },
     { link: '/team',    labelAr: 'فريق العمل',  labelEn: 'Our Team' },
   ];
 
@@ -89,11 +89,15 @@ export class HeaderComponent {
     const toggler = document.querySelector('.navbar-toggler') as HTMLElement | null;
     const collapse = document.getElementById('navbarNav');
     if (collapse?.classList.contains('show')) toggler?.click();
+     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // توافقي مع استدعاءات: (click)="navigateAndCloseDropdown(item.link, 'about')"
   navigateAndCloseDropdown(path: string, _dropdown?: string, closeMenu: boolean = true): void {
     this.closeAllDropdowns();
     this.router.navigate([path]).finally(() => this.closeAllAndCollapse(closeMenu));
+  }
+    scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

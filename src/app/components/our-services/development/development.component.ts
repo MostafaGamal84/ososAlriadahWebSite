@@ -61,9 +61,9 @@ export class DevelopmentComponent {
 
   stats = [
     { value: 25, label: { en: 'Years Experience', ar: 'سنوات خبرة' } },
-    { value: 150, label: { en: 'Completed Projects', ar: 'مشاريع منجزة' } },
+    { value: 90, label: { en: 'Completed Projects', ar: 'مشاريع منجزة' } },
     { value: 10, label: { en: 'Awards Won', ar: 'جوائز محلية ودولية' } },
-    { value: 300, label: { en: 'Happy Clients', ar: 'عملاء سعداء' } },
+    { value: 300, label: { en: 'Clients', ar: 'عميل مستفيد' } },
   ];
 
   team = [

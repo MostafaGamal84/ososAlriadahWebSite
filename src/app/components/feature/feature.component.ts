@@ -55,22 +55,22 @@ export class FeatureComponent {
           'https://pbs.twimg.com/media/GxrmAr8WgAA-cIp?format=jpg&name=large',
       },
     },
-    {
-      id: 2,
-      titleAr: 'تقييم العقارات بدقة',
-      titleEn: 'Accurate Property Evaluation',
-      subtitleAr: 'تقييم العقارات بدقة',
-      subtitleEn: 'Accurate Property Evaluation',
-      descriptionAr:
-        'نقدم خدمات تقييم احترافية للعقارات لضمان اتخاذ قرارات استثمارية سليمة وشفافة.',
-      descriptionEn:
-        'We provide professional property evaluation services to ensure sound and transparent investment decisions.',
-      icon: {
-        type: 'img',
-        content:
-          'https://pbs.twimg.com/media/GwkBRWHXcAAfB-4?format=jpg&name=900x900',
-      },
-    },
+   {
+  id: 2,
+  titleAr: 'الوساطة العقارية',
+  titleEn: 'Real Estate Brokerage',
+  subtitleAr: 'وساطة عقارية موثوقة',
+  subtitleEn: 'Trusted Brokerage Services',
+  descriptionAr:
+    'نقدّم خدمات وساطة عقارية شاملة لربط البائعين بالمشترين/المستأجرين: إدراج وتسويق العقار، استقبال الاستفسارات وتنظيم الزيارات، التفاوض على السعر والشروط، ودعم إجراءات التوثيق حتى الإغلاق برسوم شفافة.',
+  descriptionEn:
+    'End-to-end real estate brokerage: listing and marketing, qualified leads, property viewings, negotiation on price and terms, and compliant closing support with transparent fees.',
+  icon: {
+    type: 'img',
+    content: 'https://cdn-icons-png.flaticon.com/512/942/942748.png' // house + handshake icon
+  },
+},
+
     {
       id: 3,
       titleAr: 'دعم واستشارات عقارية',

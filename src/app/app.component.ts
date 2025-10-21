@@ -13,6 +13,7 @@ import { ContactService } from './services/contact.service';
 import { CommonModule } from '@angular/common';
 import { PackagesComponent } from './components/auction/auction.component';
 import { OwlComponent } from './components/owl/owl.component';
+import { ProjectsComponent } from './components/projects/projects.component';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ import { OwlComponent } from './components/owl/owl.component';
     CommonModule,
     PackagesComponent,
     OwlComponent,
+    ProjectsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -51,4 +53,6 @@ export class AppComponent {
     const url = this.router.url.split('?')[0].split('#')[0];
     return url === '/' || url === '/about';
   }
+
+  
 }

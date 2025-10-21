@@ -35,7 +35,7 @@ developer = {
   ];
 
   contactInfo = {
-    email: 'OsosAlRiyada@info.com',
+    email: 'Info@osos-alriadah.com',
     phone: '+966575060000',
   };
   

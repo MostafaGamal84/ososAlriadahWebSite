@@ -1,0 +1,54 @@
+<section class="dev-projects" >
+  <div class="container">
+    <div class="head">
+      <h2 class="title">{{ currentLang === 'ar' ? 'المشاريع' : 'Development Projects' }}</h2>
+
+      <!-- (optional) tiny currentLanguage switch; remove if you already control currentLang elsewhere -->
+    
+    </div>
+
+    <!-- Cards -->
+    <div class="cards" (mouseleave)="clearActive()">
+      <article
+        class="card"
+        *ngFor="let p of projects; index as i; trackBy: trackById"
+        [class.active]="i === activeIndex"
+        (mouseenter)="setActive(i)"
+        (click)="setActive(i)"
+        (touchstart)="setActive(i)"
+        [style.backgroundImage]="'url(' + p.image + ')'"
+      >
+        <div class="shade"></div>
+
+        <!-- Compact title -->
+        <div class="mini-title">
+          {{ currentLang === 'ar' ? p.titleAr : p.titleEn }}
+        </div>
+
+        <!-- Expanded content (fades in after shade) -->
+        <div class="content">
+          <h3 class="big">{{ currentLang === 'ar' ? p.titleAr : p.titleEn }}</h3>
+          <p class="desc">{{ currentLang === 'ar' ? p.descAr : p.descEn }}</p>
+          <a class="btn primary"  href="javascript:void(0)"
+  (click)="$event.stopPropagation(); openPdf(p)">
+            {{ currentLang === 'ar' ? 'تعرف أكثر' : 'Learn more' }}
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Footer controls -->
+    <div class="footer">
+      <div class="page">{{ activeIndex >= 0 ? (activeIndex + 1) : 0 }}</div>
+
+      <div class="progress">
+        <span class="bar" [style.width.%]="progressPercent"></span>
+      </div>
+
+      <div class="nav">
+        <button class="circle" (click)="prev()" aria-label="السابق">‹</button>
+        <button class="circle" (click)="next()" aria-label="التالي">›</button>
+      </div>
+    </div>
+  </div>
+</section>
