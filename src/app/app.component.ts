@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { BackToTopComponent } from './components/back-to-top/back-to-top.component';
@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 import { AuctionComponent } from './components/auction/auction.component';
 import { OwlComponent } from './components/owl/owl.component';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -40,6 +42,8 @@ import { ProjectsComponent } from './components/projects/projects.component';
 })
 export class AppComponent {
   title = 'اسس الريادة للخدمات العقارية';
+  private snapchatTrackingSubscription?: Subscription;
+
   constructor(public contactService: ContactService, public router: Router) {}
 
   ngOnInit(): void {
@@ -47,6 +51,12 @@ export class AppComponent {
     this.contactService.currentLang = savedLang === 'en' ? 'en' : 'ar';
     document.documentElement.dir =
       this.contactService.currentLang === 'ar' ? 'rtl' : 'ltr';
+
+    this.initializeSnapchatPixelTracking();
+  }
+
+  ngOnDestroy(): void {
+    this.snapchatTrackingSubscription?.unsubscribe();
   }
 
   isHomeOrAbout(): boolean {
@@ -68,5 +78,42 @@ export class AppComponent {
     return withoutFragment.startsWith('/')
       ? withoutFragment
       : `/${withoutFragment}`;
+  }
+
+  private initializeSnapchatPixelTracking(): void {
+    const pixelId = this.getSnapchatPixelId();
+    if (!pixelId) {
+      return;
+    }
+
+    const snaptr = (window as { snaptr?: (...args: unknown[]) => void }).snaptr;
+    if (typeof snaptr !== 'function') {
+      console.warn('Snapchat Pixel script not loaded. Skipping analytics tracking.');
+      return;
+    }
+
+    snaptr('track', 'PAGE_VIEW');
+
+    let skipNextNavigation = true;
+    this.snapchatTrackingSubscription = this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (skipNextNavigation) {
+          skipNextNavigation = false;
+          return;
+        }
+
+        snaptr('track', 'PAGE_VIEW');
+      });
+  }
+
+  private getSnapchatPixelId(): string | undefined {
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="snapchat-pixel-id"]');
+    const content = meta?.content?.trim();
+    if (!content || content === 'REPLACE_WITH_YOUR_PIXEL_ID') {
+      return undefined;
+    }
+
+    return content;
   }
 }
