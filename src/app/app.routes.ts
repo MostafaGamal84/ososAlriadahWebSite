@@ -30,7 +30,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: AuctionComponent, data: { defaultTab: 'all' } },
       { path: 'current', component: AuctionComponent, data: { defaultTab: 'current' } },
-      { path: 'upcoming', component: AuctionComponent, data: { defaultTab: 'upcoming' } },
+      { path: 'coming', component: AuctionComponent, data: { defaultTab: 'coming' } },
+      { path: 'upcoming', redirectTo: 'coming', pathMatch: 'full' },
       { path: 'ended', component: AuctionComponent, data: { defaultTab: 'ended' } },
     ],
   },

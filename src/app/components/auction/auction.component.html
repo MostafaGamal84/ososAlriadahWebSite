@@ -12,8 +12,8 @@
       <button class="tab-button" [class.active]="selectedTab === 'current'" (click)="selectTab('current')">
         {{ currentLang === 'ar' ? 'الجارية' : 'Current' }}
       </button>
-      <button class="tab-button" [class.active]="selectedTab === 'upcoming'" (click)="selectTab('upcoming')">
-        {{ currentLang === 'ar' ? 'القادمة' : 'Upcoming' }}
+      <button class="tab-button" [class.active]="selectedTab === 'coming'" (click)="selectTab('coming')">
+        {{ currentLang === 'ar' ? 'القادمة' : 'Coming' }}
       </button>
       <button class="tab-button" [class.active]="selectedTab === 'ended'" (click)="selectTab('ended')">
         {{ currentLang === 'ar' ? 'المنتهية' : 'Ended' }}
@@ -52,7 +52,7 @@
                     ? (auction.status === 'current' ? 'مزاد جاري'
                         : auction.status === 'ended' ? 'مزاد منتهي' : 'مزاد قادم')
                     : (auction.status === 'current' ? 'Current'
-                        : auction.status === 'ended' ? 'Ended' : 'Upcoming')
+                        : auction.status === 'ended' ? 'Ended' : 'Coming')
                 }}
               </span>
 
@@ -90,12 +90,12 @@
                 <div class="timer-title">
                   {{
                     currentLang === 'ar'
-                      ? (auction.status === 'upcoming'
+                      ? (auction.status === 'coming'
                           ? 'يبدأ المزاد بعد'
                           : auction.status === 'current'
                             ? 'ينتهي المزاد بعد'
                             : 'المزاد منتهي')
-                      : (auction.status === 'upcoming'
+                      : (auction.status === 'coming'
                           ? 'Starts in'
                           : auction.status === 'current'
                             ? 'Ends in'

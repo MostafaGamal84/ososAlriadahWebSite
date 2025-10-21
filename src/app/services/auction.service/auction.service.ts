@@ -12,7 +12,7 @@ export interface Auction {
   pdfPath: string;
   isDeleted?: boolean;
   isPermanentlyDeleted?: boolean;
-  status?: 'current' | 'upcoming' | 'ended';
+  status?: 'current' | 'coming' | 'ended';
   timeLeft?: string;
   timeToStart?: string;
   imageUrl?: string;
@@ -50,12 +50,12 @@ export class AuctionService {
   calculateAuctionStatus(
     startDate: string,
     endDate: string
-  ): 'upcoming' | 'current' | 'ended' {
+  ): 'coming' | 'current' | 'ended' {
     const now = new Date();
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    if (now < start) return 'upcoming';
+    if (now < start) return 'coming';
     if (now >= start && now <= end) return 'current';
     return 'ended';
   }

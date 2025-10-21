@@ -8,7 +8,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
@@ -17,7 +17,7 @@ import { AuctionService } from '../../services/auction.service/auction.service';
 
 Swiper.use([Navigation, Pagination, Autoplay]);
 
-type AuctionStatus = 'upcoming' | 'current' | 'ended';
+type AuctionStatus = 'coming' | 'current' | 'ended';
 type AuctionTab = 'all' | AuctionStatus;
 
 interface Countdown {
@@ -86,13 +86,13 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
     ar: {
       all: 'المزادات',
       current: 'المزادات الجارية',
-      upcoming: 'المزادات القادمة',
+      coming: 'المزادات القادمة',
       ended: 'المزادات المنتهية',
     },
     en: {
       all: 'Auctions',
       current: 'Current Auctions',
-      upcoming: 'Upcoming Auctions',
+      coming: 'Coming Auctions',
       ended: 'Ended Auctions',
     },
   };
@@ -105,7 +105,8 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private cdr: ChangeDetectorRef,
     private auctionService: AuctionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -185,8 +186,10 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** ---------- Tabs & Filtering ---------- */
   selectTab(tab: AuctionTab): void {
+    const prev = this.selectedTab;
     this.selectedTab = tab;
-    this.applyFilter(true);
+    this.applyFilter(prev !== tab);
+    this.navigateForTab(tab);
   }
 
   // recreateSwiper: when true, rebuild swiper (e.g., on tab change or initial load)
@@ -197,6 +200,12 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
         : this.auctions.filter((a) => a.status === this.selectedTab);
 
     if (recreateSwiper) this.recreateSwiper();
+  }
+
+  private navigateForTab(tab: AuctionTab): void {
+    const targetUrl = tab === 'all' ? '/auction' : `/auction/${tab}`;
+    if (this.router.url === targetUrl) return;
+    this.router.navigateByUrl(targetUrl, { replaceUrl: true });
   }
 
   private syncTabFromRoute(tab?: unknown): void {
@@ -211,9 +220,9 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private normalizeTab(tab?: unknown): AuctionTab {
-    return tab === 'current' || tab === 'upcoming' || tab === 'ended'
-      ? tab
-      : 'all';
+    if (tab === 'current' || tab === 'coming' || tab === 'ended') return tab;
+    if (tab === 'upcoming') return 'coming';
+    return 'all';
   }
 
   /** ---------- Swiper ---------- */
@@ -288,7 +297,7 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
     const start = new Date(startStr).getTime();
     const end = new Date(endStr).getTime();
     if (isNaN(start) || isNaN(end)) return 'ended';
-    if (now < start) return 'upcoming';
+    if (now < start) return 'coming';
     if (now >= start && now <= end) return 'current';
     return 'ended';
   }
@@ -303,7 +312,7 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
       return { days: '0', hours: '00', minutes: '00', seconds: '00' };
 
     const target =
-      status === 'upcoming'
+      status === 'coming'
         ? new Date(startStr).getTime()
         : new Date(endStr).getTime();
 
