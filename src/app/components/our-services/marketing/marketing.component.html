@@ -1,210 +1,118 @@
-<div class="leasing" [attr.dir]="dir">
-  <!-- HERO -->
-  <section class="leasing__hero">
-    <div class="leasing__hero-content" style="flex:1">
-      <h1>
-        {{ currentLang === 'ar' ? 'التسويق العقاري' : 'Real Estate Marketing' }}
-      </h1>
-      <p class="leasing__subtitle">
-        {{
-          currentLang === 'ar'
-            ? 'نُقدّم خطة تسويق متكاملة لبيع أو تأجير عقارك بأسرع وقت وأفضل عائد — تصوير احترافي، إعلانات مدفوعة، وإدارة الاستفسارات حتى إتمام التعاقد.'
-            : 'We deliver a full-funnel strategy to sell or lease your property fast and at the best return—pro photography, paid ads, lead handling, and contract support.'
-        }}
+<div class="inner-page" [attr.dir]="dir">
+  <app-page-heading
+    [title]="currentLang === 'ar' ? 'التسويق العقاري' : 'Real estate marketing'"
+    [description]="
+      currentLang === 'ar'
+        ? 'نُبرز قيمة عقارك، ونوصله إلى الجمهور المناسب.'
+        : 'Bringing your property’s value to the right audience.'
+    "
+  ></app-page-heading>
+  <section class="inner-section inner-width inner-split">
+    <div class="inner-copy" appAppInViewport animationClass="reveal-on-scroll">
+      <span class="inner-kicker"><span [attr.data-cms-key]="'marketing.text.000'">{{ (currentLang === "ar"
+          ? "تسويق يبدأ بفهم العقار"
+          : "MARKETING THAT STARTS WITH UNDERSTANDING") | cmsText:('marketing.text.000') }}</span></span>
+      <h2>
+        <span [attr.data-cms-key]="'marketing.text.001'">{{ (currentLang === "ar"
+            ? "حضور واضح. وتفاصيل تُقنع."
+            : "A clear presence. Compelling detail.") | cmsText:('marketing.text.001') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'marketing.text.002'">{{ (currentLang === "ar"
+            ? "خطة تسويق تجمع التصوير الاحترافي والإعلانات وإدارة الاستفسارات، مع متابعة المهتمين ودعم خطوات التعاقد."
+            : "A marketing plan combining professional photography, advertising and enquiry management, with follow-up and support through the agreement process.") | cmsText:('marketing.text.002') }}</span>
       </p>
-
-      <div class="leasing__cta-buttons">
-        <button class="leasing__button leasing__button--primary" (click)="navigateTo('contact')">
-          {{ currentLang === 'ar' ? 'اطلب استشارة مجانية' : 'Get a Free Consultation' }}
-        </button>
-        <button class="leasing__button leasing__button--secondary" (click)="scrollTo('steps')">
-          {{ currentLang === 'ar' ? 'خطوات العمل' : 'How It Works' }}
+      <div class="inner-actions">
+        <a routerLink="/contact" class="inner-button"
+          ><span [attr.data-cms-key]="'marketing.text.003'">{{ (currentLang === "ar" ? "ناقش تسويق عقارك" : "Discuss your property") | cmsText:('marketing.text.003') }}</span>
+          ↗</a
+        ><button
+          type="button"
+          class="inner-button secondary"
+          (click)="scrollTo('steps')"
+        >
+          <span [attr.data-cms-key]="'marketing.text.004'">{{ (currentLang === "ar" ? "خطوات العمل" : "How it works") | cmsText:('marketing.text.004') }}</span>
         </button>
       </div>
     </div>
-
-    <div class="leasing__hero-image">
-      <img
-        class="leasing__image"
-        alt="Marketing hero"
-        src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fit=crop"
-      />
-    </div>
+    <figure
+      class="inner-photo"
+      appAppInViewport
+      animationClass="reveal-on-scroll"
+    >
+      <img [attr.data-cms-key]="'marketing.image.005'" [src]="('images/architecture.jpg') | cmsText:('marketing.image.005')" alt="" />
+      <figcaption>
+        <span [attr.data-cms-key]="'marketing.text.006'">{{ (currentLang === "ar"
+            ? "نمنح تفاصيل عقارك المساحة التي تستحقها."
+            : "Giving your property’s details the attention they deserve.") | cmsText:('marketing.text.006') }}</span>
+      </figcaption>
+    </figure>
   </section>
-
-  <!-- FEATURES -->
-  <section class="leasing__features">
-    <h2 class="leasing__section-title">
-      {{ currentLang === 'ar' ? 'لماذا تختارنا؟' : 'Why Choose Us?' }}
-    </h2>
-
-    <div class="leasing__features-grid">
-      <article class="leasing__feature-card" *ngFor="let f of features; trackBy: trackByIdx">
-        <div class="leasing__feature-icon">
-          <mat-icon aria-hidden="true">{{ f.icon }}</mat-icon>
-        </div>
-        <h3 class="leasing__feature-title">{{ currentLang === 'ar' ? f.titleAr : f.titleEn }}</h3>
-        <p class="leasing__feature-desc">{{ currentLang === 'ar' ? f.descAr : f.descEn }}</p>
+  <section class="inner-section inner-width">
+    <div class="inner-section-head">
+      <h2><span [attr.data-cms-key]="'marketing.text.007'">{{ (currentLang === "ar" ? "ما الذي نقدمه؟" : "What we provide") | cmsText:('marketing.text.007') }}</span></h2>
+    </div>
+    <div class="inner-grid">
+      <article
+        class="inner-card"
+        *ngFor="let f of features; let i = index; trackBy: trackByIdx; let cmsIndex0 = index"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+      >
+        <span class="inner-number">0<span [attr.data-cms-key]="'marketing.text.008' + '.' + cmsIndex0">{{ (i + 1) | cmsText:('marketing.text.008' + '.' + cmsIndex0) }}</span> /</span
+        ><span class="material-icons" aria-hidden="true"><span [attr.data-cms-key]="'marketing.text.009' + '.' + cmsIndex0">{{ (f.icon) | cmsText:('marketing.text.009' + '.' + cmsIndex0) }}</span></span>
+        <h3><span [attr.data-cms-key]="'marketing.text.010' + '.' + cmsIndex0">{{ (currentLang === "ar" ? f.titleAr : f.titleEn) | cmsText:('marketing.text.010' + '.' + cmsIndex0) }}</span></h3>
+        <p><span [attr.data-cms-key]="'marketing.text.011' + '.' + cmsIndex0">{{ (currentLang === "ar" ? f.descAr : f.descEn) | cmsText:('marketing.text.011' + '.' + cmsIndex0) }}</span></p>
       </article>
     </div>
   </section>
-
-  
-  <!-- <section class="leasing__properties" id="properties">
-    <h2 class="leasing__section-title">
-      {{ currentLang === 'ar' ? 'عقارات مختارة' : 'Featured Properties' }}
-    </h2>
-
-   
-    <div class="leasing__filters">
-      <div class="leasing__filter-group">
-        <label class="leasing__filter-label">
-          {{ currentLang === 'ar' ? 'المدينة' : 'City' }}
-        </label>
-        <select class="leasing__filter-select" [(ngModel)]="filters.city" (change)="applyFilters()">
-          <option value="all">{{ currentLang === 'ar' ? 'الكل' : 'All' }}</option>
-          <option *ngFor="let c of cities" [value]="c.value">{{ currentLang === 'ar' ? c.ar : c.en }}</option>
-        </select>
-      </div>
-
-      <div class="leasing__filter-group">
-        <label class="leasing__filter-label">
-          {{ currentLang === 'ar' ? 'النوع' : 'Type' }}
-        </label>
-        <select class="leasing__filter-select" [(ngModel)]="filters.type" (change)="applyFilters()">
-          <option value="all">{{ currentLang === 'ar' ? 'الكل' : 'All' }}</option>
-          <option *ngFor="let t of types" [value]="t.value">{{ currentLang === 'ar' ? t.ar : t.en }}</option>
-        </select>
-      </div>
-
-      <div class="leasing__filter-group">
-        <label class="leasing__filter-label">
-          {{ currentLang === 'ar' ? 'الميزانية (ريال)' : 'Budget (SAR)' }}
-        </label>
-        <select class="leasing__filter-select" [(ngModel)]="filters.budget" (change)="applyFilters()">
-          <option value="all">{{ currentLang === 'ar' ? 'غير محدد' : 'Any' }}</option>
-          <option value="0-3000">0 - 3,000</option>
-          <option value="3000-7000">3,000 - 7,000</option>
-          <option value="7000-15000">7,000 - 15,000</option>
-          <option value="15000+">15,000+</option>
-        </select>
-      </div>
-
-      <button class="leasing__filter-button" (click)="resetFilters()">
-        {{ currentLang === 'ar' ? 'إعادة ضبط' : 'Reset' }}
-      </button>
+  <section class="inner-section inner-width" id="steps">
+    <div class="inner-section-head">
+      <h2><span [attr.data-cms-key]="'marketing.text.012'">{{ (currentLang === "ar" ? "خطوات العمل" : "How it works") | cmsText:('marketing.text.012') }}</span></h2>
     </div>
-
- 
-    <div class="leasing__properties-grid">
-      <article class="leasing__property-card" *ngFor="let p of displayed; trackBy: trackById">
-        <span class="leasing__property-badge">{{ currentLang === 'ar' ? p.badgeAr : p.badgeEn }}</span>
-        <img class="leasing__property-image" [src]="p.image" [alt]="currentLang === 'ar' ? p.titleAr : p.titleEn" />
-        <div class="leasing__property-details">
-          <h3 class="leasing__property-title">{{ currentLang === 'ar' ? p.titleAr : p.titleEn }}</h3>
-
-          <div class="leasing__property-info">
-            <div class="leasing__property-info-item">
-              <mat-icon>location_on</mat-icon>
-              <span>{{ currentLang === 'ar' ? p.cityAr : p.cityEn }}</span>
-            </div>
-            <div class="leasing__property-info-item">
-              <mat-icon>square_foot</mat-icon>
-              <span>{{ p.area }} m²</span>
-            </div>
-            <div class="leasing__property-info-item" *ngIf="p.beds">
-              <mat-icon>hotel</mat-icon>
-              <span>{{ p.beds }} {{ currentLang === 'ar' ? 'غرف' : 'Beds' }}</span>
-            </div>
-            <div class="leasing__property-info-item" *ngIf="p.baths">
-              <mat-icon>bathtub</mat-icon>
-              <span>{{ p.baths }} {{ currentLang === 'ar' ? 'حمامات' : 'Baths' }}</span>
-            </div>
-          </div>
-
-          <div class="leasing__property-footer">
-            <div class="leasing__property-price">
-              {{ p.price | number }} {{ currentLang === 'ar' ? 'ريال' : 'SAR' }}
-              <span *ngIf="p.period"> / {{ currentLang === 'ar' ? p.periodAr : p.periodEn }}</span>
-            </div>
-            <button class="leasing__property-button" (click)="navigateTo('contact')">
-              {{ currentLang === 'ar' ? 'تفاصيل' : 'Details' }}
-            </button>
-          </div>
-        </div>
+    <div class="inner-grid">
+      <article
+        class="inner-card"
+        *ngFor="let s of steps; let i = index; trackBy: trackByIdx; let cmsIndex1 = index"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+      >
+        <span class="inner-number">0<span [attr.data-cms-key]="'marketing.text.013' + '.' + cmsIndex1">{{ (i + 1) | cmsText:('marketing.text.013' + '.' + cmsIndex1) }}</span> /</span>
+        <h3><span [attr.data-cms-key]="'marketing.text.014' + '.' + cmsIndex1">{{ (currentLang === "ar" ? s.titleAr : s.titleEn) | cmsText:('marketing.text.014' + '.' + cmsIndex1) }}</span></h3>
+        <p><span [attr.data-cms-key]="'marketing.text.015' + '.' + cmsIndex1">{{ (currentLang === "ar" ? s.descAr : s.descEn) | cmsText:('marketing.text.015' + '.' + cmsIndex1) }}</span></p>
       </article>
     </div>
-
-    <div class="leasing__view-all" *ngIf="displayed.length === 0">
-      <p>{{ currentLang === 'ar' ? 'لا توجد نتائج مطابقة.' : 'No matching results.' }}</p>
-    </div>
-  </section> -->
-
-  <!-- PROCESS -->
-  <section class="leasing__process"  id="steps">
-    <h2 class="leasing__section-title">
-      {{ currentLang === 'ar' ? 'خطوات العمل' : 'How It Works' }}
-    </h2>
-
-    <div class="leasing__process-steps">
-      <div class="leasing__step" *ngFor="let s of steps; trackBy: trackByIdx">
-        <div class="leasing__step-number"></div>
-        <h3 class="leasing__step-title">{{ currentLang === 'ar' ? s.titleAr : s.titleEn }}</h3>
-        <p class="leasing__step-desc">{{ currentLang === 'ar' ? s.descAr : s.descEn }}</p>
-      </div>
-    </div>
   </section>
-
-  <!-- FAQ (native <details> for zero dependencies) -->
-  <section class="leasing__properties">
-    <h2 class="leasing__section-title">
-      {{ currentLang === 'ar' ? 'الأسئلة الشائعة' : 'FAQs' }}
-    </h2>
-
+  <section class="inner-section inner-width">
+    <div class="inner-section-head">
+      <h2>
+        <span [attr.data-cms-key]="'marketing.text.016'">{{ (currentLang === "ar"
+            ? "الأسئلة الشائعة"
+            : "Frequently asked questions") | cmsText:('marketing.text.016') }}</span>
+      </h2>
+    </div>
+    <details class="inner-faq" *ngFor="let q of faqs; trackBy: trackByIdx; let cmsIndex2 = index">
+      <summary><span [attr.data-cms-key]="'marketing.text.017' + '.' + cmsIndex2">{{ (currentLang === "ar" ? q.qAr : q.qEn) | cmsText:('marketing.text.017' + '.' + cmsIndex2) }}</span></summary>
+      <p><span [attr.data-cms-key]="'marketing.text.018' + '.' + cmsIndex2">{{ (currentLang === "ar" ? q.aAr : q.aEn) | cmsText:('marketing.text.018' + '.' + cmsIndex2) }}</span></p>
+    </details>
+  </section>
+  <aside class="inner-cta inner-width">
     <div>
-      <details style="margin-bottom:12px;" *ngFor="let q of faqs; trackBy: trackByIdx">
-        <summary style="font-weight:700; cursor:pointer;">
-          {{ currentLang === 'ar' ? q.qAr : q.qEn }}
-        </summary>
-        <p style="margin:12px 0 0;">
-          {{ currentLang === 'ar' ? q.aAr : q.aEn }}
-        </p>
-      </details>
+      <span class="inner-kicker">OSOS AL-RIYADAH</span>
+      <h2>
+        <span [attr.data-cms-key]="'marketing.text.019'">{{ (currentLang === "ar"
+            ? "لنبدأ خطوتك العقارية القادمة."
+            : "Let’s plan your next property move.") | cmsText:('marketing.text.019') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'marketing.text.020'">{{ (currentLang === "ar"
+            ? "فريقنا هنا للاستماع إلى احتياجاتك ومناقشة الخيارات المناسبة لك."
+            : "Our team is here to listen and discuss the options that suit your needs.") | cmsText:('marketing.text.020') }}</span>
+      </p>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="leasing__cta" [style.background-image]="'url(https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1600&auto=format&fit=crop)'">
-    <h3 class="leasing__cta-title">
-      {{
-        currentLang === 'ar'
-          ? 'جاهز لبيع أو تأجير عقارك؟'
-          : 'Ready to Sell or Lease Your Property?'
-      }}
-    </h3>
-    <p class="leasing__cta-desc">
-      {{
-        currentLang === 'ar'
-          ? 'اترك بياناتك وسيتواصل معك فريقنا لاقتراح الخطة الأنسب خلال 24 ساعة عمل.'
-          : 'Share your details and our team will propose the best plan within one business day.'
-      }}
-    </p>
-    <button class="leasing__cta-button" (click)="navigateTo('contact')">
-      {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
-    </button>
-  </section>
-</div>
-
-<!-- Optional: Keep your Coming Soon card for later toggling -->
-<div class="coming-soon-container" *ngIf="showComingSoon">
-  <div class="coming-soon-content" [attr.dir]="dir">
-    <div class="icon-wrapper"><mat-icon class="main-icon">home_work</mat-icon></div>
-    <h1>{{ currentLang === 'ar' ? 'التسويق العقاري' : 'Real Estate Marketing' }}</h1>
-    <p class="coming-soon-text">{{ currentLang === 'ar' ? 'قريبًا....' : 'Coming soon...' }}</p>
-    <div class="progress-container"><mat-progress-bar mode="indeterminate"></mat-progress-bar></div>
-    <p class="contact-text">{{ currentLang === 'ar' ? 'تواصل معنا لمعرفة المزيد' : 'Contact us to learn more' }}</p>
-    <button mat-raised-button color="primary" (click)="navigateTo('contact')" class="custom-mat-button">
-      {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
-    </button>
-  </div>
+    <a routerLink="/contact" class="inner-button gold"
+      ><span [attr.data-cms-key]="'marketing.text.021'">{{ (currentLang === "ar" ? "تواصل معنا" : "Contact us") | cmsText:('marketing.text.021') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </aside>
 </div>

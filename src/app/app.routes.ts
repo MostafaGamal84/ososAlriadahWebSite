@@ -14,8 +14,10 @@ import { ManagementComponent } from './components/our-services/management/manage
 import { MarketingComponent } from './components/our-services/marketing/marketing.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { PreviewComponent } from './components/preview/preview.component';
+import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = [
+  { path: 'admin', loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent), canDeactivate: [(component: import('./admin/admin.component').AdminComponent) => !component.dirty || confirm('لديك تعديلات غير محفوظة. هل تريد المغادرة؟')] },
   { path: 'about', component: AboutUsComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'preview', component: PreviewComponent },
@@ -42,6 +44,6 @@ export const routes: Routes = [
   { path: 'mangement', component: ManagementComponent },
   { path: 'markting', component: MarketingComponent },
 
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: '**', redirectTo: '/' },
 ];

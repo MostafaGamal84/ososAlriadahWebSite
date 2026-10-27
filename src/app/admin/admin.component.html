@@ -1,0 +1,61 @@
+<section class="admin-shell" dir="rtl">
+  <header class="admin-head"><div><small>OSOS / ADMINISTRATION</small><h1>إدارة أسس الريادة</h1><p>محتوى واضح، وتحكم كامل في موقعك.</p></div><a routerLink="/">عرض الموقع ↗</a></header>
+  @if(checking){<p role="status">جارٍ التحقق من الجلسة…</p>}
+  @else if(!authenticated){
+    <form class="admin-login" (ngSubmit)="login()">
+      <h2>تسجيل دخول الإدارة</h2>
+      <label>اسم المستخدم<input name="username" [(ngModel)]="username" autocomplete="username" required maxlength="120" /></label>
+      <label>كلمة المرور<input name="password" type="password" [(ngModel)]="password" autocomplete="current-password" required maxlength="256" /></label>
+      <button class="primary" [disabled]="busy">{{busy?'جارٍ الدخول…':'دخول'}}</button>
+      @if(error){<p class="error" role="alert">{{error}}</p>}
+    </form>
+  } @else {
+    <div class="admin-actions"><button [class.active]="tab==='auctions'" (click)="switchTab('auctions')">المزادات ({{auctions.length}})</button><button [class.active]="tab==='projects'" (click)="switchTab('projects')">المشروعات ({{projects.length}})</button><button class="gold" (click)="live()" [disabled]="busy">✦ تعديل الموقع مباشرة</button><button (click)="logout()" [disabled]="busy">تسجيل الخروج</button></div>
+    @if(error){<p class="error" role="alert">{{error}}</p>}
+    @if(message){<p class="success" role="status">{{message}}</p>}
+    @if(editing){
+      <form class="admin-form" (ngSubmit)="save()">
+        <div class="form-head"><h2>{{editing.id?'تعديل':'إضافة'}} {{tab==='auctions'?'مزاد':'مشروع'}}</h2><span>لا تُنشر التعديلات إلا عند الحفظ</span></div>
+        <div class="fields">
+        @if(tab==='auctions'){
+          <label>اسم المزاد بالعربية<input name="name" [(ngModel)]="editing.name" required maxlength="240" /></label>
+          <label>اسم المزاد بالإنجليزية<input name="nameEn" [(ngModel)]="editing.nameEn" maxlength="240" dir="ltr" /></label>
+          <label>الوصف بالعربية<textarea name="content" [(ngModel)]="editing.content" maxlength="12000"></textarea></label>
+          <label>الوصف بالإنجليزية<textarea name="contentEn" [(ngModel)]="editing.contentEn" maxlength="12000" dir="ltr"></textarea></label>
+          <label>بداية المزاد (توقيت جهازك)<input name="start" type="datetime-local" [(ngModel)]="editing.start" required /></label>
+          <label>نهاية المزاد (توقيت جهازك)<input name="end" type="datetime-local" [(ngModel)]="editing.end" required /></label>
+          <label>سعر الافتتاح — ر.س<input name="price" type="number" min="0" max="9999999999999999" step="0.01" [(ngModel)]="editing.openingPrice" required /></label>
+          <label>اسم الوكيل<input name="agent" [(ngModel)]="editing.agentName" maxlength="200" /></label>
+          <label>المدينة<input name="city" [(ngModel)]="editing.city" maxlength="200" /></label>
+          <label>الحي<input name="district" [(ngModel)]="editing.district" maxlength="200" /></label>
+          <label class="wide">رابط منصة المزاد (HTTPS)<input name="url" [(ngModel)]="editing.url" maxlength="1000" dir="ltr" /></label>
+          <label>صورة المزاد<input name="image" [(ngModel)]="editing.imagePath" maxlength="1000" dir="ltr" /><input type="file" accept="image/png,image/jpeg,image/webp" (change)="upload($event,'imagePath')" [disabled]="busy" /></label>
+          <label>ملف المزاد PDF<input name="pdf" [(ngModel)]="editing.pdfPath" maxlength="1000" dir="ltr" /><input type="file" accept="application/pdf" (change)="upload($event,'pdfPath')" [disabled]="busy" /></label>
+        } @else {
+          <label>عنوان المشروع بالعربية<input name="titleAr" [(ngModel)]="editing.titleAr" required maxlength="240" /></label>
+          <label>عنوان المشروع بالإنجليزية<input name="titleEn" [(ngModel)]="editing.titleEn" required maxlength="240" dir="ltr" /></label>
+          <label>الوصف بالعربية<textarea name="descAr" [(ngModel)]="editing.descAr" maxlength="12000"></textarea></label>
+          <label>الوصف بالإنجليزية<textarea name="descEn" [(ngModel)]="editing.descEn" maxlength="12000" dir="ltr"></textarea></label>
+          <label>صورة المشروع<input name="image" [(ngModel)]="editing.image" maxlength="1000" dir="ltr" /><input type="file" accept="image/png,image/jpeg,image/webp" (change)="upload($event,'image')" [disabled]="busy" /></label>
+          <label>ملف المشروع PDF<input name="pdf" [(ngModel)]="editing.pdfUrl" maxlength="1000" dir="ltr" /><input type="file" accept="application/pdf" (change)="upload($event,'pdfUrl')" [disabled]="busy" /></label>
+          <label>ترتيب العرض<input name="order" type="number" [(ngModel)]="editing.sortOrder" required /></label>
+          <label class="checkbox"><input type="checkbox" name="featured" [(ngModel)]="editing.featured" />عرض في الرئيسية</label>
+        }
+        <label class="checkbox"><input type="checkbox" name="published" [(ngModel)]="editing.published" />منشور للزوار</label>
+        </div>
+        @if(editing.image || editing.imagePath){<img class="image-preview" [src]="editing.image || editing.imagePath" alt="معاينة الصورة المختارة" />}
+        <p class="hint">الملفات المسموحة: JPG، PNG، WEBP، PDF — بحد أقصى 20 ميجابايت. رفع الملف لا ينشره في الصفحة حتى تحفظ.</p>
+        <div class="admin-actions"><button class="primary" [disabled]="busy">{{busy?'جارٍ الحفظ أو الرفع…':'حفظ'}}</button><button type="button" (click)="discard()" [disabled]="busy">إلغاء</button></div>
+      </form>
+    } @else {
+      <div class="list-head"><h2>{{tab==='auctions'?'المزادات':'المشروعات'}}</h2><div><button (click)="load()" [disabled]="busy">تحديث</button><button class="primary" (click)="edit()" [disabled]="busy">+ إضافة {{tab==='auctions'?'مزاد':'مشروع'}}</button></div></div>
+      @if(busy){<p role="status">جارٍ تحميل البيانات…</p>}
+      <div class="admin-list">
+        @for(row of rows; track row.id){
+          <article><div><span class="status" [class.published]="row.published">{{row.published?'منشور':'مسودة'}}</span><h3>{{row.name || row.titleAr}}</h3><p>{{row.nameEn || row.titleEn}}</p></div><div class="row-actions"><button (click)="edit(row)" [disabled]="busy">تعديل</button><button class="danger" (click)="pendingDelete=row" [disabled]="busy">حذف</button></div></article>
+        } @empty { @if(!busy){<p class="empty">لا توجد عناصر بعد. ابدأ بإضافة {{tab==='auctions'?'مزاد':'مشروع'}}.</p>} }
+      </div>
+    }
+    @if(pendingDelete){<div class="dialog-backdrop"><section class="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete-title"><h2 id="delete-title">حذف {{pendingDelete.name || pendingDelete.titleAr}}؟</h2><p>سيُحذف العنصر من قاعدة البيانات والموقع. لا يمكن التراجع عن الحذف.</p><button class="danger" (click)="remove()" [disabled]="busy">تأكيد الحذف</button><button (click)="pendingDelete=null" [disabled]="busy">إلغاء</button></section></div>}
+  }
+</section>

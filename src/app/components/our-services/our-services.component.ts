@@ -1,3 +1,7 @@
+import { CmsTextPipe } from '../../services/cms-text.pipe';
+import { RouterLink } from '@angular/router';
+import { PageHeadingComponent } from '../page-heading/page-heading.component';
+import { AppInViewportDirective } from '../../directives/app-in-viewport.directive';
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { register } from 'swiper/element/bundle';
@@ -23,7 +27,12 @@ interface Service {
 @Component({
   selector: 'app-our-services',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CmsTextPipe, 
+    CommonModule,
+    RouterLink,
+    PageHeadingComponent,
+    AppInViewportDirective,
+  ],
   templateUrl: './our-services.component.html',
   styleUrl: './our-services.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -136,7 +145,16 @@ export class OurServicesComponent {
   }
 
   navigateToService(service: Service): void {
-    console.log('Navigating to:', service);
+    const routes: Record<string, string> = {
+      'Real Estate Brokerage': '/brokerage',
+      'Real Estate Marketing': '/markting',
+      'Real Estate Development': '/development',
+      'Ownership & Leasing': '/leasing',
+      'Property Management': '/mangement',
+      'Real Estate Auctions': '/auction',
+    };
+    const route = routes[service.serviceNameEn];
+    if (route) this.router.navigate([route]);
   }
 
   isActiveLink(link: string): boolean {

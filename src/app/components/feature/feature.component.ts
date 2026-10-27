@@ -1,3 +1,7 @@
+import { CmsTextPipe } from '../../services/cms-text.pipe';
+import { RouterLink } from '@angular/router';
+import { PageHeadingComponent } from '../page-heading/page-heading.component';
+import { AppInViewportDirective } from '../../directives/app-in-viewport.directive';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CounterComponent } from '../counter/counter.component';
@@ -26,7 +30,12 @@ interface Feature {
 @Component({
   selector: 'app-feature',
   standalone: true,
-  imports: [CounterComponent, CommonModule],
+  imports: [CmsTextPipe, 
+    CommonModule,
+    RouterLink,
+    PageHeadingComponent,
+    AppInViewportDirective,
+  ],
   templateUrl: './feature.component.html',
   styleUrl: './feature.component.css',
 })
@@ -55,21 +64,21 @@ export class FeatureComponent {
           'https://pbs.twimg.com/media/GxrmAr8WgAA-cIp?format=jpg&name=large',
       },
     },
-   {
-  id: 2,
-  titleAr: 'الوساطة العقارية',
-  titleEn: 'Real Estate Brokerage',
-  subtitleAr: 'وساطة عقارية موثوقة',
-  subtitleEn: 'Trusted Brokerage Services',
-  descriptionAr:
-    'نقدّم خدمات وساطة عقارية شاملة لربط البائعين بالمشترين/المستأجرين: إدراج وتسويق العقار، استقبال الاستفسارات وتنظيم الزيارات، التفاوض على السعر والشروط، ودعم إجراءات التوثيق حتى الإغلاق برسوم شفافة.',
-  descriptionEn:
-    'End-to-end real estate brokerage: listing and marketing, qualified leads, property viewings, negotiation on price and terms, and compliant closing support with transparent fees.',
-  icon: {
-    type: 'img',
-    content: 'https://cdn-icons-png.flaticon.com/512/942/942748.png' // house + handshake icon
-  },
-},
+    {
+      id: 2,
+      titleAr: 'الوساطة العقارية',
+      titleEn: 'Real Estate Brokerage',
+      subtitleAr: 'وساطة عقارية موثوقة',
+      subtitleEn: 'Trusted Brokerage Services',
+      descriptionAr:
+        'نقدّم خدمات وساطة عقارية شاملة لربط البائعين بالمشترين/المستأجرين: إدراج وتسويق العقار، استقبال الاستفسارات وتنظيم الزيارات، التفاوض على السعر والشروط، ودعم إجراءات التوثيق حتى الإغلاق برسوم شفافة.',
+      descriptionEn:
+        'End-to-end real estate brokerage: listing and marketing, qualified leads, property viewings, negotiation on price and terms, and compliant closing support with transparent fees.',
+      icon: {
+        type: 'img',
+        content: 'https://cdn-icons-png.flaticon.com/512/942/942748.png', // house + handshake icon
+      },
+    },
 
     {
       id: 3,

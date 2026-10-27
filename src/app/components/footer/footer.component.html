@@ -1,69 +1,73 @@
 <footer class="footer" [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
   <div class="footer-grid">
-    <!-- Company Info -->
     <div class="footer-brand">
-      <div class="logo-wrapper">
-        <img src="https://pbs.twimg.com/profile_images/1756714052372357121/jItqW0yk_400x400.jpg"
-          alt="{{ currentLang === 'ar' ? 'شعار أسس الريادة' : 'Logo' }}" class="footer-logo">
-      </div>
-      <h3 class="company-name">
-        {{ currentLang === 'ar' ? companyName.ar : companyName.en }}
+      <a routerLink="/" class="footer-brand-name"><span [attr.data-cms-key]="'footer.text.000'">{{ (currentLang === "ar" ? "أسس الريادة" : "OSOS AL-RIYADAH") | cmsText:('footer.text.000') }}</span></a
+      ><span class="footer-kicker">REAL ESTATE · ESTABLISHED ON TRUST</span>
+      <p>
+        <span [attr.data-cms-key]="'footer.text.001'">{{ (currentLang === "ar"
+            ? "أسس راسخة، ورؤية تصنع مستقبل العقار."
+            : "Solid foundations. A vision for the future of real estate.") | cmsText:('footer.text.001') }}</span>
+      </p>
+    </div>
+    <div>
+      <h3>
+        <span [attr.data-cms-key]="'footer.text.002'">{{ (currentLang === "ar" ? "اكتشف أسس الريادة" : "Discover Osos") | cmsText:('footer.text.002') }}</span>
       </h3>
+      <a *ngFor="let link of quickLinks; let cmsIndex0 = index" [routerLink]="link.path"><span [attr.data-cms-key]="'footer.text.003' + '.' + cmsIndex0">{{ (currentLang === "ar" ? link.textAr : link.textEn) | cmsText:('footer.text.003' + '.' + cmsIndex0) }}</span></a>
     </div>
-
-    <!-- Quick Links -->
-    <div class="footer-links">
-      <h4 class="footer-heading">{{ currentLang === 'ar' ? 'روابط سريعة' : 'Quick Links' }}</h4>
-      <ul class="links-list">
-        <li *ngFor="let link of quickLinks">
-          <a [routerLink]="link.path" class="footer-link" (click)="scrollTo($event)">
-            {{ currentLang === 'ar' ? link.textAr : link.textEn }}
-          </a>
-        </li>
-      </ul>
+    <div>
+      <h3>
+        <span [attr.data-cms-key]="'footer.text.004'">{{ (currentLang === "ar" ? "فرصك العقارية" : "Your opportunities") | cmsText:('footer.text.004') }}</span>
+      </h3>
+      <a routerLink="/projects"><span [attr.data-cms-key]="'footer.text.005'">{{ (currentLang === "ar" ? "المشروعات" : "Projects") | cmsText:('footer.text.005') }}</span></a
+      ><a routerLink="/auction/current"><span [attr.data-cms-key]="'footer.text.006'">{{ (currentLang === "ar" ? "المزادات الحالية" : "Current auctions") | cmsText:('footer.text.006') }}</span></a
+      ><a routerLink="/auction/coming"><span [attr.data-cms-key]="'footer.text.007'">{{ (currentLang === "ar" ? "المزادات القادمة" : "Upcoming auctions") | cmsText:('footer.text.007') }}</span></a>
     </div>
-
-    <!-- Contact Info -->
-    <div class="footer-contact">
-      <h4 class="footer-heading">{{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}</h4>
-      <div class="contact-item">
-        <i class="fas fa-envelope"></i>
-        <a [href]="'mailto:' + contactInfo.email" class="contact-link">
-          {{ contactInfo.email }}
-        </a>
-      </div>
-      <div class="contact-item">
-        <i class="fab fa-whatsapp"></i>
-        <span class="contact-text">{{ contactInfo.phone }}</span>
-      </div>
+    <div>
+      <h3><span [attr.data-cms-key]="'footer.text.008'">{{ (currentLang === "ar" ? "يسعدنا تواصلك" : "Get in touch") | cmsText:('footer.text.008') }}</span></h3>
+      <a [href]="'mailto:' + contactInfo.email"
+        ><bdi dir="ltr"><span [attr.data-cms-key]="'footer.text.009'">{{ (contactInfo.email) | cmsText:('footer.text.009') }}</span></bdi></a
+      ><a [href]="'tel:' + contactInfo.phone"
+        ><bdi dir="ltr"><span [attr.data-cms-key]="'footer.text.010'">{{ (contactInfo.phone) | cmsText:('footer.text.010') }}</span></bdi></a
+      ><a
+        href="https://wa.me/966575060000"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><span [attr.data-cms-key]="'footer.text.011'">{{ (currentLang === "ar" ? "تواصل عبر واتساب ↗" : "Chat on WhatsApp ↗") | cmsText:('footer.text.011') }}</span></a
+      >
     </div>
-
-    <!-- Social Media -->
-    <!-- <div class="footer-social">
-      <h4 class="footer-heading">{{ currentLang === 'ar' ? 'تابعنا' : 'Follow Us' }}</h4>
-      <div class="social-icons">
-        <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" class="social-icon"
-          [attr.aria-label]="social.icon">
-          <i class="fab fa-{{ social.icon }}"></i>
-        </a>
-      </div>
-    </div> -->
   </div>
-
-  <!-- Copyright -->
-  <div class="footer-copyright">
-  <p>
-  &copy; {{ currentYear }} {{ currentLang === 'ar' ? companyName.ar : companyName.en }}.
-  {{ currentLang === 'ar' ? 'جميع الحقوق محفوظة' : 'All rights reserved' }} —
-  {{ currentLang === 'ar' ? 'تم التطوير بواسطة' : 'Developed by' }}
-  <a href="https://www.linkedin.com/in/mostafa-gamal-875ab8245/" target="_blank" rel="noopener noreferrer">
-    Mostafa Gamal
-  </a>
-  <!-- &
-  <a href="https://www.linkedin.com/in/mahmouddoma" target="_blank" rel="noopener noreferrer">
-    Mahmoud Doma
-  </a> -->
-</p>
-</div>
-
+  <div class="footer-bottom">
+    <span
+      >© {{ currentYear }}
+      {{
+        currentLang === "ar"
+          ? "أسس الريادة. جميع الحقوق محفوظة."
+          : "Osos Al-Riyadah. All rights reserved."
+      }}</span
+    >
+    <a
+      class="devora-brand"
+      href="https://devora-sa.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Powered by Devora Solution Technology"
+      dir="ltr"
+    >
+      <span class="devora-company">
+        <span class="devora-credit">Powered by</span>
+        <app-portfolio-logo-icon
+          width="144px"
+          accentColor="#d7bd94"
+          textColor="#faf9f6"
+          backgroundColor="transparent"
+          [showBackground]="false"
+          animation="none"
+          ariaLabel="Devora Solution Technology"
+        />
+        <span class="devora-site">devora-sa.com</span>
+      </span>
+      <span class="devora-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
 </footer>

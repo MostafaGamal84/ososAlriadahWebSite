@@ -1,88 +1,158 @@
-<section class="contact-section py-5">
-  <div class="container" appInViewport animationType="fade-in" staggerDelay="1">
-    <div class="row justify-content-center mb-5" data-animate>
-      <div class="col-12 col-md-8 text-center" data-animate>
-        <h2 class="section-title mb-4" data-animate>
-          {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
-        </h2>
-        <p class="section-description" data-animate>
-          {{ currentLang === 'ar' ? 'نحن هنا للإجابة على استفساراتك' : 'We are here to answer your questions' }}
-        </p>
+<div class="inner-page">
+  <app-page-heading
+    [title]="currentLang === 'ar' ? 'تواصل معنا' : 'Contact us'"
+    [description]="
+      currentLang === 'ar'
+        ? 'خطوتك القادمة تبدأ بمحادثة. يسعدنا الاستماع إليك.'
+        : 'Your next step starts with a conversation. We are here to listen.'
+    "
+  ></app-page-heading>
+  <section class="inner-section inner-width inner-contact-grid">
+    <aside appAppInViewport animationClass="reveal-on-scroll">
+      <span class="inner-kicker"><span [attr.data-cms-key]="'contact.text.000'">{{ (currentLang === "ar"
+          ? "دعنا نتعرّف على طموحك"
+          : "TELL US ABOUT YOUR PLANS") | cmsText:('contact.text.000') }}</span></span>
+      <h2>
+        <span [attr.data-cms-key]="'contact.text.001'">{{ (currentLang === "ar"
+            ? "نستمع أولًا، ونمضي معك."
+            : "We listen first. Then move forward together.") | cmsText:('contact.text.001') }}</span>
+      </h2>
+      <p class="inner-contact-note">
+        <span [attr.data-cms-key]="'contact.text.002'">{{ (currentLang === "ar"
+            ? "سواء كنت تبحث عن فرصة عقارية أو ترغب في معرفة المزيد عن خدماتنا، شاركنا احتياجك وسيتواصل معك فريقنا."
+            : "Whether you are exploring a property opportunity or learning more about our services, share your needs and our team will be in touch.") | cmsText:('contact.text.002') }}</span>
+      </p>
+      <div class="inner-contact-method">
+        <span><span [attr.data-cms-key]="'contact.text.003'">{{ (currentLang === "ar" ? "اتصل بنا" : "Call us") | cmsText:('contact.text.003') }}</span></span
+        ><a href="tel:+966575060000" dir="ltr">+966 57 506 0000</a>
       </div>
-    </div>
-
-    <div class="row justify-content-center" data-animate>
-      <div class="col-12 col-md-10 col-lg-8" data-animate>
-        <div *ngIf="submitResult" class="alert" [ngClass]="submitResult.success ? 'alert-success' : 'alert-danger'"
-          role="alert" data-animate>
-          {{ submitResult.message }}
-        </div>
-
-        <form class="contact-form p-4 bg-white rounded-3 shadow-sm" [formGroup]="contactForm" (ngSubmit)="onSubmit()"
-          data-animate>
-          <div class="row g-3">
-            <div class="col-12 col-md-6" data-animate>
-              <div class="form-group">
-                <input type="text" class="form-control" [ngClass]="{'is-invalid': hasError('name')}"
-                  [placeholder]="currentLang === 'ar' ? 'الاسم' : 'Name'" formControlName="name" required />
-                <div *ngIf="hasError('name')" class="invalid-feedback">{{ getErrorMessage('name') }}</div>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6" data-animate>
-              <div class="form-group">
-                <input type="email" class="form-control" [ngClass]="{'is-invalid': hasError('email')}"
-                  [placeholder]="currentLang === 'ar' ? 'البريد الإلكتروني' : 'Email Address'" formControlName="email"
-                  required />
-                <div *ngIf="hasError('email')" class="invalid-feedback">{{ getErrorMessage('email') }}</div>
-              </div>
-            </div>
-
-            <div class="col-12" data-animate>
-              <div class="form-group">
-                <input type="tel" class="form-control" [ngClass]="{'is-invalid': hasError('phone')}"
-                  [placeholder]="currentLang === 'ar' ? 'رقم الهاتف' : 'Phone Number'" formControlName="phone" />
-                <div *ngIf="hasError('phone')" class="invalid-feedback">{{ getErrorMessage('phone') }}</div>
-              </div>
-            </div>
-
-            <div class="col-12" data-animate>
-              <div class="form-group">
-                <textarea class="form-control" [ngClass]="{'is-invalid': hasError('message')}" rows="5"
-                  [placeholder]="currentLang === 'ar' ? 'رسالتك' : 'Your Message'" formControlName="message"
-                  required></textarea>
-                <div *ngIf="hasError('message')" class="invalid-feedback">{{ getErrorMessage('message') }}</div>
-              </div>
-            </div>
-
-            <div class="col-12 text-center" data-animate>
-              <button type="submit" class="btn btn-primary px-5 py-2" [disabled]="contactForm.invalid || isSubmitting">
-                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status"
-                  aria-hidden="true"></span>
-                {{ isSubmitting ? (currentLang === 'ar' ? 'جاري الإرسال...' : 'Sending...') : (currentLang === 'ar' ?
-                'إرسال' : 'Submit') }}
-              </button>
-            </div>
+      <div class="inner-contact-method">
+        <span><span [attr.data-cms-key]="'contact.text.004'">{{ (currentLang === "ar" ? "البريد الإلكتروني" : "Email us") | cmsText:('contact.text.004') }}</span></span
+        ><a href="mailto:Info@osos-alriadah.com">Info&#64;osos-alriadah.com</a>
+      </div>
+      <div class="inner-actions">
+        <a
+          href="https://wa.me/966575060000"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inner-button secondary"
+          ><span [attr.data-cms-key]="'contact.text.005'">{{ (currentLang === "ar" ? "تواصل عبر واتساب" : "Chat on WhatsApp") | cmsText:('contact.text.005') }}</span>
+          ↗</a
+        >
+      </div>
+    </aside>
+    <div appAppInViewport animationClass="reveal-on-scroll">
+      <div
+        *ngIf="submitResult"
+        class="inner-form-result"
+        [class.failed]="!submitResult.success"
+        role="alert"
+      >
+        <span [attr.data-cms-key]="'contact.text.006'">{{ (submitResult.message) | cmsText:('contact.text.006') }}</span>
+      </div>
+      <form
+        class="inner-contact-form"
+        [formGroup]="contactForm"
+        (ngSubmit)="onSubmit()"
+        [attr.aria-busy]="isSubmitting"
+      >
+        <div class="inner-form-grid">
+          <div class="inner-field">
+            <label for="contact-name"><span [attr.data-cms-key]="'contact.text.007'">{{ (currentLang === "ar" ? "الاسم الكامل *" : "Full name *") | cmsText:('contact.text.007') }}</span></label
+            ><input
+              id="contact-name"
+              formControlName="name"
+              autocomplete="name"
+              required
+              [attr.aria-invalid]="hasError('name')"
+              aria-describedby="name-error"
+              [placeholder]="
+                currentLang === 'ar' ? 'كيف نناديك؟' : 'Your full name'
+              "
+            />
+            <p id="name-error" class="inner-error" *ngIf="hasError('name')">
+              {{ getErrorMessage("name") }}
+            </p>
           </div>
-        </form>
-      </div>
+          <div class="inner-field">
+            <label for="contact-email"><span [attr.data-cms-key]="'contact.text.008'">{{ (currentLang === "ar" ? "البريد الإلكتروني *" : "Email address *") | cmsText:('contact.text.008') }}</span></label
+            ><input
+              id="contact-email"
+              type="email"
+              formControlName="email"
+              autocomplete="email"
+              required
+              [attr.aria-invalid]="hasError('email')"
+              aria-describedby="email-error"
+              placeholder="name@example.com"
+              dir="ltr"
+            />
+            <p id="email-error" class="inner-error" *ngIf="hasError('email')">
+              {{ getErrorMessage("email") }}
+            </p>
+          </div>
+          <div class="inner-field wide">
+            <label for="contact-phone"><span [attr.data-cms-key]="'contact.text.009'">{{ (currentLang === "ar"
+                ? "رقم الهاتف (اختياري)"
+                : "Phone number (optional)") | cmsText:('contact.text.009') }}</span></label
+            ><input
+              id="contact-phone"
+              type="tel"
+              formControlName="phone"
+              autocomplete="tel"
+              [attr.aria-invalid]="hasError('phone')"
+              aria-describedby="phone-error"
+              placeholder="+966"
+              dir="ltr"
+            />
+            <p id="phone-error" class="inner-error" *ngIf="hasError('phone')">
+              {{ getErrorMessage("phone") }}
+            </p>
+          </div>
+          <div class="inner-field wide">
+            <label for="contact-message"><span [attr.data-cms-key]="'contact.text.010'">{{ (currentLang === "ar"
+                ? "كيف يمكننا مساعدتك؟ *"
+                : "How can we help? *") | cmsText:('contact.text.010') }}</span></label
+            ><textarea
+              id="contact-message"
+              formControlName="message"
+              rows="5"
+              required
+              [attr.aria-invalid]="hasError('message')"
+              aria-describedby="message-error"
+              [placeholder]="
+                currentLang === 'ar'
+                  ? 'أخبرنا عن طلبك أو استفسارك...'
+                  : 'Tell us about your enquiry...'
+              "
+            ></textarea>
+            <p
+              id="message-error"
+              class="inner-error"
+              *ngIf="hasError('message')"
+            >
+              {{ getErrorMessage("message") }}
+            </p>
+          </div>
+        </div>
+        <div class="inner-form-footer">
+          <p>
+            <span [attr.data-cms-key]="'contact.text.011'">{{ (currentLang === "ar"
+                ? "الحقول المشار إليها بعلامة * مطلوبة."
+                : "Fields marked with * are required.") | cmsText:('contact.text.011') }}</span>
+          </p>
+          <button type="submit" class="inner-button" [disabled]="isSubmitting">
+            <span [attr.data-cms-key]="'contact.text.012'">{{ (isSubmitting
+                ? currentLang === "ar"
+                  ? "جارٍ الإرسال..."
+                  : "Sending..."
+                : currentLang === "ar"
+                  ? "إرسال الرسالة"
+                  : "Send message") | cmsText:('contact.text.012') }}</span>
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </form>
     </div>
-
-    <!-- <div class="row mt-5 g-4" data-animate>
-      <div class="col-12 col-md-6" data-animate>
-        <div class="contact-info text-center p-3" data-animate>
-          <i class="fas fa-phone mb-3"></i>
-          <h4 class="h5">{{ currentLang === 'ar' ? 'الواتساب' : 'WhatsApp' }}</h4>
-          <p class="mb-0">+201099381081</p>
-        </div>
-      </div>
-      <div class="col-12 col-md-6" data-animate>
-        <div class="contact-info text-center p-3" data-animate>
-          <i class="fas fa-envelope mb-3"></i>
-          <h4 class="h5">{{ currentLang === 'ar' ? 'البريد الإلكتروني' : 'Email' }}</h4>
-          <p class="mb-0">allhghayte8&#64;gmail.com</p>
-        </div>
-      </div>
-    </div> -->
-  </div>
-</section>
+  </section>
+</div>

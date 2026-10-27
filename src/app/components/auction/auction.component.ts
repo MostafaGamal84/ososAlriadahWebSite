@@ -1,3 +1,4 @@
+import { PageHeadingComponent } from '../page-heading/page-heading.component';
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
@@ -8,7 +9,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
@@ -35,14 +36,14 @@ interface Auction {
   content?: string;
   imagePath?: string;
   pdfPath?: string;
-  imageUrl?: string;   // full URL for image
-  pdfUrl?: string;     // full URL for pdf
+  imageUrl?: string; // full URL for image
+  pdfUrl?: string; // full URL for pdf
   openingPrice?: number;
   agentName?: string;
   district?: string;
   city?: string;
   gallery?: string[];
-  url?: string;        // external auction platform URL
+  url?: string; // external auction platform URL
   status: AuctionStatus;
   cd: Countdown;
 }
@@ -50,7 +51,7 @@ interface Auction {
 @Component({
   selector: 'app-auction',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PageHeadingComponent, RouterLink],
   templateUrl: './auction.component.html',
   styleUrls: ['./auction.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -68,7 +69,10 @@ interface Auction {
     trigger('timerSwap', [
       transition('* => *', [
         style({ opacity: 0, transform: 'translateY(-4px)' }),
-        animate('160ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+        animate(
+          '160ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' }),
+        ),
       ]),
     ]),
   ],
@@ -82,6 +86,7 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedTab: AuctionTab = 'all';
   lockedStatus: AuctionStatus | null = null;
   isLoading = false;
+  loadFailed = false;
 
   readonly tabOrder: AuctionTab[] = ['all', 'current', 'coming', 'ended'];
   visibleTabs: AuctionTab[] = [...this.tabOrder];
@@ -125,14 +130,14 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private auctionService: AuctionService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.currentLang = localStorage.getItem('lang') === 'en' ? 'en' : 'ar';
     this.syncTabFromRoute(this.route.snapshot.data['defaultTab']);
     const routeDataSub = this.route.data.subscribe((data) =>
-      this.syncTabFromRoute(data['defaultTab'])
+      this.syncTabFromRoute(data['defaultTab']),
     );
     this.subscriptions.add(routeDataSub);
     this.loadAuctions();
@@ -150,8 +155,9 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /** ---------- Data ---------- */
-  private loadAuctions(): void {
+  loadAuctions(): void {
     this.isLoading = true;
+    this.loadFailed = false;
 
     const sub = this.auctionService.getAllAuctions().subscribe({
       next: (rows: any[]) => {
@@ -159,13 +165,13 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
           const status = this.computeStatus(r.start, r.end);
           const a: Auction = {
             id: r.id,
-            name: r.name,
+            name: this.currentLang === 'en' ? r.nameEn || r.name : r.name,
             start: r.start,
             end: r.end,
-            content: r.content || '',
+            content: this.currentLang === 'en' ? r.contentEn || r.content || '' : r.content || '',
             imagePath: r.imagePath || '',
             pdfPath: r.pdfPath || '',
-            imageUrl: 'https://app.osos-alriadah.com/'+r.imagePath,
+            imageUrl: this.fullUrl(r.imagePath) || 'images/property-placeholder.svg',
             pdfUrl: this.fullUrl(r.pdfPath),
             url: this.fullUrl(r.url),
             openingPrice: r.openingPrice ?? 0,
@@ -183,7 +189,10 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
         this.applyFilter(true);
         this.isLoading = false;
       },
-      error: () => (this.isLoading = false),
+      error: () => {
+        this.isLoading = false;
+        this.loadFailed = true;
+      },
     });
 
     this.subscriptions.add(sub);
@@ -191,6 +200,7 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private fullUrl(rel?: string): string {
     if (!rel) return '';
+    if (rel.startsWith('/uploads/') || rel.startsWith('/assets/') || rel.startsWith('images/')) return rel;
     if (/^https?:\/\//i.test(rel)) return rel;
     const normalized = rel.replace(/^\/+/, '');
     return `https://app.osos-alriadah.com/${normalized}`;
@@ -316,7 +326,7 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
   private computeStatus(
     startStr: string,
     endStr: string,
-    now = Date.now()
+    now = Date.now(),
   ): AuctionStatus {
     const start = new Date(startStr).getTime();
     const end = new Date(endStr).getTime();
@@ -330,7 +340,7 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
     status: AuctionStatus,
     startStr: string,
     endStr: string,
-    now = Date.now()
+    now = Date.now(),
   ): Countdown {
     if (status === 'ended')
       return { days: '0', hours: '00', minutes: '00', seconds: '00' };
@@ -352,7 +362,7 @@ export class AuctionComponent implements OnInit, AfterViewInit, OnDestroy {
       minutes: String(m).padStart(2, '0'),
       seconds: String(s).padStart(2, '0'),
     };
-    }
+  }
 
   /** ---------- Share ---------- */
   shareAuction(a: Auction): void {

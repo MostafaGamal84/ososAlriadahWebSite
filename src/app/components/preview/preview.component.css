@@ -1,8 +1,10 @@
 /* Fallback header height: change if your header is different */
-:root { --header-h: 89حء; }
+:root {
+  --header-h: 100px;
+}
 
 /* The entire preview page sits BELOW the fixed header */
-.pdf-wrap{
+.pdf-wrap {
   position: fixed;
   top: var(--header-h, 100px);
   left: 0;
@@ -17,7 +19,7 @@
 }
 
 /* Top bar */
-.topbar{
+.topbar {
   display: grid;
   grid-template-columns: 100px 1fr 160px;
   align-items: center;
@@ -27,7 +29,7 @@
   border-bottom: 1px solid #e5e7eb;
 }
 
-.topbar .title{
+.topbar .title {
   margin: 0;
   text-align: center;
   font-size: 1rem;
@@ -38,7 +40,7 @@
   text-overflow: ellipsis;
 }
 
-.topbar .btn{
+.topbar .btn {
   height: 36px;
   border-radius: 999px;
   border: 1px solid #e5e7eb;
@@ -47,11 +49,17 @@
   font-weight: 600;
   cursor: pointer;
 }
-.topbar .btn.primary{ background:#0f6b4a; color:#fff; border-color:#0f6b4a; }
+.topbar .btn.primary {
+  background: #0f6b4a;
+  color: #fff;
+  border-color: #0f6b4a;
+}
 
 /* PDF area */
-.frame{ overflow: hidden; }
-.frame iframe{
+.frame {
+  overflow: hidden;
+}
+.frame iframe {
   width: 100%;
   height: 100%;
   display: block;
@@ -60,10 +68,51 @@
 }
 
 /* Empty state */
-.empty{
+.empty {
   height: 100%;
   display: grid;
   place-items: center;
   color: #64748b;
   font-weight: 600;
+}
+.pdf-wrap {
+  position: relative;
+  inset: auto;
+  min-height: 75vh;
+  height: calc(100svh - var(--navbar-height));
+  background: #efefea;
+}
+.topbar {
+  background: #192f3f;
+  color: #faf9f6;
+  border-bottom: 2px solid #bc9b62;
+  padding: 18px 6%;
+  grid-template-columns: 60px 1fr 170px;
+}
+.topbar .btn {
+  border-radius: 2px;
+}
+.topbar .btn.primary {
+  background: #bc9b62;
+  border-color: #bc9b62;
+  color: #192f3f;
+}
+.empty {
+  padding: 30px;
+  text-align: center;
+  line-height: 1.9;
+}
+@media (max-width: 600px) {
+  .topbar {
+    grid-template-columns: 45px 1fr;
+    padding: 15px;
+    gap: 12px;
+  }
+  .topbar .btn.primary {
+    grid-column: 1/-1;
+  }
+  .topbar .title {
+    white-space: normal;
+    line-height: 1.6;
+  }
 }

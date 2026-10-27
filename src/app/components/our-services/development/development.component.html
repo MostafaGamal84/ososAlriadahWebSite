@@ -1,125 +1,93 @@
-<section class="development-container">
-    <!-- Hero Section -->
-    <div class="container hero-section">
-        <div class="row align-items-center" [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
-
-            <!-- النص -->
-            <div class="col-lg-6 hero-content" [ngClass]="currentLang === 'ar' ? 'text-end' : 'text-start'">
-                <h1>
-                    {{ currentLang === 'ar'
-                    ? 'تطوير العقارات بأعلى جودة'
-                    : 'Real Estate Development with the Highest Quality' }}
-                </h1>
-                <p class="subtitle">
-                    {{ currentLang === 'ar'
-                    ? 'نبني مشاريع عقارية استثنائية تجمع بين التصميم المبتكر والجودة العالية'
-                    : 'We build exceptional real estate projects combining innovative design and high quality' }}
-                </p>
-                <div class="cta-buttons">
-                    <button class="btn btn-primary me-2" (click)="navigateTo('contact')">
-                        {{ currentLang === 'ar' ? 'ابدأ الآن' : 'Get Started' }}
-                    </button>
-                    <button class="btn btn-outline-primary" (click)="navigateTo('vision')">
-                        {{ currentLang === 'ar' ? 'تعرف علينا أكثر' : 'Learn More' }}
-                    </button>
-                </div>
-            </div>
-
-            <!-- الصورة -->
-            <div class="col-lg-6 hero-image text-center">
-                <img class="img-fluid rounded shadow"
-                    src="https://i.pinimg.com/1200x/70/9c/85/709c850b624123f6f51bc658d3dc71c7.jpg" alt="تطوير عقاري">
-            </div>
-
-        </div>
+<div class="inner-page">
+  <app-page-heading
+    [title]="
+      currentLang === 'ar' ? 'التطوير العقاري' : 'Real estate development'
+    "
+    [description]="
+      currentLang === 'ar'
+        ? 'من فكرة مدروسة، إلى مساحة تنبض بالحياة.'
+        : 'From a considered idea to a space brought to life.'
+    "
+  ></app-page-heading>
+  <section class="inner-section inner-width inner-split">
+    <div class="inner-copy" appAppInViewport animationClass="reveal-on-scroll">
+      <span class="inner-kicker"><span [attr.data-cms-key]="'development.text.000'">{{ (currentLang === "ar"
+          ? "نطوّر اليوم من أجل الغد"
+          : "DEVELOPING TODAY FOR TOMORROW") | cmsText:('development.text.000') }}</span></span>
+      <h2>
+        <span [attr.data-cms-key]="'development.text.001'">{{ (currentLang === "ar"
+            ? "رؤية معمارية، وعناية بكل تفصيلة."
+            : "Architectural vision. Care in every detail.") | cmsText:('development.text.001') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'development.text.002'">{{ (currentLang === "ar"
+            ? "نبني مشاريع عقارية تجمع بين التصميم المبتكر وجودة التنفيذ، من التخطيط واختيار المواد إلى الاهتمام بتجربة المستخدم واستدامة المبنى."
+            : "We develop properties that combine thoughtful design and quality execution, from planning and material choices to the experience of the people who use them.") | cmsText:('development.text.002') }}</span>
+      </p>
+      <div class="inner-actions">
+        <a routerLink="/projects" class="inner-button"
+          ><span [attr.data-cms-key]="'development.text.003'">{{ (currentLang === "ar" ? "استعرض مشروعاتنا" : "Explore our projects") | cmsText:('development.text.003') }}</span>
+          ↗</a
+        ><a routerLink="/contact" class="inner-button secondary"><span [attr.data-cms-key]="'development.text.004'">{{ (currentLang === "ar" ? "ناقش مشروعك" : "Discuss your project") | cmsText:('development.text.004') }}</span></a>
+      </div>
     </div>
-
-
-
-    <!-- Features Section -->
-    <div class="features-section">
-        <h2 class="section-title">
-            {{ currentLang === 'ar' ? 'نهجنا في التطوير العقاري' : 'Our Real Estate Development Approach' }}
-        </h2>
-        <div class="features-grid">
-            <div class="feature-card" *ngFor="let feature of features">
-                <div class="card-icon-wrapper">
-                    <mat-icon class="feature-icon">{{feature.icon}}</mat-icon>
-                </div>
-                <h3 class="feature-title">{{currentLang === 'ar' ? feature.title.ar : feature.title.en}}</h3>
-                <p class="feature-description">{{currentLang === 'ar' ? feature.description.ar :
-                    feature.description.en}}
-                </p>
-            </div>
-        </div>
+    <figure
+      class="inner-photo"
+      appAppInViewport
+      animationClass="reveal-on-scroll"
+    >
+      <img [attr.data-cms-key]="'development.image.005'" [src]="('images/architecture.jpg') | cmsText:('development.image.005')" alt="" />
+      <figcaption>
+        <span [attr.data-cms-key]="'development.text.006'">{{ (currentLang === "ar"
+            ? "التخطيط والتصميم والتنفيذ، ضمن رؤية واحدة."
+            : "Planning, design and delivery, with one shared vision.") | cmsText:('development.text.006') }}</span>
+      </figcaption>
+    </figure>
+  </section>
+  <section class="inner-section inner-width">
+    <div class="inner-section-head">
+      <h2>
+        <span [attr.data-cms-key]="'development.text.007'">{{ (currentLang === "ar" ? "نهجنا في التطوير" : "Our development approach") | cmsText:('development.text.007') }}</span>
+      </h2>
     </div>
-
-    <!-- Technologies Section (يمكنك تسميتها "التقنيات والأساليب" أو ازالة) -->
-    <!-- <div class="tech-section">
-        <h2 class="section-title">أدوات وتقنيات البناء الحديثة</h2>
-        <div class="tech-tabs">
-            <button *ngFor="let tech of technologies" [class.active]="tech === activeTech" (click)="activeTech = tech">
-                {{tech}}
-            </button>
-        </div>
-        <div class="tech-content">
-            <div class="tech-description">
-                <h3>لماذا {{activeTech}}؟</h3>
-                <p>نستخدم أحدث تقنيات البناء لضمان الجودة والاستدامة في مشاريعنا العقارية.</p>
-                <ul>
-                    <li>كفاءة عالية في البناء باستخدام {{activeTech}}</li>
-                    <li>تحسين جودة المشاريع وسرعة التنفيذ باستخدام {{activeTech}}</li>
-                    <li>توفير حلول مستدامة وصديقة للبيئة</li>
-                </ul>
-            </div>
-            <div class="tech-image">
-                <img [src]="'assets/tech-' + activeTech.toLowerCase() + '.png'" [alt]="activeTech + ' logo'">
-            </div>
-        </div>
-    </div> -->
-
-    <!-- Stats Section -->
-    <div class="stats-section">
-        <div class="stat-card" *ngFor="let stat of stats">
-            <div class="stat-value" [appCountUp]="stat.value">{{stat.value}}</div>
-            <div class="stat-label">{{currentLang === 'ar' ? stat.label.ar : stat.label.en}}</div>
-        </div>
+    <div class="inner-grid">
+      <article
+        class="inner-card"
+        *ngFor="let feature of features; let i = index; let cmsIndex0 = index"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+        [revealDelay]="i * 70"
+      >
+        <span class="inner-number">0<span [attr.data-cms-key]="'development.text.008' + '.' + cmsIndex0">{{ (i + 1) | cmsText:('development.text.008' + '.' + cmsIndex0) }}</span> /</span
+        ><span class="material-icons" aria-hidden="true"><span [attr.data-cms-key]="'development.text.009' + '.' + cmsIndex0">{{ (feature.icon) | cmsText:('development.text.009' + '.' + cmsIndex0) }}</span></span>
+        <h3><span [attr.data-cms-key]="'development.text.010' + '.' + cmsIndex0">{{ (feature.title[currentLang]) | cmsText:('development.text.010' + '.' + cmsIndex0) }}</span></h3>
+        <p><span [attr.data-cms-key]="'development.text.011' + '.' + cmsIndex0">{{ (feature.description[currentLang]) | cmsText:('development.text.011' + '.' + cmsIndex0) }}</span></p>
+      </article>
     </div>
-
-    <!-- Team Section -->
-    <!-- <div class="team-section">
-        <h2 class="section-title">فريقنا المتميز</h2>
-        <div class="team-grid">
-            <div class="team-card" *ngFor="let member of team">
-                <img [src]="member.image" [alt]="member.name" class="team-photo" />
-                <div class="team-info">
-                    <h3>{{member.name}}</h3>
-                    <p class="role">{{member.role}}</p>
-                    <div class="social-links">
-                        <a *ngIf="member.social.twitter" [href]="member.social.twitter"
-                            target="_blank"><mat-icon>twitter</mat-icon></a>
-                        <a *ngIf="member.social.linkedin" [href]="member.social.linkedin"
-                            target="_blank"><mat-icon>linkedin</mat-icon></a>
-                        <a *ngIf="member.social.github" [href]="member.social.github"
-                            target="_blank"><mat-icon>code</mat-icon></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <div class="cta-section">
-        <div class="cta-container">
-            <h2 class="cta-title">
-                {{ currentLang === 'ar' ? 'هل أنت جاهز لتطوير مشروعك العقاري؟' : 'Ready to Develop Your Real Estate
-                Project?' }}
-            </h2>
-            <p class="cta-subtitle">
-                {{ currentLang === 'ar' ? 'دعنا نبني مستقبلًا أفضل معًا' : 'Let us build a better future together' }}
-            </p>
-            <button class="cta-button" (click)="navigateTo('contact')">
-                {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
-            </button>
-        </div>
+    <div class="inner-stat-strip">
+      <div *ngFor="let stat of stats; let cmsIndex1 = index">
+        <strong [appCountUp]="stat.value"><span [attr.data-cms-key]="'development.text.012' + '.' + cmsIndex1">{{ (stat.value) | cmsText:('development.text.012' + '.' + cmsIndex1) }}</span></strong
+        ><span><span [attr.data-cms-key]="'development.text.013' + '.' + cmsIndex1">{{ (stat.label[currentLang]) | cmsText:('development.text.013' + '.' + cmsIndex1) }}</span></span>
+      </div>
     </div>
-</section>
+  </section>
+  <aside class="inner-cta inner-width">
+    <div>
+      <span class="inner-kicker">OSOS AL-RIYADAH</span>
+      <h2>
+        <span [attr.data-cms-key]="'development.text.014'">{{ (currentLang === "ar"
+            ? "لنبدأ خطوتك العقارية القادمة."
+            : "Let’s plan your next property move.") | cmsText:('development.text.014') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'development.text.015'">{{ (currentLang === "ar"
+            ? "فريقنا هنا للاستماع إلى احتياجاتك ومناقشة الخيارات المناسبة لك."
+            : "Our team is here to listen and discuss the options that suit your needs.") | cmsText:('development.text.015') }}</span>
+      </p>
+    </div>
+    <a routerLink="/contact" class="inner-button gold"
+      ><span [attr.data-cms-key]="'development.text.016'">{{ (currentLang === "ar" ? "تواصل معنا" : "Contact us") | cmsText:('development.text.016') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </aside>
+</div>

@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "titleAr": "مشروع المصيف المرحلة الاولى- تبوك",
+    "descAr": "تصميم داخلي مودرن دافئ بالمصيف–تبوك؛ استقبال ومعيشة ومطبخ مفتوح وغرف نوم بمواد طبيعية وإضاءة مخفية.",
+    "titleEn": "Al-Maseef Residence Round 1 – Tabuk",
+    "descEn": "Warm-modern interior in Al-Maseef, Tabuk: reception, living, open kitchen, bedrooms; natural finishes and layered lighting.",
+    "image": "https://osos-alriadah.com/assets/projects/almasiaf1.jpeg",
+    "pdfUrl": "https://osos-alriadah.com/assets/projects/almasiaf-1.pdf",
+    "published": true,
+    "featured": true,
+    "sortOrder": 0,
+    "version": 1
+  },
+  {
+    "id": 2,
+    "titleAr": "مشروع المصيف المرحلة الثانية - تبوك",
+    "descAr": "استكمال الطابع المودرن الدافئ؛ استقبال ومعيشة ومطبخ مفتوح وغرف نوم بمواد طبيعية وإضاءة خفية.",
+    "titleEn": "Al-Maseef Residence Round 2 – Tabuk",
+    "descEn": "Phase two: warm-modern styling with open living/dining, kitchen, bedrooms; natural materials and concealed LED layers.",
+    "image": "https://osos-alriadah.com/assets/projects/almasiaf2.jpeg",
+    "pdfUrl": "https://osos-alriadah.com/assets/projects/almasiaf-2.pdf",
+    "published": true,
+    "featured": false,
+    "sortOrder": 1,
+    "version": 1
+  },
+  {
+    "id": 3,
+    "titleAr": "مشروع النخيل فيلا - الطابق الأرضي",
+    "descAr": "طابق أرضي: صالة مفتوحة على السفرة، مدخل أنيق، مطبخ تحضيري، غرفة ضيوف؛ ألوان هادئة وإضاءة مخفية.",
+    "titleEn": "Al-Nakheel Villa – Ground Floor",
+    "descEn": "Ground floor: open living–dining, elegant foyer, prep kitchen, guest room; soft palette and indirect lighting.",
+    "image": "https://osos-alriadah.com/assets/projects/alnakheel1.jpeg",
+    "pdfUrl": "https://osos-alriadah.com/assets/projects/alnakheel-1.pdf",
+    "published": true,
+    "featured": true,
+    "sortOrder": 2,
+    "version": 1
+  },
+  {
+    "id": 4,
+    "titleAr": "مشروع النخيل فيلا - الطابق الأول",
+    "descAr": "طابق أول: جناح رئيسي، غرفتا أطفال بحمام مشترك، صالة عائلية وبانتري وشرفة؛ خامات دافئة وإضاءة متعددة.",
+    "titleEn": "Al-Nakheel Villa – First Floor",
+    "descEn": "First floor: master suite, two kids’ rooms with shared bath, family lounge with pantry and balcony; warm materials, layered lighting.",
+    "image": "https://osos-alriadah.com/assets/projects/alnakheel2.jpeg",
+    "pdfUrl": "https://osos-alriadah.com/assets/projects/alnakheel-2.pdf",
+    "published": true,
+    "featured": false,
+    "sortOrder": 3,
+    "version": 1
+  }
+]

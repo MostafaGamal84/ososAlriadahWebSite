@@ -1,33 +1,116 @@
-<section class="about-us-section d-flex align-items-center justify-content-center text-center text-white min-vh-100"
-  [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" aria-labelledby="about-us-title">
-
-  <div class="slider w-100" data-animate>
-    <div *ngFor="let slide of slides; let i = index" class="slide" data-animate [class.active]="currentSlide === i"
-      [style.backgroundImage]="'url(' + slide + ')'"></div>
-    <div class="overlay" data-animate></div>
-  </div>
-
-  <div class="container position-relative z-2 px-3 px-md-4" [class.text-end]="currentLang === 'ar'"
-    [class.text-start]="currentLang === 'en'" data-animate>
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-12" data-animate>
-        <h2 class="fw-bold fs-1 mb-4 mt-5">
-          {{ currentLang === "ar" ? sectionTitle.ar : sectionTitle.en }}
-        </h2>
-        <p class="lead mb-4 fs-6 fs-md-5 w-100 mx-auto" [class.text-end]="currentLang === 'ar'"
-          [class.text-start]="currentLang === 'en'">
-          {{ currentLang === "ar" ? description.ar : description.en }}
-        </p>
-        <button class="btn btn-primary" data-animate (click)="scrollToAuctions()">
-          {{ currentLang === "ar" ? 'اكتشف المزادات' : 'Explore Auctions' }}
-        </button>
+<div class="inner-page">
+  <app-page-heading
+    [title]="currentLang === 'ar' ? 'من نحن' : 'About us'"
+    [description]="
+      currentLang === 'ar'
+        ? 'أسس راسخة. رؤية طموحة. وشراكة تصنع القيمة.'
+        : 'Solid foundations. An ambitious vision. A partnership that creates value.'
+    "
+  ></app-page-heading>
+  <section class="inner-section inner-width inner-split">
+    <div class="inner-copy" appAppInViewport animationClass="reveal-on-scroll">
+      <span class="inner-kicker"><span [attr.data-cms-key]="'about-us.text.000'">{{ (currentLang === "ar"
+          ? "شريكك في رحلة العقار"
+          : "YOUR REAL ESTATE PARTNER") | cmsText:('about-us.text.000') }}</span></span>
+      <h2>
+        <span [attr.data-cms-key]="'about-us.text.001'">{{ (currentLang === "ar"
+            ? "نرى في كل مساحة، فرصة لمستقبل أفضل."
+            : "Every space holds the potential for a better future.") | cmsText:('about-us.text.001') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'about-us.text.002'">{{ (currentLang === "ar"
+            ? "أسس الريادة للخدمات العقارية تقدم حلولًا في التسويق وإدارة وتطوير العقارات. نجمع بين فهم احتياجات عملائنا والمعرفة بالسوق، لنساعدهم في اتخاذ خطوات عقارية مدروسة."
+            : "Osos Al-Riyadah provides property marketing, management and development solutions. We combine an understanding of our clients’ needs with market knowledge to support considered property decisions.") | cmsText:('about-us.text.002') }}</span>
+      </p>
+      <div class="inner-actions">
+        <a routerLink="/our-services" class="inner-button"
+          ><span [attr.data-cms-key]="'about-us.text.003'">{{ (currentLang === "ar" ? "اكتشف خدماتنا" : "Explore services") | cmsText:('about-us.text.003') }}</span>
+          ↗</a
+        ><a routerLink="/team" class="inner-button secondary"><span [attr.data-cms-key]="'about-us.text.004'">{{ (currentLang === "ar" ? "تعرّف على فريقنا" : "Meet our team") | cmsText:('about-us.text.004') }}</span></a>
       </div>
     </div>
-  </div>
-
-  <div class="pagination" data-animate>
-    <span *ngFor="let slide of slides; let i = index" class="dot" data-animate [class.active]="currentSlide === i"
-      (click)="setCurrentSlide(i)">
-    </span>
-  </div>
-</section>
+    <figure
+      class="inner-photo"
+      appAppInViewport
+      animationClass="reveal-on-scroll"
+    >
+      <img [attr.data-cms-key]="'about-us.image.005'" [src]="('images/architecture.jpg') | cmsText:('about-us.image.005')" alt="" />
+      <figcaption>
+        <span [attr.data-cms-key]="'about-us.text.006'">{{ (currentLang === "ar"
+            ? "من الرؤية إلى التفاصيل، نبني علاقتنا على الثقة."
+            : "From vision to detail, our relationships are built on trust.") | cmsText:('about-us.text.006') }}</span>
+      </figcaption>
+    </figure>
+  </section>
+  <section class="inner-section inner-width">
+    <div class="inner-grid">
+      <article
+        class="inner-card"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+      >
+        <span class="inner-number">01 /</span>
+        <h3><span [attr.data-cms-key]="'about-us.text.007'">{{ (currentLang === "ar" ? "رؤيتنا" : "Our vision") | cmsText:('about-us.text.007') }}</span></h3>
+        <p>
+          <span [attr.data-cms-key]="'about-us.text.008'">{{ (currentLang === "ar"
+              ? "حلول عقارية متكاملة تلبي التطلعات وتساهم في مجتمعات مستدامة."
+              : "Integrated real estate solutions that serve ambitions and contribute to sustainable communities.") | cmsText:('about-us.text.008') }}</span>
+        </p>
+        <a routerLink="/vision" class="inner-button secondary"
+          ><span [attr.data-cms-key]="'about-us.text.009'">{{ (currentLang === "ar" ? "اكتشف الرؤية" : "Our vision") | cmsText:('about-us.text.009') }}</span> ↗</a
+        >
+      </article>
+      <article
+        class="inner-card"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+      >
+        <span class="inner-number">02 /</span>
+        <h3><span [attr.data-cms-key]="'about-us.text.010'">{{ (currentLang === "ar" ? "رسالتنا" : "Our mission") | cmsText:('about-us.text.010') }}</span></h3>
+        <p>
+          <span [attr.data-cms-key]="'about-us.text.011'">{{ (currentLang === "ar"
+              ? "تمكين عملائنا من قرارات عقارية واعية، بعلاقات تقوم على الوضوح والاحترافية."
+              : "Helping clients make informed property decisions through clarity and professionalism.") | cmsText:('about-us.text.011') }}</span>
+        </p>
+        <a routerLink="/mission" class="inner-button secondary"
+          ><span [attr.data-cms-key]="'about-us.text.012'">{{ (currentLang === "ar" ? "اقرأ رسالتنا" : "Our mission") | cmsText:('about-us.text.012') }}</span> ↗</a
+        >
+      </article>
+      <article
+        class="inner-card"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+      >
+        <span class="inner-number">03 /</span>
+        <h3><span [attr.data-cms-key]="'about-us.text.013'">{{ (currentLang === "ar" ? "ما يميزنا" : "Our approach") | cmsText:('about-us.text.013') }}</span></h3>
+        <p>
+          <span [attr.data-cms-key]="'about-us.text.014'">{{ (currentLang === "ar"
+              ? "عناية بالتفاصيل، وتواصل مستمر، وحلول ترتبط باحتياجات كل عميل."
+              : "Attention to detail, ongoing communication and solutions shaped around each client.") | cmsText:('about-us.text.014') }}</span>
+        </p>
+        <a routerLink="/features" class="inner-button secondary"
+          ><span [attr.data-cms-key]="'about-us.text.015'">{{ (currentLang === "ar" ? "اعرف المزيد" : "Learn more") | cmsText:('about-us.text.015') }}</span> ↗</a
+        >
+      </article>
+    </div>
+  </section>
+  <aside class="inner-cta inner-width">
+    <div>
+      <span class="inner-kicker">OSOS AL-RIYADAH</span>
+      <h2>
+        <span [attr.data-cms-key]="'about-us.text.016'">{{ (currentLang === "ar"
+            ? "لنبدأ خطوتك العقارية القادمة."
+            : "Let’s plan your next property move.") | cmsText:('about-us.text.016') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'about-us.text.017'">{{ (currentLang === "ar"
+            ? "فريقنا هنا للاستماع إلى احتياجاتك ومناقشة الخيارات المناسبة لك."
+            : "Our team is here to listen and discuss the options that suit your needs.") | cmsText:('about-us.text.017') }}</span>
+      </p>
+    </div>
+    <a routerLink="/contact" class="inner-button gold"
+      ><span [attr.data-cms-key]="'about-us.text.018'">{{ (currentLang === "ar" ? "تواصل معنا" : "Contact us") | cmsText:('about-us.text.018') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </aside>
+</div>

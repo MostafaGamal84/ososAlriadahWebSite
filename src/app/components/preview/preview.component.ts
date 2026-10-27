@@ -6,26 +6,29 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'app-preview',
-  imports: [PdfViewerModule,CommonModule],
+  imports: [PdfViewerModule, CommonModule],
   templateUrl: './preview.component.html',
-  styleUrl: './preview.component.css'
+  styleUrl: './preview.component.css',
 })
 export class PreviewComponent {
-title = 'Document';
+  title = 'Document';
+  loadFailed = false;
   pdfUrl = ''; // e.g. '/assets/pdfs/sample.pdf'
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
   ) {
-    this.route.queryParamMap.subscribe(q => {
+    this.route.queryParamMap.subscribe((q) => {
       const raw = q.get('url') || '';
       this.title = q.get('title') || this.title;
 
       // ensure a leading slash so Angular doesn’t 404 on deep routes
       let parsed = raw;
-      try { parsed = decodeURIComponent(raw); } catch {}
+      try {
+        parsed = decodeURIComponent(raw);
+      } catch {}
       if (parsed && !/^https?:\/\//i.test(parsed) && !parsed.startsWith('/')) {
         parsed = '/' + parsed;
       }
@@ -50,7 +53,10 @@ title = 'Document';
   }
 
   private absoluteUrl(path: string): string {
-    try { return new URL(path, window.location.origin).toString(); }
-    catch { return path; }
+    try {
+      return new URL(path, window.location.origin).toString();
+    } catch {
+      return path;
+    }
   }
 }

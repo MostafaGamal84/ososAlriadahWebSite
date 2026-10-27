@@ -2,18 +2,18 @@
   <div class="container">
     <div class="partners-carousel" role="list">
       <!-- main track -->
-      <figure class="partner" *ngFor="let p of partners; trackBy: trackByIdx" role="listitem">
-        <img [src]="p.src" [alt]="(currentLang === 'ar' ? p.nameAr : p.nameEn) + ' logo'" />
+      <figure class="partner" *ngFor="let p of partners; trackBy: trackByIdx; let cmsIndex0 = index" role="listitem">
+        <img [attr.data-cms-key]="'owl.image.000' + '.' + cmsIndex0" [src]="(p.src) | cmsText:('owl.image.000' + '.' + cmsIndex0)" [alt]="(currentLang === 'ar' ? p.nameAr : p.nameEn) + ' logo'" />
         <figcaption class="partner-name">
-          {{ currentLang === 'ar' ? p.nameAr : p.nameEn }}
+          <span [attr.data-cms-key]="'owl.text.001' + '.' + cmsIndex0">{{ (currentLang === 'ar' ? p.nameAr : p.nameEn) | cmsText:('owl.text.001' + '.' + cmsIndex0) }}</span>
         </figcaption>
       </figure>
 
       <!-- duplicate for seamless loop -->
-      <figure class="partner" *ngFor="let p of partners; trackBy: trackByIdx" role="listitem">
-        <img [src]="p.src" [alt]="(currentLang === 'ar' ? p.nameAr : p.nameEn) + ' logo'" />
+      <figure class="partner" *ngFor="let p of partners; trackBy: trackByIdx; let cmsIndex1 = index" role="listitem">
+        <img [attr.data-cms-key]="'owl.image.002' + '.' + cmsIndex1" [src]="(p.src) | cmsText:('owl.image.002' + '.' + cmsIndex1)" [alt]="(currentLang === 'ar' ? p.nameAr : p.nameEn) + ' logo'" />
         <figcaption class="partner-name">
-          {{ currentLang === 'ar' ? p.nameAr : p.nameEn }}
+          <span [attr.data-cms-key]="'owl.text.003' + '.' + cmsIndex1">{{ (currentLang === 'ar' ? p.nameAr : p.nameEn) | cmsText:('owl.text.003' + '.' + cmsIndex1) }}</span>
         </figcaption>
       </figure>
     </div>

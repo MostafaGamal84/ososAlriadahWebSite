@@ -1,3 +1,7 @@
+import { CmsTextPipe } from '../../../services/cms-text.pipe';
+import { RouterLink } from '@angular/router';
+import { PageHeadingComponent } from '../../page-heading/page-heading.component';
+import { AppInViewportDirective } from '../../../directives/app-in-viewport.directive';
 import { Component } from '@angular/core';
 interface Feature {
   icon: string;
@@ -22,7 +26,13 @@ interface TeamMember {
 
 @Component({
   selector: 'app-development',
-  imports: [CommonModule, MatIconModule, CountUpDirective],
+  imports: [CmsTextPipe, 
+    CommonModule,
+    RouterLink,
+    PageHeadingComponent,
+    AppInViewportDirective,
+    CountUpDirective,
+  ],
   templateUrl: './development.component.html',
   styleUrl: './development.component.css',
 })

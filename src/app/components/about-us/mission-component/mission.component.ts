@@ -1,3 +1,7 @@
+import { CmsTextPipe } from '../../../services/cms-text.pipe';
+import { RouterLink } from '@angular/router';
+import { PageHeadingComponent } from '../../page-heading/page-heading.component';
+import { AppInViewportDirective } from '../../../directives/app-in-viewport.directive';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -6,7 +10,12 @@ import { Router } from '@angular/router';
   selector: 'app-mission',
   templateUrl: './mission.component.html',
   styleUrls: ['./mission.component.css'],
-  imports: [CommonModule],
+  imports: [CmsTextPipe, 
+    CommonModule,
+    RouterLink,
+    PageHeadingComponent,
+    AppInViewportDirective,
+  ],
 })
 export class MissionComponent {
   currentLang: string = 'ar';

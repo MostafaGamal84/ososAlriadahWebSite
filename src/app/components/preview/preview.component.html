@@ -1,27 +1,46 @@
 <section class="pdf-wrap" [attr.dir]="isArabic(title) ? 'rtl' : 'ltr'">
   <header class="topbar">
-    <button class="btn back" (click)="back()">←</button>
+    <button
+      class="btn back"
+      (click)="back()"
+      [attr.aria-label]="isArabic(title) ? 'رجوع' : 'Go back'"
+    >
+      ←
+    </button>
     <h1 class="title">{{ title }}</h1>
     <button class="btn primary" (click)="openInNewTab()">
-      {{ isArabic(title) ? 'فتح في تبويب' : 'Open in new tab' }}
+      {{ isArabic(title) ? "فتح في تبويب" : "Open in new tab" }}
     </button>
   </header>
 
   <div class="frame">
-    <ng-container *ngIf="pdfUrl; else noPdf">
+    <div *ngIf="loadFailed" class="empty" role="alert">
+      <p>
+        {{
+          isArabic(title)
+            ? "تعذّر تحميل ملف المشروع. يرجى المحاولة لاحقًا أو التواصل مع فريقنا."
+            : "The project brochure could not be loaded. Please try later or contact our team."
+        }}
+      </p>
+    </div>
+    <ng-container *ngIf="pdfUrl && !loadFailed; else noPdf">
       <!-- PDF.js viewer -->
       <pdf-viewer
         [src]="pdfUrl"
+        (error)="loadFailed = true"
         [render-text]="true"
         [original-size]="true"
         [fit-to-page]="true"
-        style="display:block; width:100%; height:100%;"
+        style="display: block; width: 100%; height: 100%"
       ></pdf-viewer>
     </ng-container>
 
     <ng-template #noPdf>
-      <div class="empty"><p>No PDF URL provided.</p></div>
+      <div class="empty" *ngIf="!loadFailed">
+        <p>
+          {{ isArabic(title) ? "لا يوجد ملف للعرض." : "No brochure provided." }}
+        </p>
+      </div>
     </ng-template>
   </div>
-  
 </section>

@@ -1,3 +1,7 @@
+import { CmsTextPipe } from '../../../services/cms-text.pipe';
+import { RouterLink } from '@angular/router';
+import { PageHeadingComponent } from '../../page-heading/page-heading.component';
+import { AppInViewportDirective } from '../../../directives/app-in-viewport.directive';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -66,12 +70,17 @@ interface Payment {
 @Component({
   selector: 'app-management',
   standalone: true,
-  imports: [MatIconModule, FormsModule, CommonModule, MatProgressBarModule],
+  imports: [CmsTextPipe, 
+    CommonModule,
+    RouterLink,
+    PageHeadingComponent,
+    AppInViewportDirective,
+  ],
   templateUrl: './management.component.html',
   styleUrls: ['./management.component.css'],
 })
 export class ManagementComponent {
-    currentLang: string = localStorage.getItem('lang') || 'ar';
+  currentLang: string = localStorage.getItem('lang') || 'ar';
 
   // Modal control properties
   newPropertyModal = false;
@@ -316,7 +325,7 @@ export class ManagementComponent {
       (p) =>
         p.status === 'pending' &&
         p.date <
-          new Date(today.getFullYear(), today.getMonth(), today.getDate())
+          new Date(today.getFullYear(), today.getMonth(), today.getDate()),
     );
   }
 
@@ -354,7 +363,7 @@ export class ManagementComponent {
   // Get property for tenant
   getPropertyForTenant(tenant: Tenant): Property | undefined {
     return this.properties.find((p) =>
-      p.tenants?.some((t) => t.id === tenant.id)
+      p.tenants?.some((t) => t.id === tenant.id),
     );
   }
 
@@ -364,7 +373,7 @@ export class ManagementComponent {
 
   // Tab management
   setActiveTab(
-    tab: 'properties' | 'tenants' | 'payments' | 'maintenance'
+    tab: 'properties' | 'tenants' | 'payments' | 'maintenance',
   ): void {
     this.activeTab = tab;
   }

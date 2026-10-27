@@ -1,77 +1,66 @@
-<section class="mission-section" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
-  <div class="container">
-    <div class="mission-container">
-      <div class="row align-items-center g-5">
-        <!-- Image Column -->
-        <div class="col-lg-5">
-          <div class="mission-media">
-            <div class="media-wrapper">
-              <img src="https://i.pinimg.com/1200x/b9/86/cd/b986cdd3b618e3c90520ec6227466f64.jpg"
-                alt="{{ currentLang === 'ar' ? 'رسالتنا' : 'Our Mission' }}" class="mission-image" />
-
-              <!-- Optional decorative elements -->
-              <div class="media-decoration"></div>
-              <div class="media-badge">
-                <i class="fas fa-bullseye"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Content Column -->
-        <div class="col-lg-7">
-          <div class="mission-content">
-            <div class="section-header">
-              <span class="section-tag">
-                {{ currentLang === 'ar' ? 'من نحن' : 'About Us' }}
-              </span>
-              <h2 class="section-title">
-                {{ currentLang === 'ar' ? 'رسالتنا' : 'Our Mission' }}
-              </h2>
-              <div class="title-divider"></div>
-            </div>
-
-            <p class="mission-text">
-              {{ mission[currentLang] }}
-            </p>
-
-            <div class="mission-features">
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>{{ currentLang === 'ar' ? 'شفافية كاملة' : 'Full Transparency' }}</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>{{ currentLang === 'ar' ? 'خبرة متخصصة' : 'Specialized Expertise' }}</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>{{ currentLang === 'ar' ? 'شراكات طويلة الأمد' : 'Long-term Partnerships' }}</span>
-              </div>
-            </div>
-
-            <div class="action-buttons">
-              <button class="btn btn-mission-primary" (click)="navigateTo('our-services')">
-                <span class="btn-content">
-                  <span class="btn-text">
-                    {{ currentLang === 'ar' ? 'اكتشف خدماتنا' : 'Discover Services' }}
-                  </span>
-                  <span class="btn-icon">
-                    <i class="fas" [class.fa-arrow-left]="currentLang === 'ar'"
-                      [class.fa-arrow-right]="currentLang !== 'ar'"></i>
-                  </span>
-                </span>
-                <span class="hover-effect"></span>
-              </button>
-
-              <button class="btn btn-mission-secondary" (click)="navigateTo('contact')">
-                {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
-              </button>
-            </div>
-
-          </div>
-        </div>
+<div class="inner-page">
+  <app-page-heading
+    [title]="currentLang === 'ar' ? 'رسالتنا' : 'Our mission'"
+    [description]="
+      currentLang === 'ar'
+        ? 'ثقة تُبنى بالتفاصيل، وشراكة تستمر بالقيمة.'
+        : 'Trust built through detail. Partnerships sustained by value.'
+    "
+  ></app-page-heading>
+  <section class="inner-section inner-width inner-split">
+    <figure
+      class="inner-photo"
+      appAppInViewport
+      animationClass="reveal-on-scroll"
+    >
+      <img [attr.data-cms-key]="'mission.image.000'" [src]="('images/architecture.jpg') | cmsText:('mission.image.000')" alt="" />
+    </figure>
+    <div class="inner-copy" appAppInViewport animationClass="reveal-on-scroll">
+      <span class="inner-kicker"><span [attr.data-cms-key]="'mission.text.001'">{{ (currentLang === "ar" ? "التزامنا تجاهك" : "OUR COMMITMENT TO YOU") | cmsText:('mission.text.001') }}</span></span>
+      <h2>
+        <span [attr.data-cms-key]="'mission.text.002'">{{ (currentLang === "ar"
+            ? "قرارات واعية. علاقات راسخة."
+            : "Informed decisions. Lasting relationships.") | cmsText:('mission.text.002') }}</span>
+      </h2>
+      <p><span [attr.data-cms-key]="'mission.text.003'">{{ (mission[currentLang]) | cmsText:('mission.text.003') }}</span></p>
+      <ul class="inner-checks">
+        <li>
+          <span [attr.data-cms-key]="'mission.text.004'">{{ (currentLang === "ar" ? "شفافية كاملة" : "Full transparency") | cmsText:('mission.text.004') }}</span>
+        </li>
+        <li>
+          <span [attr.data-cms-key]="'mission.text.005'">{{ (currentLang === "ar" ? "خبرة متخصصة" : "Specialist expertise") | cmsText:('mission.text.005') }}</span>
+        </li>
+        <li>
+          <span [attr.data-cms-key]="'mission.text.006'">{{ (currentLang === "ar"
+              ? "شراكات طويلة الأمد"
+              : "Long-term partnerships") | cmsText:('mission.text.006') }}</span>
+        </li>
+      </ul>
+      <div class="inner-actions">
+        <a routerLink="/our-services" class="inner-button"
+          ><span [attr.data-cms-key]="'mission.text.007'">{{ (currentLang === "ar" ? "اكتشف خدماتنا" : "Discover services") | cmsText:('mission.text.007') }}</span>
+          ↗</a
+        >
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  <aside class="inner-cta inner-width">
+    <div>
+      <span class="inner-kicker">OSOS AL-RIYADAH</span>
+      <h2>
+        <span [attr.data-cms-key]="'mission.text.008'">{{ (currentLang === "ar"
+            ? "لنبدأ خطوتك العقارية القادمة."
+            : "Let’s plan your next property move.") | cmsText:('mission.text.008') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'mission.text.009'">{{ (currentLang === "ar"
+            ? "فريقنا هنا للاستماع إلى احتياجاتك ومناقشة الخيارات المناسبة لك."
+            : "Our team is here to listen and discuss the options that suit your needs.") | cmsText:('mission.text.009') }}</span>
+      </p>
+    </div>
+    <a routerLink="/contact" class="inner-button gold"
+      ><span [attr.data-cms-key]="'mission.text.010'">{{ (currentLang === "ar" ? "تواصل معنا" : "Contact us") | cmsText:('mission.text.010') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </aside>
+</div>

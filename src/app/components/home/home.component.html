@@ -1,0 +1,300 @@
+<section class="hero" aria-labelledby="hero-title">
+  <img
+    class="hero-image"
+    [attr.data-cms-key]="'home.image.000'" [src]="('images/architecture.jpg') | cmsText:('home.image.000')"
+    alt=""
+    fetchpriority="high"
+  />
+  <div class="hero-shade"></div>
+  <div class="hero-content page-width">
+    <div class="eyebrow light">
+      <span></span
+      ><span [attr.data-cms-key]="'home.text.001'">{{ (ar ? "أسس راسخة. آفاق واعدة." : "SOLID FOUNDATIONS. NEW HORIZONS.") | cmsText:('home.text.001') }}</span>
+    </div>
+    <h1 id="hero-title">
+      <span [attr.data-cms-key]="'home.text.002'">{{ (ar ? "نُرسّخ الثقة." : "Built on trust.") | cmsText:('home.text.002') }}</span><br /><em><span [attr.data-cms-key]="'home.text.003'">{{ (ar ? "ونبني المستقبل." : "Shaping tomorrow.") | cmsText:('home.text.003') }}</span></em>
+    </h1>
+    <p>
+      <span [attr.data-cms-key]="'home.text.004'">{{ (ar
+          ? "شريكك في رحلة العقار. من الفرصة الأولى إلى استثمار يصنع الفرق، نمضي معك بخبرة ورؤية متجددة."
+          : "Your partner in real estate. From the first opportunity to an investment that makes a difference, we move forward with expertise and vision.") | cmsText:('home.text.004') }}</span>
+    </p>
+    <div class="hero-actions">
+      <a routerLink="/projects" class="action gold"
+        ><span [attr.data-cms-key]="'home.text.005'">{{ (ar ? "اكتشف مشروعاتنا" : "Explore our projects") | cmsText:('home.text.005') }}</span>
+        <span aria-hidden="true">↗</span></a
+      ><a routerLink="/contact" class="action outline"
+        ><span [attr.data-cms-key]="'home.text.006'">{{ (ar ? "تحدث مع فريقنا" : "Talk to our team") | cmsText:('home.text.006') }}</span>
+        <span aria-hidden="true">↗</span></a
+      >
+    </div>
+  </div>
+  <a class="hero-note" routerLink="/our-services">
+    <span class="hero-note-icon material-icons" aria-hidden="true"
+      >architecture</span
+    >
+    <span
+      ><small><span [attr.data-cms-key]="'home.text.007'">{{ (ar ? "من الفكرة إلى الأثر" : "FROM VISION TO VALUE") | cmsText:('home.text.007') }}</span></small>
+      <strong><span [attr.data-cms-key]="'home.text.008'">{{ (ar ? "لكل طموح، أساس." : "A foundation for every ambition.") | cmsText:('home.text.008') }}</span></strong></span
+    >
+    <span aria-hidden="true">↗</span>
+  </a>
+  <div class="hero-bottom page-width">
+    <span>OSOS AL-RIYADAH <i> / </i> REAL ESTATE</span
+    ><a routerLink="/" fragment="intro"
+      ><span [attr.data-cms-key]="'home.text.009'">{{ (ar ? "اكتشف المزيد" : "Discover more") | cmsText:('home.text.009') }}</span>
+      <span aria-hidden="true">↓</span></a
+    >
+  </div>
+</section>
+<section class="intro page-width section-space" id="intro">
+  <div appAppInViewport animationClass="reveal-on-scroll">
+    <div class="eyebrow"><span [attr.data-cms-key]="'home.text.010'">{{ (ar ? "من نحن" : "WHO WE ARE") | cmsText:('home.text.010') }}</span></div>
+    <h2>
+      <span [attr.data-cms-key]="'home.text.011'">{{ (ar ? "رؤية طموحة،" : "An ambitious vision.") | cmsText:('home.text.011') }}</span><br /><span [attr.data-cms-key]="'home.text.012'">{{ (ar ? "تبدأ من أسس متينة." : "A solid foundation.") | cmsText:('home.text.012') }}</span>
+    </h2>
+  </div>
+  <div
+    class="intro-copy"
+    appAppInViewport
+    animationClass="reveal-on-scroll"
+    [revealDelay]="100"
+  >
+    <p>
+      <span [attr.data-cms-key]="'home.text.013'">{{ (ar
+          ? "في أسس الريادة، نؤمن أن العقار أكثر من مساحة؛ هو فرصة للنمو وأساس لمستقبل أفضل. نقدم حلولًا متكاملة في التطوير والتسويق وإدارة العقارات، تجمع بين فهم السوق والعناية بالتفاصيل."
+          : "At Osos Al-Riyadah, real estate is more than a space. It is an opportunity to grow and a foundation for a better future. Our development, marketing and management solutions combine market understanding with attention to detail.") | cmsText:('home.text.013') }}</span>
+    </p>
+    <a routerLink="/vision" class="text-link"
+      ><span [attr.data-cms-key]="'home.text.014'">{{ (ar ? "تعرّف على رؤيتنا" : "Discover our vision") | cmsText:('home.text.014') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </div>
+  <div class="principles" appAppInViewport animationClass="reveal-on-scroll">
+    <div>
+      <span>01 /</span>
+      <h3><span [attr.data-cms-key]="'home.text.015'">{{ (ar ? "خبرة تصنع القيمة" : "Expertise that adds value") | cmsText:('home.text.015') }}</span></h3>
+    </div>
+    <div>
+      <span>02 /</span>
+      <h3><span [attr.data-cms-key]="'home.text.016'">{{ (ar ? "شفافية تبني الثقة" : "Transparency that builds trust") | cmsText:('home.text.016') }}</span></h3>
+    </div>
+    <div>
+      <span>03 /</span>
+      <h3><span [attr.data-cms-key]="'home.text.017'">{{ (ar ? "شراكة تدوم" : "Partnerships that last") | cmsText:('home.text.017') }}</span></h3>
+    </div>
+  </div>
+</section>
+<section class="services section-space" id="services">
+  <div class="page-width">
+    <div
+      class="section-heading"
+      appAppInViewport
+      animationClass="reveal-on-scroll"
+    >
+      <div>
+        <div class="eyebrow"><span [attr.data-cms-key]="'home.text.018'">{{ (ar ? "ما نقدمه" : "WHAT WE DO") | cmsText:('home.text.018') }}</span></div>
+        <h2>
+          <span [attr.data-cms-key]="'home.text.019'">{{ (ar
+              ? "حلول متكاملة. قيمة مستدامة."
+              : "Complete solutions. Lasting value.") | cmsText:('home.text.019') }}</span>
+        </h2>
+      </div>
+      <p>
+        <span [attr.data-cms-key]="'home.text.020'">{{ (ar
+            ? "خبرات متنوعة تجتمع لتخدم طموحك العقاري، في كل مرحلة."
+            : "Complementary expertise for your real estate ambitions, at every stage.") | cmsText:('home.text.020') }}</span>
+      </p>
+    </div>
+    <div class="service-grid">
+      <a
+        *ngFor="let service of services; let i = index; let cmsIndex0 = index"
+        [routerLink]="service.link"
+        class="service-card"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+        [revealDelay]="i * 70"
+        ><div class="service-top">
+          <span class="material-icons" aria-hidden="true"><span [attr.data-cms-key]="'home.text.021' + '.' + cmsIndex0">{{ (service.icon) | cmsText:('home.text.021' + '.' + cmsIndex0) }}</span></span
+          ><span><span [attr.data-cms-key]="'home.text.022' + '.' + cmsIndex0">{{ (service.number) | cmsText:('home.text.022' + '.' + cmsIndex0) }}</span></span>
+        </div>
+        <h3><span [attr.data-cms-key]="'home.text.023' + '.' + cmsIndex0">{{ (ar ? service.ar : service.en) | cmsText:('home.text.023' + '.' + cmsIndex0) }}</span></h3>
+        <p><span [attr.data-cms-key]="'home.text.024' + '.' + cmsIndex0">{{ (ar ? service.descriptionAr : service.descriptionEn) | cmsText:('home.text.024' + '.' + cmsIndex0) }}</span></p>
+        <span class="service-arrow" aria-hidden="true">↗</span></a
+      >
+    </div>
+  </div>
+</section>
+<section
+  class="journey page-width section-space"
+  aria-labelledby="journey-title"
+>
+  <div class="journey-art" appAppInViewport animationClass="reveal-on-scroll">
+    <img [attr.data-cms-key]="'home.image.025'" [src]="('images/architecture.jpg') | cmsText:('home.image.025')" alt="" loading="lazy" />
+    <div class="journey-art-caption">
+      <span>OSOS / PERSPECTIVE</span>
+      <p><span [attr.data-cms-key]="'home.text.026'">{{ (ar ? "نرى ما وراء المساحة." : "We see beyond the space.") | cmsText:('home.text.026') }}</span></p>
+    </div>
+    <span class="journey-seal" aria-hidden="true"
+      ><span [attr.data-cms-key]="'home.text.027'">{{ (ar ? "رؤية أبعد" : "A wider vision") | cmsText:('home.text.027') }}</span> <span>↗</span></span
+    >
+  </div>
+  <div class="journey-copy" appAppInViewport animationClass="reveal-on-scroll">
+    <div class="eyebrow"><span [attr.data-cms-key]="'home.text.028'">{{ (ar ? "رحلتك معنا" : "YOUR JOURNEY WITH US") | cmsText:('home.text.028') }}</span></div>
+    <h2 id="journey-title">
+      <span [attr.data-cms-key]="'home.text.029'">{{ (ar ? "كل بداية تستحق اهتمامًا." : "Every beginning deserves attention.") | cmsText:('home.text.029') }}</span>
+    </h2>
+    <p class="journey-lead">
+      <span [attr.data-cms-key]="'home.text.030'">{{ (ar
+          ? "سواء كنت تبحث عن مساحة جديدة أو فرصة لعقارك، ابدأ من احتياجك."
+          : "Whether you need a new space or a new opportunity for your property, start with what matters to you.") | cmsText:('home.text.030') }}</span>
+    </p>
+    <details class="journey-step" name="property-journey" open>
+      <summary>
+        <span class="journey-number">01</span
+        ><span [attr.data-cms-key]="'home.text.031'">{{ (ar ? "أبحث عن عقار" : "Find a property") | cmsText:('home.text.031') }}</span><span class="journey-plus" aria-hidden="true">+</span>
+      </summary>
+      <div>
+        <p>
+          <span [attr.data-cms-key]="'home.text.032'">{{ (ar
+              ? "تعرّف على مشروعاتنا، واطّلع على التفاصيل التي تساعدك على اختيار خطوتك القادمة."
+              : "Explore our projects and the details that help you choose your next step.") | cmsText:('home.text.032') }}</span>
+        </p>
+        <a routerLink="/projects" class="text-link"
+          ><span [attr.data-cms-key]="'home.text.033'">{{ (ar ? "استكشف المشروعات" : "Explore projects") | cmsText:('home.text.033') }}</span>
+          <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </details>
+    <details class="journey-step" name="property-journey">
+      <summary>
+        <span class="journey-number">02</span
+        ><span [attr.data-cms-key]="'home.text.034'">{{ (ar ? "أريد تسويق عقاري" : "Market my property") | cmsText:('home.text.034') }}</span><span class="journey-plus" aria-hidden="true">+</span>
+      </summary>
+      <div>
+        <p>
+          <span [attr.data-cms-key]="'home.text.035'">{{ (ar
+              ? "اكتشف كيف نبرز قيمة عقارك ونقدمه للجمهور المناسب."
+              : "Discover how we highlight your property’s value and connect it with the right audience.") | cmsText:('home.text.035') }}</span>
+        </p>
+        <a routerLink="/markting" class="text-link"
+          ><span [attr.data-cms-key]="'home.text.036'">{{ (ar ? "خدمات التسويق" : "Marketing services") | cmsText:('home.text.036') }}</span>
+          <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </details>
+    <details class="journey-step" name="property-journey">
+      <summary>
+        <span class="journey-number">03</span
+        ><span [attr.data-cms-key]="'home.text.037'">{{ (ar ? "أحتاج إلى مشورة" : "Talk through my options") | cmsText:('home.text.037') }}</span><span class="journey-plus" aria-hidden="true">+</span>
+      </summary>
+      <div>
+        <p>
+          <span [attr.data-cms-key]="'home.text.038'">{{ (ar
+              ? "شارك فريقنا احتياجك وتطلعاتك لنساعدك في تحديد البداية المناسبة."
+              : "Share your needs and ambitions with our team to find a suitable starting point.") | cmsText:('home.text.038') }}</span>
+        </p>
+        <a routerLink="/contact" class="text-link"
+          ><span [attr.data-cms-key]="'home.text.039'">{{ (ar ? "تواصل مع الفريق" : "Contact our team") | cmsText:('home.text.039') }}</span>
+          <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </details>
+  </div>
+</section>
+<section class="projects page-width section-space" id="projects">
+  <div
+    class="section-heading"
+    appAppInViewport
+    animationClass="reveal-on-scroll"
+  >
+    <div>
+      <div class="eyebrow"><span [attr.data-cms-key]="'home.text.040'">{{ (ar ? "مشروعاتنا" : "OUR PROJECTS") | cmsText:('home.text.040') }}</span></div>
+      <h2>
+        <span [attr.data-cms-key]="'home.text.041'">{{ (ar ? "مساحات ترتقي بتطلعاتك." : "Spaces that elevate your ambitions.") | cmsText:('home.text.041') }}</span>
+      </h2>
+    </div>
+    <a routerLink="/projects" class="text-link"
+      ><span [attr.data-cms-key]="'home.text.042'">{{ (ar ? "جميع المشروعات" : "All projects") | cmsText:('home.text.042') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </div>
+  @if(projectsLoading) { <p role="status"><span [attr.data-cms-key]="'home.text.043'">{{ (ar ? 'جارٍ تحميل المشروعات…' : 'Loading projects…') | cmsText:('home.text.043') }}</span></p> }
+  @if(projectsFailed) { <p role="status"><span [attr.data-cms-key]="'home.text.044'">{{ (ar ? 'تعذّر تحميل المشروعات حاليًا.' : 'Projects are temporarily unavailable.') | cmsText:('home.text.044') }}</span></p> }
+  <div class="project-grid">
+    <a *ngFor="let project of featuredProjects; let i = index; let cmsIndex1 = index" routerLink="/preview"
+      [queryParams]="{url:project.pdfUrl,title:ar?project.titleAr:project.titleEn}"
+      class="project-card" appAppInViewport animationClass="reveal-on-scroll" [revealDelay]="(i % 2) * 100">
+      <div class="project-image"><img [src]="project.image || 'images/property-placeholder.svg'"
+        (error)="imageFallback($event,''+project.id)" [alt]="ar?project.titleAr:project.titleEn" loading="lazy" />
+        <span class="project-open" aria-hidden="true">↗</span></div>
+      <div class="project-caption"><h3>{{ar?project.titleAr:project.titleEn}}</h3><span>{{ar?project.descAr:project.descEn}}</span></div>
+    </a>
+  </div>
+  @if(!projectsLoading && !projectsFailed && !featuredProjects.length) { <p><span [attr.data-cms-key]="'home.text.045'">{{ (ar ? 'سيتم عرض المشروعات المميزة هنا قريبًا.' : 'Featured projects will appear here soon.') | cmsText:('home.text.045') }}</span></p> }
+</section>
+<section class="auction-banner">
+  <div
+    class="page-width auction-inner"
+    appAppInViewport
+    animationClass="reveal-on-scroll"
+  >
+    <div class="auction-symbol" aria-hidden="true">
+      <span class="material-icons">gavel</span>
+    </div>
+    <div>
+      <div class="eyebrow light">
+        <span [attr.data-cms-key]="'home.text.046'">{{ (ar ? "المزادات العقارية" : "REAL ESTATE AUCTIONS") | cmsText:('home.text.046') }}</span>
+      </div>
+      <h2>
+        <span [attr.data-cms-key]="'home.text.047'">{{ (ar
+            ? "فرص تستحق أن تكون جزءًا منها."
+            : "Opportunities worth being part of.") | cmsText:('home.text.047') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'home.text.048'">{{ (ar
+            ? "تعرّف على مزاداتنا، واطّلع على تفاصيل الأصول والفرص المتاحة."
+            : "Explore our auctions, property details and available opportunities.") | cmsText:('home.text.048') }}</span>
+      </p>
+    </div>
+    <a routerLink="/auction" class="action gold"
+      ><span [attr.data-cms-key]="'home.text.049'">{{ (ar ? "استعرض المزادات" : "Explore auctions") | cmsText:('home.text.049') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</section>
+<section class="partners page-width section-space">
+  <div class="eyebrow"><span [attr.data-cms-key]="'home.text.050'">{{ (ar ? "شركاء النجاح" : "OUR PARTNERS") | cmsText:('home.text.050') }}</span></div>
+  <h2>
+    <span [attr.data-cms-key]="'home.text.051'">{{ (ar ? "معًا، نبني أثرًا أكبر." : "Together, we make a greater impact.") | cmsText:('home.text.051') }}</span>
+  </h2>
+  <div class="partner-logos">
+    <img
+      *ngFor="let partner of partners; let i = index; let cmsIndex2 = index"
+      [attr.data-cms-key]="'home.image.052' + '.' + cmsIndex2" [src]="('assets/images/' + partner + '.svg') | cmsText:('home.image.052' + '.' + cmsIndex2)"
+      [alt]="partnerNames[i]"
+      loading="lazy"
+    />
+  </div>
+</section>
+<section class="contact-callout page-width">
+  <div>
+    <div class="eyebrow">
+      <span [attr.data-cms-key]="'home.text.053'">{{ (ar ? "خطوتك القادمة تبدأ هنا" : "YOUR NEXT CHAPTER STARTS HERE") | cmsText:('home.text.053') }}</span>
+    </div>
+    <h2>
+      <span [attr.data-cms-key]="'home.text.054'">{{ (ar ? "لطموحك العقاري،" : "For your property ambitions,") | cmsText:('home.text.054') }}</span><br /><span [attr.data-cms-key]="'home.text.055'">{{ (ar ? "شريك يُحسن الإصغاء." : "a partner who listens.") | cmsText:('home.text.055') }}</span>
+    </h2>
+  </div>
+  <div>
+    <p>
+      <span [attr.data-cms-key]="'home.text.056'">{{ (ar
+          ? "شاركنا تطلعاتك، ودعنا نكتشف معًا الفرصة الأنسب لك."
+          : "Share your ambitions. Let’s find the right opportunity together.") | cmsText:('home.text.056') }}</span>
+    </p>
+    <a routerLink="/contact" class="action navy"
+      ><span [attr.data-cms-key]="'home.text.057'">{{ (ar ? "لنتحدث عن طموحك" : "Let’s talk about your plans") | cmsText:('home.text.057') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</section>

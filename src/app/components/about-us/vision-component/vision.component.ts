@@ -1,3 +1,7 @@
+import { CmsTextPipe } from '../../../services/cms-text.pipe';
+import { RouterLink } from '@angular/router';
+import { PageHeadingComponent } from '../../page-heading/page-heading.component';
+import { AppInViewportDirective } from '../../../directives/app-in-viewport.directive';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 interface VisionMissionItem {
@@ -20,7 +24,12 @@ interface VisionMissionItem {
   selector: 'app-vision',
   templateUrl: './vision.component.html',
   styleUrls: ['./vision.component.css'],
-  imports: [CommonModule],
+  imports: [CmsTextPipe, 
+    CommonModule,
+    RouterLink,
+    PageHeadingComponent,
+    AppInViewportDirective,
+  ],
 })
 export class VisionComponent implements OnInit {
   currentLang: string = 'ar';

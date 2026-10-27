@@ -1,170 +1,332 @@
-<div class="auctions-section">
-  <h2 class="section-title text-center">
-    {{ sectionTitles[currentLang][selectedTab] }}
-  </h2>
-
-  <div class="swiper-tabs-container">
-    <!-- Tabs -->
-    <div class="tabs-navigation" role="tablist" *ngIf="visibleTabs.length > 1">
-      <button
-        *ngFor="let tab of visibleTabs"
-        class="tab-button"
-        [class.active]="selectedTab === tab"
-        (click)="selectTab(tab)"
+<div class="inner-page">
+  <app-page-heading
+    [title]="sectionTitles[currentLang][selectedTab]"
+    [description]="
+      currentLang === 'ar'
+        ? 'فرص عقارية بتفاصيل واضحة. استعرض المزادات واختر ما يناسب تطلعاتك.'
+        : 'Property opportunities with clear details. Explore auctions and find the right fit.'
+    "
+  ></app-page-heading>
+  <div class="auctions-section">
+    <nav
+      *ngIf="lockedStatus"
+      class="auction-back"
+      [attr.aria-label]="
+        currentLang === 'ar' ? 'التنقل بين المزادات' : 'Auction navigation'
+      "
+    >
+      <a routerLink="/auction" class="inner-button secondary">
+        <span aria-hidden="true">{{ currentLang === "ar" ? "→" : "←" }}</span>
+        {{
+          currentLang === "ar"
+            ? "العودة إلى كل المزادات"
+            : "Back to all auctions"
+        }}
+      </a>
+    </nav>
+    <div class="swiper-tabs-container">
+      <!-- Tabs -->
+      <div
+        class="tabs-navigation"
+        role="group"
+        [attr.aria-label]="
+          currentLang === 'ar' ? 'تصفية المزادات' : 'Filter auctions'
+        "
+        *ngIf="visibleTabs.length > 1"
       >
-        {{ tabLabels[currentLang][tab] }}
-      </button>
-    </div>
+        <button
+          *ngFor="let tab of visibleTabs"
+          class="tab-button"
+          [class.active]="selectedTab === tab"
+          [attr.aria-pressed]="selectedTab === tab"
+          type="button"
+          (click)="selectTab(tab)"
+        >
+          {{ tabLabels[currentLang][tab] }}
+        </button>
+      </div>
 
-    <!-- Swiper -->
-    <div class="swiper auction-swiper">
-      <div class="swiper-wrapper">
-        <!-- Loading -->
-        <div *ngIf="isLoading" class="loading-indicator swiper-slide w-100">
-          {{ currentLang === 'ar' ? 'جاري التحميل...' : 'Loading...' }}
-        </div>
+      <!-- Swiper -->
+      <div class="swiper auction-swiper">
+        <div class="swiper-wrapper">
+          <!-- Loading -->
+          <div
+            *ngIf="isLoading"
+            class="loading-indicator swiper-slide w-100"
+            role="status"
+          >
+            {{ currentLang === "ar" ? "جاري التحميل..." : "Loading..." }}
+          </div>
 
-        <!-- Empty -->
-        <div *ngIf="filteredAuctions.length === 0 && !isLoading"
-             class="no-auctions-message swiper-slide w-100 justify-content-center">
-          {{ currentLang === 'ar' ? 'لا يوجد مزادات حالياً' : 'No auctions available at the moment' }}
-        </div>
+          <div
+            *ngIf="loadFailed"
+            class="no-auctions-message swiper-slide w-100 flex-column gap-3"
+            role="alert"
+          >
+            <p>
+              {{
+                currentLang === "ar"
+                  ? "تعذّر تحميل المزادات. يرجى المحاولة مرة أخرى."
+                  : "Auctions could not be loaded. Please try again."
+              }}
+            </p>
+            <button class="tab-button" type="button" (click)="loadAuctions()">
+              {{ currentLang === "ar" ? "إعادة المحاولة" : "Try again" }}
+            </button>
+          </div>
+          <!-- Empty -->
+          <div
+            *ngIf="filteredAuctions.length === 0 && !isLoading && !loadFailed"
+            class="no-auctions-message swiper-slide w-100 justify-content-center"
+            role="status"
+          >
+            {{
+              currentLang === "ar"
+                ? "لا يوجد مزادات حالياً"
+                : "No auctions available at the moment"
+            }}
+          </div>
 
-        <!-- Cards -->
-        <div *ngFor="let auction of filteredAuctions; trackBy: trackById" class="swiper-slide">
-          <div class="auction-card" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
-            <div class="media">
-              <!-- Share -->
-              <button class="share-btn" type="button" aria-label="مشاركة" (click)="shareAuction(auction)">
-                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M18 16.08a3 3 0 1 0 1.9 2.82l-8.1-4.65a3.01 3.01 0 0 0 0-2.5l8.1-4.65A3 3 0 1 0 18 5.9l-8.1 4.65a3 3 0 1 0 0 2.9L18 16.08z" fill="currentColor"/>
-                </svg>
-              </button>
-
-              <!-- Status badge -->
-              <span class="badge" [ngClass]="auction.status" [@statusBadge]="auction.status">
-                {{
-                  currentLang === 'ar'
-                    ? (auction.status === 'current' ? 'مزاد جاري'
-                        : auction.status === 'ended' ? 'مزاد منتهي' : 'مزاد قادم')
-                    : (auction.status === 'current' ? 'Current'
-                        : auction.status === 'ended' ? 'Ended' : 'Coming')
-                }}
-              </span>
-
-              <!-- Cover: clickable if auction.url exists -->
-              <a *ngIf="auction.url; else imgOnly"
-                 class="cover-link"
-                 [href]="auction.url"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 [attr.aria-label]="currentLang === 'ar' ? 'فتح المزاد في منصة خارجية' : 'Open auction on external platform'">
-                <img [src]="auction.imageUrl || placeholder" [alt]="auction.name" class="cover" />
-              </a>
-              <ng-template #imgOnly>
-                <img [src]="auction.imageUrl || placeholder" [alt]="auction.name" class="cover" />
-              </ng-template>
-
-              <!-- Dots (optional) -->
-              <div class="dots" *ngIf="(auction.gallery?.length || 0) > 1">
-                <span *ngFor="let _ of auction.gallery; index as i" [class.active]="i === 0"></span>
-              </div>
-            </div>
-
-            <div class="content">
-              <h3 class="title">{{ auction.name }}</h3>
-
-              <div class="location" *ngIf="auction.city || auction.district">
-                <i class="pi pi-map-marker"></i>
-                <span>
-                  {{ auction.district }}<ng-container *ngIf="auction.district && auction.city">،</ng-container>{{ auction.city }}
-                </span>
-              </div>
-
-              <!-- Timer -->
-              <div class="timer-card" [@timerSwap]="auction.status">
-                <div class="timer-title">
-                  {{
-                    currentLang === 'ar'
-                      ? (auction.status === 'coming'
-                          ? 'يبدأ المزاد بعد'
-                          : auction.status === 'current'
-                            ? 'ينتهي المزاد بعد'
-                            : 'المزاد منتهي')
-                      : (auction.status === 'coming'
-                          ? 'Starts in'
-                          : auction.status === 'current'
-                            ? 'Ends in'
-                            : 'Auction Ended')
-                  }}
-                </div>
-
-                <div class="timer-grid" [class.ended]="auction.status === 'ended'">
-                  <div class="timer-box">
-                    <div class="num">{{ auction.status === 'ended' ? '0'  : auction.cd?.days }}</div>
-                    <div class="lbl">{{ currentLang==='ar' ? 'يوم' : 'Days' }}</div>
-                  </div>
-                  <div class="timer-box">
-                    <div class="num">{{ auction.status === 'ended' ? '00' : auction.cd?.hours }}</div>
-                    <div class="lbl">{{ currentLang==='ar' ? 'ساعة' : 'Hours' }}</div>
-                  </div>
-                  <div class="timer-box">
-                    <div class="num">{{ auction.status === 'ended' ? '00' : auction.cd?.minutes }}</div>
-                    <div class="lbl">{{ currentLang==='ar' ? 'دقيقة' : 'Minutes' }}</div>
-                  </div>
-                  <div class="timer-box">
-                    <div class="num">{{ auction.status === 'ended' ? '00' : auction.cd?.seconds }}</div>
-                    <div class="lbl">{{ currentLang==='ar' ? 'ثانية' : 'Seconds' }}</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Opening price -->
-              <div class="price-row">
-                <span class="label">{{ currentLang==='ar' ? 'السعر الافتتاحي' : 'Opening Price' }}</span>
-                <span class="price">
-                  {{ (auction.openingPrice || 0) | number:'1.0-0' }}
-                  {{ currentLang==='ar' ? 'ريال' : 'SAR' }}
-                </span>
-              </div>
-
-              <!-- Agent -->
-              <div class="agent" *ngIf="auction.agentName">
-                <div class="agent-label">{{ currentLang==='ar' ? 'وكيل البيع' : 'Selling Agent' }}</div>
-                <div class="agent-name">{{ auction.agentName }}</div>
-              </div>
-
-              <!-- CTAs -->
-              <div class="cta-row" *ngIf="auction.url || auction.pdfUrl">
-                <a *ngIf="auction.url"
-                   class="cta-btn primary"
-                   [href]="auction.url"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                  {{ currentLang === 'ar' ? 'زيارة منصة المزاد' : 'Visit Auction' }}
-                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" class="ext-ic">
-                    <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z" fill="currentColor"/>
+          <!-- Cards -->
+          <div
+            *ngFor="let auction of filteredAuctions; trackBy: trackById"
+            class="swiper-slide"
+          >
+            <div
+              class="auction-card"
+              [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'"
+            >
+              <div class="media">
+                <!-- Share -->
+                <button
+                  class="share-btn"
+                  type="button"
+                  aria-label="مشاركة"
+                  (click)="shareAuction(auction)"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M18 16.08a3 3 0 1 0 1.9 2.82l-8.1-4.65a3.01 3.01 0 0 0 0-2.5l8.1-4.65A3 3 0 1 0 18 5.9l-8.1 4.65a3 3 0 1 0 0 2.9L18 16.08z"
+                      fill="currentColor"
+                    />
                   </svg>
-                </a>
+                </button>
 
-                <a *ngIf="auction.pdfUrl"
-                   class="cta-btn outline"
-                   [href]="auction.pdfUrl"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                  📄 {{ currentLang === 'ar' ? 'تحميل الكتيّب' : 'Download PDF' }}
+                <!-- Status badge -->
+                <span
+                  class="badge"
+                  [ngClass]="auction.status"
+                  [@statusBadge]="auction.status"
+                >
+                  {{
+                    currentLang === "ar"
+                      ? auction.status === "current"
+                        ? "مزاد جاري"
+                        : auction.status === "ended"
+                          ? "مزاد منتهي"
+                          : "مزاد قادم"
+                      : auction.status === "current"
+                        ? "Current"
+                        : auction.status === "ended"
+                          ? "Ended"
+                          : "Coming"
+                  }}
+                </span>
+
+                <!-- Cover: clickable if auction.url exists -->
+                <a
+                  *ngIf="auction.url; else imgOnly"
+                  class="cover-link"
+                  [href]="auction.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  [attr.aria-label]="
+                    currentLang === 'ar'
+                      ? 'فتح المزاد في منصة خارجية'
+                      : 'Open auction on external platform'
+                  "
+                >
+                  <img
+                    [src]="auction.imageUrl || placeholder"
+                    [alt]="auction.name"
+                    class="cover"
+                  />
                 </a>
+                <ng-template #imgOnly>
+                  <img
+                    [src]="auction.imageUrl || placeholder"
+                    [alt]="auction.name"
+                    class="cover"
+                  />
+                </ng-template>
+
+                <!-- Dots (optional) -->
+                <div class="dots" *ngIf="(auction.gallery?.length || 0) > 1">
+                  <span
+                    *ngFor="let _ of auction.gallery; index as i"
+                    [class.active]="i === 0"
+                  ></span>
+                </div>
+              </div>
+
+              <div class="content">
+                <h3 class="title">{{ auction.name }}</h3>
+
+                <div class="location" *ngIf="auction.city || auction.district">
+                  <i class="pi pi-map-marker"></i>
+                  <span>
+                    {{ auction.district
+                    }}<ng-container *ngIf="auction.district && auction.city"
+                      >،</ng-container
+                    >{{ auction.city }}
+                  </span>
+                </div>
+
+                <!-- Timer -->
+                <div class="timer-card" [@timerSwap]="auction.status">
+                  <div class="timer-title">
+                    {{
+                      currentLang === "ar"
+                        ? auction.status === "coming"
+                          ? "يبدأ المزاد بعد"
+                          : auction.status === "current"
+                            ? "ينتهي المزاد بعد"
+                            : "المزاد منتهي"
+                        : auction.status === "coming"
+                          ? "Starts in"
+                          : auction.status === "current"
+                            ? "Ends in"
+                            : "Auction Ended"
+                    }}
+                  </div>
+
+                  <div
+                    class="timer-grid"
+                    [class.ended]="auction.status === 'ended'"
+                  >
+                    <div class="timer-box">
+                      <div class="num">
+                        {{
+                          auction.status === "ended" ? "0" : auction.cd?.days
+                        }}
+                      </div>
+                      <div class="lbl">
+                        {{ currentLang === "ar" ? "يوم" : "Days" }}
+                      </div>
+                    </div>
+                    <div class="timer-box">
+                      <div class="num">
+                        {{
+                          auction.status === "ended" ? "00" : auction.cd?.hours
+                        }}
+                      </div>
+                      <div class="lbl">
+                        {{ currentLang === "ar" ? "ساعة" : "Hours" }}
+                      </div>
+                    </div>
+                    <div class="timer-box">
+                      <div class="num">
+                        {{
+                          auction.status === "ended"
+                            ? "00"
+                            : auction.cd?.minutes
+                        }}
+                      </div>
+                      <div class="lbl">
+                        {{ currentLang === "ar" ? "دقيقة" : "Minutes" }}
+                      </div>
+                    </div>
+                    <div class="timer-box">
+                      <div class="num">
+                        {{
+                          auction.status === "ended"
+                            ? "00"
+                            : auction.cd?.seconds
+                        }}
+                      </div>
+                      <div class="lbl">
+                        {{ currentLang === "ar" ? "ثانية" : "Seconds" }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Opening price -->
+                <div class="price-row">
+                  <span class="label">{{
+                    currentLang === "ar" ? "السعر الافتتاحي" : "Opening Price"
+                  }}</span>
+                  <span class="price">
+                    {{ auction.openingPrice || 0 | number: "1.0-0" }}
+                    {{ currentLang === "ar" ? "ريال" : "SAR" }}
+                  </span>
+                </div>
+
+                <!-- Agent -->
+                <div class="agent" *ngIf="auction.agentName">
+                  <div class="agent-label">
+                    {{ currentLang === "ar" ? "وكيل البيع" : "Selling Agent" }}
+                  </div>
+                  <div class="agent-name">{{ auction.agentName }}</div>
+                </div>
+
+                <!-- CTAs -->
+                <div class="cta-row" *ngIf="auction.url || auction.pdfUrl">
+                  <a
+                    *ngIf="auction.url"
+                    class="cta-btn primary"
+                    [href]="auction.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{
+                      currentLang === "ar"
+                        ? "زيارة منصة المزاد"
+                        : "Visit Auction"
+                    }}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      class="ext-ic"
+                    >
+                      <path
+                        d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </a>
+
+                  <a
+                    *ngIf="auction.pdfUrl"
+                    class="cta-btn outline"
+                    [href]="auction.pdfUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    📄
+                    {{
+                      currentLang === "ar" ? "تحميل الكتيّب" : "Download PDF"
+                    }}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
+          <!-- /Cards -->
         </div>
-        <!-- /Cards -->
-      </div>
 
-      <!-- Swiper controls -->
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+        <!-- Swiper controls -->
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
     </div>
   </div>
 </div>

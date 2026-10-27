@@ -1,12 +1,14 @@
+import { CmsTextPipe } from '../../services/cms-text.pipe';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ContactService } from '../../services/contact.service';
+import { PortfolioLogoIconComponent } from './portfolio-logo-icon.component';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CmsTextPipe, CommonModule, RouterModule, PortfolioLogoIconComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css',
 })
@@ -23,10 +25,6 @@ export class FooterComponent {
     ar: 'أسس الريادة للخدمات العقارية',
     en: 'Osos Al-Riyada Real Estate Services',
   };
-developer = {
-  name: 'Mostafa Gamal',          // غيّر الاسم
-  url: 'https://github.com/MostafaGamal84' // اختياري
-};
   quickLinks = [
     { path: '/about', textAr: 'من نحن', textEn: 'About Us' },
     { path: '/features', textAr: 'الميزات', textEn: 'Features' },
@@ -38,7 +36,7 @@ developer = {
     email: 'Info@osos-alriadah.com',
     phone: '+966575060000',
   };
-  
+
   // socialLinks = [
   //   {
   //     icon: 'youtube',

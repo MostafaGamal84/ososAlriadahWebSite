@@ -1,3 +1,4 @@
+import { CmsTextPipe } from '../../services/cms-text.pipe';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swiper from 'swiper';
@@ -15,7 +16,7 @@ interface TestimonialSlide {
 @Component({
   selector: 'app-slider',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CmsTextPipe, CommonModule],
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css'],
 })

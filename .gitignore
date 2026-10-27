@@ -40,3 +40,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# ASP.NET API local state and build output
+backend/**/bin/
+backend/**/obj/
+backend/**/.local/
+backend/**/wwwroot/uploads/
+backend/**/appsettings.Local.json

@@ -1,108 +1,106 @@
-<nav class="navbar navbar-expand-lg custom-navbar" [ngClass]="{ scrolled: isScrolled }" [attr.dir]="getDirection()">
-  <div class="container-fluid">
-
-    <!-- Logo Small Screen -->
-    <a class="navbar-brand d-lg-none"
-       [class.order-1]="currentLang === 'en'"
-       [class.order-2]="currentLang === 'ar'"
-       href="#">
-      <img src="../../../"
-           alt="شعار أسس الريادة" width="40" height="40" class="img-navbar" loading="lazy" />
-    </a>
-
-    <!-- Hamburger -->
-    <button class="navbar-toggler"
-            [class.order-1]="currentLang === 'ar'"
-            [class.order-2]="currentLang === 'en'"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+<header
+  class="site-header custom-navbar"
+  [class.scrolled]="isScrolled"
+  [attr.dir]="getDirection()"
+  (keydown.escape)="menuOpen = false; closeAllDropdowns()"
+>
+  <nav class="nav-shell" aria-label="Main navigation">
+    <a routerLink="/" class="brand" (click)="closeAllAndCollapse()"
+      ><img
+        [attr.data-cms-key]="'header.image.000'" [src]="('logoRyadah.jpg') | cmsText:('header.image.000')"
+        alt="أسس الريادة"
+        width="74"
+        height="74"
+      /><span
+        ><strong><span [attr.data-cms-key]="'header.text.001'">{{ (currentLang === "ar" ? "أسس الريادة" : "OSOS AL-RIYADAH") | cmsText:('header.text.001') }}</span></strong
+        ><small><span [attr.data-cms-key]="'header.text.002'">{{ (currentLang === "ar" ? "للخدمات العقارية" : "REAL ESTATE SERVICES") | cmsText:('header.text.002') }}</span></small></span
+      ></a
+    >
+    <button
+      type="button"
+      class="menu-toggle"
+      (click)="menuOpen = !menuOpen"
+      [attr.aria-expanded]="menuOpen"
+      aria-controls="main-navigation"
+      [attr.aria-label]="currentLang === 'ar' ? 'فتح القائمة' : 'Toggle menu'"
+    >
+      <span class="material-icons" aria-hidden="true"><span [attr.data-cms-key]="'header.text.003'">{{ (menuOpen ? "close" : "menu") | cmsText:('header.text.003') }}</span></span>
     </button>
-
-    <!-- Nav Links -->
-    <div class="collapse navbar-collapse order-3 order-lg-2" id="navbarNav">
-      <ul class="navbar-nav mx-auto align-items-lg-center text-center justify-content-center justify-content-lg-start">
-
-        <li class="nav-item">
-          <a class="nav-link" href="#about" (click)="closeAllAndCollapse()">
-            {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
-          </a>
-        </li>
-
-        <!-- About Us Dropdown -->
-        <li class="nav-item dropdown custom-dropdown">
-          <a class="nav-link dropdown-toggle" href="#"
-             (click)="toggleDropdown('about', $event)">
-            {{ currentLang === 'ar' ? 'من نحن' : 'About Us' }}
-          </a>
-          <ul class="dropdown-menu text-center" [ngClass]="{ open: dropdowns['about'] }">
-            <li *ngFor="let item of aboutLinks">
-              <a class="dropdown-item"
-                 [routerLink]="item.link"
-                 (click)="navigateAndCloseDropdown(item.link, 'about')">
-                {{ currentLang === 'ar' ? item.labelAr : item.labelEn }}
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <!-- Services Dropdown -->
-        <li class="nav-item dropdown custom-dropdown">
-          <a class="nav-link dropdown-toggle" href="#"
-             (click)="toggleDropdown('services', $event)">
-            {{ currentLang === 'ar' ? 'خدماتنا' : 'Our Services' }}
-          </a>
-          <ul class="dropdown-menu text-center" [ngClass]="{ open: dropdowns['services'] }">
-            <li *ngFor="let item of serviceLinks">
-              <a class="dropdown-item"
-                 [routerLink]="item.link"
-                 (click)="navigateAndCloseDropdown(item.link, 'services')">
-                {{ currentLang === 'ar' ? item.labelAr : item.labelEn }}
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#auction" (click)="closeAllAndCollapse()">
-            {{ currentLang === 'ar' ? 'المزادات' : 'Auctions' }}
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#features" (click)="closeAllAndCollapse()">
-            {{ currentLang === 'ar' ? 'الميزات' : 'Features' }}
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#contact" (click)="closeAllAndCollapse()">
-            {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
-          </a>
-        </li>
-
-        <!-- Language Toggle -->
-        <li class="nav-item">
-         <div class="lang-switch">
-        <button type="button" [class.active]="currentLang==='ar'" (click)="toggleLanguage()">عربي</button>
-        <button type="button" [class.active]="currentLang==='en'" (click)="toggleLanguage()">EN</button>
+    <div class="navigation" id="main-navigation" [class.is-open]="menuOpen">
+      <a
+        routerLink="/"
+        routerLinkActive="selected"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeAllAndCollapse()"
+        ><span [attr.data-cms-key]="'header.text.004'">{{ (currentLang === "ar" ? "الرئيسية" : "Home") | cmsText:('header.text.004') }}</span></a
+      >
+      <div class="nav-dropdown">
+        <button
+          type="button"
+          (click)="toggleDropdown('about', $event)"
+          [attr.aria-expanded]="dropdowns.about"
+        >
+          <span [attr.data-cms-key]="'header.text.005'">{{ (currentLang === "ar" ? "من نحن" : "About us") | cmsText:('header.text.005') }}</span>
+          <span aria-hidden="true">⌄</span>
+        </button>
+        <div class="nav-submenu" *ngIf="dropdowns.about">
+          <a
+            *ngFor="let item of aboutLinks; let cmsIndex0 = index"
+            [routerLink]="item.link"
+            (click)="closeAllAndCollapse()"
+            ><span [attr.data-cms-key]="'header.text.006' + '.' + cmsIndex0">{{ (currentLang === "ar" ? item.labelAr : item.labelEn) | cmsText:('header.text.006' + '.' + cmsIndex0) }}</span></a
+          >
+        </div>
       </div>
-        </li>
-      </ul>
-
-      <!-- Logo Desktop -->
-      <a class="navbar-brand d-none d-lg-block"
-         [class.ms-lg-auto]="currentLang === 'en'"
-         [class.me-lg-auto]="currentLang === 'ar'"
-         href="#">
-        <img src="https://pbs.twimg.com/profile_images/1756714052372357121/jItqW0yk_400x400.jpg"
-             alt="شعار أسس الريادة" width="50" height="50"
-             class="img-navbar" loading="lazy" />
-      </a>
+      <div class="nav-dropdown">
+        <button
+          type="button"
+          (click)="toggleDropdown('services', $event)"
+          [attr.aria-expanded]="dropdowns.services"
+        >
+          <span [attr.data-cms-key]="'header.text.007'">{{ (currentLang === "ar" ? "خدماتنا" : "Services") | cmsText:('header.text.007') }}</span>
+          <span aria-hidden="true">⌄</span>
+        </button>
+        <div class="nav-submenu" *ngIf="dropdowns.services">
+          <a
+            *ngFor="let item of serviceLinks; let cmsIndex1 = index"
+            [routerLink]="item.link"
+            (click)="closeAllAndCollapse()"
+            ><span [attr.data-cms-key]="'header.text.008' + '.' + cmsIndex1">{{ (currentLang === "ar" ? item.labelAr : item.labelEn) | cmsText:('header.text.008' + '.' + cmsIndex1) }}</span></a
+          >
+        </div>
+      </div>
+      <a
+        routerLink="/projects"
+        routerLinkActive="selected"
+        (click)="closeAllAndCollapse()"
+        ><span [attr.data-cms-key]="'header.text.009'">{{ (currentLang === "ar" ? "مشروعاتنا" : "Projects") | cmsText:('header.text.009') }}</span></a
+      >
+      <a
+        routerLink="/auction"
+        routerLinkActive="selected"
+        (click)="closeAllAndCollapse()"
+        ><span [attr.data-cms-key]="'header.text.010'">{{ (currentLang === "ar" ? "المزادات" : "Auctions") | cmsText:('header.text.010') }}</span></a
+      >
+      <div class="nav-tools">
+        <button
+          class="language"
+          type="button"
+          (click)="toggleLanguage()"
+          [attr.aria-label]="
+            currentLang === 'ar' ? 'Switch to English' : 'التحويل إلى العربية'
+          "
+        >
+          <span [attr.data-cms-key]="'header.text.011'">{{ (currentLang === "ar" ? "EN" : "عربي") | cmsText:('header.text.011') }}</span>
+          <span aria-hidden="true">◎</span></button
+        ><a
+          routerLink="/contact"
+          class="nav-contact"
+          (click)="closeAllAndCollapse()"
+          ><span [attr.data-cms-key]="'header.text.012'">{{ (currentLang === "ar" ? "تواصل معنا" : "Contact us") | cmsText:('header.text.012') }}</span>
+          <span aria-hidden="true">↗</span></a
+        >
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>

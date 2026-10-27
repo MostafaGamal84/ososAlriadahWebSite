@@ -22,7 +22,7 @@ export interface Auction {
   providedIn: 'root',
 })
 export class AuctionService {
-  private readonly baseUrl = 'https://app.osos-alriadah.com/api/Auction';
+  private readonly baseUrl = '/api/public/auctions';
   // private readonly baseUrl = 'https://localhost:5001/api/Auction';
 
   constructor(private http: HttpClient) {}
@@ -32,19 +32,19 @@ export class AuctionService {
   }
 
   getAuctionById(id: number): Observable<Auction> {
-    return this.http.get<Auction>(`${this.baseUrl}/GetById/${id}`);
+    return this.http.get<Auction>(`/api/admin/auctions/${id}`);
   }
 
   createAuction(auctionData: Omit<Auction, 'id'>): Observable<Auction> {
-    return this.http.post<Auction>(`${this.baseUrl}/add`, auctionData);
+    return this.http.post<Auction>('/api/admin/auctions', auctionData);
   }
 
   updateAuction(auctionData: Auction): Observable<Auction> {
-    return this.http.post<Auction>(`${this.baseUrl}/update`, auctionData);
+    return this.http.put<Auction>(`/api/admin/auctions/${auctionData.id}`, auctionData);
   }
 
-  deleteAuction(id: number): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/Delete/${id}`, {});
+  deleteAuction(id: number, version: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/auctions/${id}?version=${version}`);
   }
 
   calculateAuctionStatus(

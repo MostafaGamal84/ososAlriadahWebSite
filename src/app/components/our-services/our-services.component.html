@@ -1,69 +1,72 @@
-<div class="services-container">
-  <!-- Header Section -->
-  <div class="services-header text-center">
-    <h2 class="services-title">
-      {{ currentLang == "ar" ? "خدماتنا العقارية" : "Our Real Estate Services" }}
-    </h2>
-    <h3 class="services-subtitle">
-      {{ currentLang == "ar" ? "الخدمات الشائعة" : "Popular Services" }}
-    </h3>
-  </div>
-
-  <!-- No Services Message -->
-  <div *ngIf="services.length === 0" class="no-services-message">
-    <div class="message-card">
-      <h3>🎉 {{ currentLang == "ar" ? "لا توجد خدمات متاحة حالياً" : "No Services Available Yet" }}</h3>
+<div class="inner-page">
+  <app-page-heading
+    [title]="
+      currentLang === 'ar' ? 'خدماتنا العقارية' : 'Our real estate services'
+    "
+    [description]="
+      currentLang === 'ar'
+        ? 'خبرات متكاملة، ترافق طموحك في كل مرحلة.'
+        : 'Complementary expertise for every stage of your property journey.'
+    "
+  ></app-page-heading>
+  <section class="inner-section inner-width">
+    <div class="inner-section-head">
+      <div>
+        <span class="inner-kicker"><span [attr.data-cms-key]="'our-services.text.000'">{{ (currentLang === "ar" ? "ما نقدمه" : "WHAT WE DO") | cmsText:('our-services.text.000') }}</span></span>
+        <h2>
+          <span [attr.data-cms-key]="'our-services.text.001'">{{ (currentLang === "ar"
+              ? "كل احتياج، له أساس."
+              : "A foundation for every need.") | cmsText:('our-services.text.001') }}</span>
+        </h2>
+      </div>
       <p>
-        {{ currentLang == "ar"
-        ? "هذه الميزة سيتم تفعيلها قريبًا إن شاء الله. تابعنا للمزيد."
-        : "This feature will be available soon, Insha'Allah. Stay tuned for updates." }}
+        <span [attr.data-cms-key]="'our-services.text.002'">{{ (currentLang === "ar"
+            ? "اكتشف خدماتنا واختر المجال الذي يناسب خطوتك القادمة."
+            : "Explore our services and find the right support for your next step.") | cmsText:('our-services.text.002') }}</span>
       </p>
     </div>
-  </div>
-
-  <!-- Service Links Navigation -->
-  <div class="service-links mb-5">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div *ngFor="let link of serviceLinks" class="col-md-2 col-sm-4 col-6 mb-3">
-          <a [routerLink]="link.link" class="service-link-btn" [class.active]="isActiveLink(link.link)">
-            {{ currentLang == 'ar' ? link.labelAr : link.labelEn }}
-          </a>
-        </div>
-      </div>
+    <div class="inner-grid">
+      <button
+        type="button"
+        class="inner-card inner-card-link"
+        *ngFor="let service of services; let i = index; let cmsIndex0 = index"
+        (click)="navigateToService(service)"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+        [revealDelay]="(i % 3) * 70"
+      >
+        <span class="inner-number">0<span [attr.data-cms-key]="'our-services.text.003' + '.' + cmsIndex0">{{ (i + 1) | cmsText:('our-services.text.003' + '.' + cmsIndex0) }}</span> /</span
+        ><span class="material-icons" aria-hidden="true"><span [attr.data-cms-key]="'our-services.text.004' + '.' + cmsIndex0">{{ (["handshake", "campaign", "apartment", "key", "domain", "gavel"][i]) | cmsText:('our-services.text.004' + '.' + cmsIndex0) }}</span></span>
+        <h3>
+          <span [attr.data-cms-key]="'our-services.text.005' + '.' + cmsIndex0">{{ (currentLang === "ar" ? service.serviceNameAr : service.serviceNameEn) | cmsText:('our-services.text.005' + '.' + cmsIndex0) }}</span>
+        </h3>
+        <p>
+          <span [attr.data-cms-key]="'our-services.text.006' + '.' + cmsIndex0">{{ (currentLang === "ar" ? service.descriptionAr : service.descriptionEn) | cmsText:('our-services.text.006' + '.' + cmsIndex0) }}</span>
+        </p>
+        <span class="inner-link"
+          ><span [attr.data-cms-key]="'our-services.text.007' + '.' + cmsIndex0">{{ (currentLang === "ar" ? "تفاصيل الخدمة" : "Explore service") | cmsText:('our-services.text.007' + '.' + cmsIndex0) }}</span>
+          <span aria-hidden="true">↗</span></span
+        >
+      </button>
     </div>
-  </div>
-  <!-- Services Carousel -->
-  <div *ngIf="services.length > 0" class="services-carousel m-5">
-    <swiper-container class="services-swiper" [spaceBetween]="20" [loop]="false" [pagination]="{ clickable: true }"
-      [navigation]="true" [breakpoints]="breakpoints" (slidechange)="onSlideChange($event)">
-
-      <swiper-slide *ngFor="let service of services; let i = index">
-        <div class="service-card mb-5" [class.expanded]="expandedCardIndex === i" (click)="toggleCardExpand(i)">
-          <div class="card-front">
-            <img [src]="service.icon" [alt]="currentLang == 'ar' ? service.serviceNameAr : service.serviceNameEn"
-              class="service-icon" />
-            <h3 class="service-name">
-              {{ currentLang == "ar" ? service.serviceNameAr : service.serviceNameEn }}
-            </h3>
-            <span class="service-type">
-              {{ currentLang == "ar" ? service.typeAr : service.typeEn }}
-            </span>
-          </div>
-
-          <div class="card-back">
-            <div class="service-details">
-              <h3>{{ currentLang == "ar" ? service.serviceNameAr : service.serviceNameEn }}</h3>
-              <p class="service-description">
-                {{ currentLang == "ar" ? service.descriptionAr : service.descriptionEn }}
-              </p>
-              <button class="details-btn" (click)="navigateToService(service)">
-                {{ currentLang == "ar" ? "عرض التفاصيل" : "View Details" }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </swiper-slide>
-    </swiper-container>
-  </div>
+  </section>
+  <aside class="inner-cta inner-width">
+    <div>
+      <span class="inner-kicker">OSOS AL-RIYADAH</span>
+      <h2>
+        <span [attr.data-cms-key]="'our-services.text.008'">{{ (currentLang === "ar"
+            ? "لنبدأ خطوتك العقارية القادمة."
+            : "Let’s plan your next property move.") | cmsText:('our-services.text.008') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'our-services.text.009'">{{ (currentLang === "ar"
+            ? "فريقنا هنا للاستماع إلى احتياجاتك ومناقشة الخيارات المناسبة لك."
+            : "Our team is here to listen and discuss the options that suit your needs.") | cmsText:('our-services.text.009') }}</span>
+      </p>
+    </div>
+    <a routerLink="/contact" class="inner-button gold"
+      ><span [attr.data-cms-key]="'our-services.text.010'">{{ (currentLang === "ar" ? "تواصل معنا" : "Contact us") | cmsText:('our-services.text.010') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </aside>
 </div>

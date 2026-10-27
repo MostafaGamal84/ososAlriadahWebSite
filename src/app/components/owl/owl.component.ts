@@ -1,3 +1,4 @@
+import { CmsTextPipe } from '../../services/cms-text.pipe';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -10,7 +11,7 @@ interface Partner {
 @Component({
   selector: 'app-owl',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CmsTextPipe, CommonModule],
   templateUrl: './owl.component.html',
   styleUrls: ['./owl.component.css'],
 })

@@ -1,54 +1,59 @@
-<section class="dev-projects" >
-  <div class="container">
-    <div class="head">
-      <h2 class="title">{{ currentLang === 'ar' ? 'المشاريع' : 'Development Projects' }}</h2>
-
-      <!-- (optional) tiny currentLanguage switch; remove if you already control currentLang elsewhere -->
-    
-    </div>
-
-    <!-- Cards -->
-    <div class="cards" (mouseleave)="clearActive()">
-      <article
-        class="card"
-        *ngFor="let p of projects; index as i; trackBy: trackById"
-        [class.active]="i === activeIndex"
-        (mouseenter)="setActive(i)"
-        (click)="setActive(i)"
-        (touchstart)="setActive(i)"
-        [style.backgroundImage]="'url(' + p.image + ')'"
-      >
-        <div class="shade"></div>
-
-        <!-- Compact title -->
-        <div class="mini-title">
-          {{ currentLang === 'ar' ? p.titleAr : p.titleEn }}
-        </div>
-
-        <!-- Expanded content (fades in after shade) -->
-        <div class="content">
-          <h3 class="big">{{ currentLang === 'ar' ? p.titleAr : p.titleEn }}</h3>
-          <p class="desc">{{ currentLang === 'ar' ? p.descAr : p.descEn }}</p>
-          <a class="btn primary"  href="javascript:void(0)"
-  (click)="$event.stopPropagation(); openPdf(p)">
-            {{ currentLang === 'ar' ? 'تعرف أكثر' : 'Learn more' }}
-          </a>
-        </div>
-      </article>
-    </div>
-
-    <!-- Footer controls -->
-    <div class="footer">
-      <div class="page">{{ activeIndex >= 0 ? (activeIndex + 1) : 0 }}</div>
-
-      <div class="progress">
-        <span class="bar" [style.width.%]="progressPercent"></span>
+<div class="inner-page">
+  <app-page-heading
+    [title]="currentLang === 'ar' ? 'مشروعاتنا' : 'Our projects'"
+    [description]="
+      currentLang === 'ar'
+        ? 'مساحات ترتقي بالحياة. اكتشف تفاصيل مشروعاتنا.'
+        : 'Spaces that elevate life. Explore the details of our projects.'
+    "
+  ></app-page-heading>
+  <section class="project-list">
+    <div class="project-wrap">
+      @if(loading) { <p role="status">{{currentLang==='ar'?'جارٍ تحميل المشروعات…':'Loading projects…'}}</p> }
+      @if(loadFailed) { <div role="alert"><p>{{currentLang==='ar'?'تعذّر تحميل المشروعات.':'Projects could not be loaded.'}}</p><button class="inner-button" (click)="loadProjects()">{{currentLang==='ar'?'إعادة المحاولة':'Try again'}}</button></div> }
+      @if(!loading && !loadFailed && !projects.length) { <p>{{currentLang==='ar'?'لا توجد مشروعات منشورة حاليًا.':'No published projects yet.'}}</p> }
+      <div class="project-cards">
+        <article
+          *ngFor="let p of projects; let i = index; trackBy: trackById"
+          class="project-item"
+          appAppInViewport
+          animationClass="reveal-on-scroll"
+          [revealDelay]="(i % 2) * 100"
+        >
+          <div class="project-photo">
+            <img
+              [src]="p.image"
+              (error)="imageFallback($event, p.id)"
+              [alt]="
+                unavailableImages.has(p.id)
+                  ? currentLang === 'ar'
+                    ? 'رسم معماري توضيحي'
+                    : 'Architectural illustration'
+                  : currentLang === 'ar'
+                    ? p.titleAr
+                    : p.titleEn
+              "
+              loading="lazy"
+            /><span *ngIf="unavailableImages.has(p.id)">{{
+              currentLang === "ar"
+                ? "صورة المشروع غير متاحة"
+                : "Project image unavailable"
+            }}</span>
+          </div>
+          <div class="project-info">
+            <h2>{{ currentLang === "ar" ? p.titleAr : p.titleEn }}</h2>
+            <p>{{ currentLang === "ar" ? p.descAr : p.descEn }}</p>
+            <button type="button" (click)="openPdf(p)">
+              {{
+                currentLang === "ar"
+                  ? "استعرض ملف المشروع"
+                  : "View project brochure"
+              }}
+              <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </article>
       </div>
-
-      <div class="nav">
-        <button class="circle" (click)="prev()" aria-label="السابق">‹</button>
-        <button class="circle" (click)="next()" aria-label="التالي">›</button>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

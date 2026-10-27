@@ -1,3 +1,7 @@
+import { CmsTextPipe } from '../../../services/cms-text.pipe';
+import { RouterLink } from '@angular/router';
+import { PageHeadingComponent } from '../../page-heading/page-heading.component';
+import { AppInViewportDirective } from '../../../directives/app-in-viewport.directive';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,7 +40,12 @@ interface ProcessStep {
 
 @Component({
   selector: 'app-leasing',
-  imports: [MatIconModule, CommonModule, FormsModule, MatProgressBarModule],
+  imports: [CmsTextPipe, 
+    CommonModule,
+    RouterLink,
+    PageHeadingComponent,
+    AppInViewportDirective,
+  ],
   templateUrl: './leasing.component.html',
   styleUrl: './leasing.component.css',
 })

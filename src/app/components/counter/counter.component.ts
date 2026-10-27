@@ -1,3 +1,4 @@
+import { CmsTextPipe } from '../../services/cms-text.pipe';
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -22,7 +23,7 @@ import {
 @Component({
   selector: 'app-counter',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CmsTextPipe, CommonModule],
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.css'],
   animations: [

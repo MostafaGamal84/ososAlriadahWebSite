@@ -1,10 +1,10 @@
 <section class="counters-section" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" aria-labelledby="counters-title">
   <h2 id="counters-title" class="section-title">
-    {{ currentLang === 'ar' ? 'إحصائياتنا' : 'Our Statistics' }}
+    <span [attr.data-cms-key]="'counter.text.000'">{{ (currentLang === 'ar' ? 'إحصائياتنا' : 'Our Statistics') | cmsText:('counter.text.000') }}</span>
   </h2>
 
   <div class="counter-container">
-    <article class="counter-item" *ngFor="let counter of counters; let i = index"
+    <article class="counter-item" *ngFor="let counter of counters; let i = index; let cmsIndex0 = index"
       [@counterAnimation]="animationState[i]" (@counterAnimation.done)="onAnimationDone($event, i)" role="region"
       [attr.aria-label]="currentLang === 'ar' ? counter.labelAr : counter.labelEn">
       <div class="counter-icon" aria-hidden="true">
@@ -13,13 +13,13 @@
 
       <div class="counter-number">
         <span class="counter-value" #counterValue>
-          {{ formatNumber(counter.count) }}
+          <span [attr.data-cms-key]="'counter.text.001' + '.' + cmsIndex0">{{ (formatNumber(counter.count)) | cmsText:('counter.text.001' + '.' + cmsIndex0) }}</span>
         </span>
         <span class="counter-suffix" aria-hidden="true">+</span>
       </div>
 
       <p class="counter-label">
-        {{ currentLang === 'ar' ? counter.labelAr : counter.labelEn }}
+        <span [attr.data-cms-key]="'counter.text.002' + '.' + cmsIndex0">{{ (currentLang === 'ar' ? counter.labelAr : counter.labelEn) | cmsText:('counter.text.002' + '.' + cmsIndex0) }}</span>
       </p>
     </article>
   </div>

@@ -2,10 +2,10 @@
   <div class="row mb-5">
     <div class="col-12 text-center">
       <h2 id="testimonials-title" class="section-header mb-3">
-        {{ currentLang === 'ar' ? 'لوحة الشرف للطلاب الخاتمين' : 'Honor Board for Quran Graduates' }}
+        <span [attr.data-cms-key]="'slider.text.000'">{{ (currentLang === 'ar' ? 'لوحة الشرف للطلاب الخاتمين' : 'Honor Board for Quran Graduates') | cmsText:('slider.text.000') }}</span>
       </h2>
       <p class="section-subtitle mx-auto">
-        {{ currentLang === 'ar' ? 'شاهد قصص نجاح طلابنا وتجاربهم المميزة في رحلة تعلم القرآن الكريم' : 'Explore our students\' success stories and experiences on their Quran learning journey.' }}
+        <span [attr.data-cms-key]="'slider.text.001'">{{ (currentLang === 'ar' ? 'شاهد قصص نجاح طلابنا وتجاربهم المميزة في رحلة تعلم القرآن الكريم' : 'Explore our students\' success stories and experiences on their Quran learning journey.') | cmsText:('slider.text.001') }}</span>
       </p>
     </div>
   </div>
@@ -15,14 +15,14 @@
       <div class="testimonials-slider position-relative">
         <div class="swiper" role="region" [attr.aria-label]="currentLang === 'ar' ? 'شرائح إنجازات الطلاب' : 'Student achievement slides'">
           <div class="swiper-wrapper">
-            <div *ngFor="let slide of slides" class="swiper-slide text-center" role="group" >
+            <div *ngFor="let slide of slides; let cmsIndex0 = index" class="swiper-slide text-center" role="group" >
               <div class="testimonial-image-wrapper">
-                <img [src]="slide.image"  class="testimonial-image" loading="lazy" />
+                <img [attr.data-cms-key]="'slider.image.002' + '.' + cmsIndex0" [src]="(slide.image) | cmsText:('slider.image.002' + '.' + cmsIndex0)"  class="testimonial-image" loading="lazy" />
               </div>
               <div class="testimonial-content mt-4">
-                <h3 class="testimonial-name">{{ currentLang === 'ar' ?  slide.title.ar :  slide.title.en  }}</h3>
-                <p class="testimonial-role mb-0">{{ currentLang === 'ar' ?  slide.gender.ar :  slide.gender.en   }}</p>
-                <p class="testimonial-text mb-3">{{  currentLang === 'ar' ?  slide.subtitle.ar :  slide.subtitle.en }}</p>
+                <h3 class="testimonial-name"><span [attr.data-cms-key]="'slider.text.003' + '.' + cmsIndex0">{{ (currentLang === 'ar' ?  slide.title.ar :  slide.title.en) | cmsText:('slider.text.003' + '.' + cmsIndex0) }}</span></h3>
+                <p class="testimonial-role mb-0"><span [attr.data-cms-key]="'slider.text.004' + '.' + cmsIndex0">{{ (currentLang === 'ar' ?  slide.gender.ar :  slide.gender.en) | cmsText:('slider.text.004' + '.' + cmsIndex0) }}</span></p>
+                <p class="testimonial-text mb-3"><span [attr.data-cms-key]="'slider.text.005' + '.' + cmsIndex0">{{ (currentLang === 'ar' ?  slide.subtitle.ar :  slide.subtitle.en) | cmsText:('slider.text.005' + '.' + cmsIndex0) }}</span></p>
               </div>
             </div>
           </div>

@@ -1,76 +1,84 @@
-<div class="brokerage-container" [class.en]="currentLang === 'en'">
-    <!-- Hero Section -->
-    <div class="brokerage-hero">
-        <div class="hero-content">
-            <h1 class="brokerage-title">{{ currentLang === 'ar' ? companyTitle.ar : companyTitle.en }}</h1>
-            <p class="brokerage-description">{{ currentLang === 'ar' ? description.ar : description.en }}</p>
-            <div class="hero-cta">
-                <button class="cta-button primary" (click)="navigateTo('contact')">
-                    {{ currentLang === 'ar' ? 'تواصل معنا ' : 'Contact Us' }}
-                </button>
-                <button class="cta-button secondary" (click)="scrollDown()">
-                    {{ currentLang === 'ar' ? 'إعرف أكثر' : 'Learn More' }}
-                </button>
-
-            </div>
-        </div>
-        <div class="hero-image">
-            <img src="https://i.pinimg.com/736x/5d/1e/b7/5d1eb770150e9f1fe55ac8fb619fe82a.jpg"
-                [alt]="currentLang === 'ar' ? companyTitle.ar : companyTitle.en">
-        </div>
+<div class="inner-page">
+  <app-page-heading
+    [title]="
+      currentLang === 'ar' ? 'الوساطة العقارية' : 'Real estate brokerage'
+    "
+    [description]="
+      currentLang === 'ar'
+        ? 'نصل بين العقار المناسب، والقرار المدروس.'
+        : 'Connecting the right property with a considered decision.'
+    "
+  ></app-page-heading>
+  <section class="inner-section inner-width inner-split">
+    <div class="inner-copy" appAppInViewport animationClass="reveal-on-scroll">
+      <span class="inner-kicker"><span [attr.data-cms-key]="'brokerage.text.000'">{{ (currentLang === "ar" ? "وضوح في كل خطوة" : "CLARITY AT EVERY STEP") | cmsText:('brokerage.text.000') }}</span></span>
+      <h2>
+        <span [attr.data-cms-key]="'brokerage.text.001'">{{ (currentLang === "ar"
+            ? "من أول استفسار، حتى إتمام الاتفاق."
+            : "From the first enquiry to the final agreement.") | cmsText:('brokerage.text.001') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'brokerage.text.002'">{{ (currentLang === "ar"
+            ? "نقدم خدمات الوساطة لربط البائعين بالمشترين والمستأجرين، من عرض العقار وتنظيم الزيارات إلى التفاوض ودعم إجراءات التوثيق. نحرص على وضوح المعلومات والتواصل طوال الرحلة."
+            : "We connect sellers with buyers and tenants, from property presentation and viewings to negotiations and documentation support. Clear information and ongoing communication guide the process.") | cmsText:('brokerage.text.002') }}</span>
+      </p>
+      <div class="inner-actions">
+        <a routerLink="/contact" class="inner-button"
+          ><span [attr.data-cms-key]="'brokerage.text.003'">{{ (currentLang === "ar"
+              ? "تحدث مع فريق الوساطة"
+              : "Talk to our brokerage team") | cmsText:('brokerage.text.003') }}</span>
+          ↗</a
+        ><a routerLink="/projects" class="inner-button secondary"><span [attr.data-cms-key]="'brokerage.text.004'">{{ (currentLang === "ar" ? "المشروعات" : "Our projects") | cmsText:('brokerage.text.004') }}</span></a>
+      </div>
     </div>
-
-    <!-- Stats Section -->
-    <div class="stats-section">
-        <div class="stat-card" *ngFor="let stat of statistics">
-            <div class="stat-value" [appCountUp]="getStatValue(stat.value)" [options]="counterOptions"></div>
-            <div class="stat-label">{{ currentLang === 'ar' ? stat.label.ar : stat.label.en }}</div>
-        </div>
+    <figure
+      class="inner-photo"
+      appAppInViewport
+      animationClass="reveal-on-scroll"
+    >
+      <img [attr.data-cms-key]="'brokerage.image.005'" [src]="('images/architecture.jpg') | cmsText:('brokerage.image.005')" alt="" />
+      <figcaption>
+        <span [attr.data-cms-key]="'brokerage.text.006'">{{ (currentLang === "ar"
+            ? "فهم احتياجك هو البداية لاختيار الفرصة المناسبة."
+            : "Understanding your needs is the first step towards the right opportunity.") | cmsText:('brokerage.text.006') }}</span>
+      </figcaption>
+    </figure>
+  </section>
+  <section class="inner-section inner-width">
+    <div class="inner-section-head">
+      <h2><span [attr.data-cms-key]="'brokerage.text.007'">{{ (currentLang === "ar" ? "كيف نرافقك؟" : "How we support you") | cmsText:('brokerage.text.007') }}</span></h2>
     </div>
-
-    <!-- Features Section -->
-    <div class="features-section">
-        <h2 class="section-title">{{ currentLang === 'ar' ? 'لماذا تختارنا؟' : 'Why Choose Us?' }}</h2>
-        <div class="features-grid">
-            <div class="feature-card" *ngFor="let feature of features">
-                <div class="feature-icon">
-                    <i [class]="'fas ' + feature.icon"></i>
-                </div>
-                <h3>{{ currentLang === 'ar' ? feature.title.ar : feature.title.en }}</h3>
-                <p>{{ currentLang === 'ar' ? feature.description.ar : feature.description.en }}</p>
-            </div>
-        </div>
+    <div class="inner-grid">
+      <article
+        class="inner-card"
+        *ngFor="let feature of features; let i = index; let cmsIndex0 = index"
+        appAppInViewport
+        animationClass="reveal-on-scroll"
+      >
+        <span class="inner-number">0<span [attr.data-cms-key]="'brokerage.text.008' + '.' + cmsIndex0">{{ (i + 1) | cmsText:('brokerage.text.008' + '.' + cmsIndex0) }}</span> /</span
+        ><i [class]="'fas ' + feature.icon" aria-hidden="true"></i>
+        <h3><span [attr.data-cms-key]="'brokerage.text.009' + '.' + cmsIndex0">{{ (feature.title[currentLang]) | cmsText:('brokerage.text.009' + '.' + cmsIndex0) }}</span></h3>
+        <p><span [attr.data-cms-key]="'brokerage.text.010' + '.' + cmsIndex0">{{ (feature.description[currentLang]) | cmsText:('brokerage.text.010' + '.' + cmsIndex0) }}</span></p>
+      </article>
     </div>
-
-    <!-- Testimonials -->
-    <div class="testimonials-section">
-        <h2 class="section-title">{{ currentLang === 'ar' ? 'آراء عملائنا' : 'Client Testimonials' }}</h2>
-        <div class="testimonials-slider">
-            <div class="testimonial-card" *ngFor="let testimonial of testimonials">
-                <div class="testimonial-content">
-                    <div class="quote-icon">"</div>
-                    <p>{{ currentLang === 'ar' ? testimonial.quote.ar : testimonial.quote.en }}</p>
-                </div>
-                <div class="client-info">
-                    <img [src]="testimonial.clientImage" alt="Client" class="client-avatar">
-                    <div>
-                        <h4>{{testimonial.clientName}}</h4>
-                        <div class="client-rating">
-                            <i class="fas" [ngClass]="{'fa-star': star, 'fa-star-half-alt': !star}"
-                                *ngFor="let star of getStars(testimonial.rating)"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  </section>
+  <aside class="inner-cta inner-width">
+    <div>
+      <span class="inner-kicker">OSOS AL-RIYADAH</span>
+      <h2>
+        <span [attr.data-cms-key]="'brokerage.text.011'">{{ (currentLang === "ar"
+            ? "لنبدأ خطوتك العقارية القادمة."
+            : "Let’s plan your next property move.") | cmsText:('brokerage.text.011') }}</span>
+      </h2>
+      <p>
+        <span [attr.data-cms-key]="'brokerage.text.012'">{{ (currentLang === "ar"
+            ? "فريقنا هنا للاستماع إلى احتياجاتك ومناقشة الخيارات المناسبة لك."
+            : "Our team is here to listen and discuss the options that suit your needs.") | cmsText:('brokerage.text.012') }}</span>
+      </p>
     </div>
-
-    <!-- CTA Section -->
-    <div class="cta-section">
-        <!-- <h2>{{ currentLang === 'ar' ? ctaData.title.ar : ctaData.title.en }}</h2>
-        <p>{{ currentLang === 'ar' ? ctaData.subtitle.ar : ctaData.subtitle.en }}</p> -->
-        <button class="cta-button large" (click)="navigateTo('brokerage')">
-            {{ currentLang === 'ar' ? ctaData.buttonText.ar : ctaData.buttonText.en }}
-        </button>
-    </div>
+    <a routerLink="/contact" class="inner-button gold"
+      ><span [attr.data-cms-key]="'brokerage.text.013'">{{ (currentLang === "ar" ? "تواصل معنا" : "Contact us") | cmsText:('brokerage.text.013') }}</span>
+      <span aria-hidden="true">↗</span></a
+    >
+  </aside>
 </div>

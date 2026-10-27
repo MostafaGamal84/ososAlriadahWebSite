@@ -1,54 +1,32 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
+import { SiteContentService } from './services/site-content.service';
+import { LiveEditorComponent } from './admin/live-editor.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { AboutUsComponent } from './components/about-us/about-us.component';
 import { BackToTopComponent } from './components/back-to-top/back-to-top.component';
-import { ContactComponent } from './components/contact/contact.component';
-import { FeatureComponent } from './components/feature/feature.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { OurServicesComponent } from './components/our-services/our-services.component';
-import { AppInViewportDirective } from './directives/app-in-viewport.directive';
 import { ContactService } from './services/contact.service';
-import { CommonModule } from '@angular/common';
-import { AuctionComponent } from './components/auction/auction.component';
-import { OwlComponent } from './components/owl/owl.component';
-import { ProjectsComponent } from './components/projects/projects.component';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    // Components
-    AboutUsComponent,
-    BackToTopComponent,
-    ContactComponent,
-    FeatureComponent,
-    FooterComponent,
-    HeaderComponent,
-    OurServicesComponent,
-    AppInViewportDirective,
-    RouterOutlet,
-    CommonModule,
-    AuctionComponent,
-    OwlComponent,
-    ProjectsComponent
-  ],
+  imports: [BackToTopComponent, FooterComponent, HeaderComponent, RouterOutlet, LiveEditorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent {
   title = 'اسس الريادة للخدمات العقارية';
   private snapchatTrackingSubscription?: Subscription;
 
-  constructor(public contactService: ContactService, public router: Router) {}
+  constructor(public contactService: ContactService, public router: Router, private cms: SiteContentService) {}
 
   ngOnInit(): void {
+    this.cms.load().catch(() => { /* Original content stays readable if the API is unavailable. */ });
     const savedLang = localStorage.getItem('lang');
     this.contactService.currentLang = savedLang === 'en' ? 'en' : 'ar';
+    document.documentElement.lang = this.contactService.currentLang;
     document.documentElement.dir =
       this.contactService.currentLang === 'ar' ? 'rtl' : 'ltr';
 
